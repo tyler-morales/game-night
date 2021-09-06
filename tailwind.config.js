@@ -6,6 +6,11 @@ module.exports = {
       primary: 'var(--color-primary)',
       secondary: 'var(--color-secondary)',
       tertiary: 'var(--color-tertiary)',
+      quad: 'var(--color-quad)',
+      white: 'var(--color-white)',
+    },
+    fontFamily: {
+      body: ['Poppins', 'sans-serif'],
     },
   },
   variants: {
