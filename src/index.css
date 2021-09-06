@@ -1,6 +1,20 @@
+:root {
+  --color-primary: #000022;
+  --color-secondary: #fce17d;
+  --color-tertiary: #49d3ad;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+/* .logo > img {
+  fill: var(--color-secondary);
+} */

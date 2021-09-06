@@ -3,9 +3,14 @@ import './App.css'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className="bg-primary h-screen pt-6">
+      <header class="w-11/12">
+        <img
+          style={{ width: '150px' }}
+          class="m-auto"
+          src={logo}
+          alt="Game Night Logo"
+        />
       </header>
     </div>
   )
