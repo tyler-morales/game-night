@@ -1,16 +1,19 @@
-// import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Auth } from 'aws-amplify'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { AuthContext } from '../context/AuthContext'
 
 const schema = yup.object().shape({
   username: yup.string().min(4).max(20).required(),
-  authCode: yup.string().max(6).required(),
+  authCode: yup.string().min(6).max(6).required(),
 })
 
-export const ConfirmSignUp = () => {
+export const VerifyAccount = () => {
+  const { user } = useContext(AuthContext)
+
   const {
     register,
     handleSubmit,
@@ -19,19 +22,21 @@ export const ConfirmSignUp = () => {
     resolver: yupResolver(schema),
   })
 
-  // const [serverError, setServerError] = useState({ status: false, message: '' })
+  const [serverError, setServerError] = useState({ status: false, message: '' })
 
   const onSubmit = async ({ username, authCode }) => {
     try {
+      // TODO: Add auth context to store account name for quick access
       await Auth.confirmSignUp(username, authCode)
-      console.log('Code confirmed')
     } catch (error) {
-      console.error(
-        'Verification code does not match. Please enter a valid verification code.',
-        error
-      )
+      setServerError({
+        status: true,
+        message: 'Account name and confirmation code do no match',
+      })
     }
   }
+
+  const renderError = (message) => message
 
   return (
     <section className="flex justify-center md:flex-row-reverse gap-16 mt-9 md:mt-14 w-11/12 lg:max-w-screen-xl m-auto">
@@ -52,6 +57,8 @@ export const ConfirmSignUp = () => {
               Family/ Friend Group Name
             </label>
             <input
+              name="accountname"
+              defaultValue={user}
               type="text"
               {...register('username')}
               className={
@@ -76,16 +83,30 @@ export const ConfirmSignUp = () => {
                   ? 'focus:ring-error transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2'
                   : 'focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2'
               }
-              placeholder="ahslandboys2000"
+              placeholder="123456"
               autoFocus
             />
-            {/* <p className="text-error text-sm">{serverError.message}</p> */}
+
+            <p className="text-error text-sm">
+              {errors.authCode &&
+                renderError('Confirmation code must be 6 digits long')}
+              {serverError.message}
+            </p>
             <input
               className="transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent"
               type="submit"
               value="Confirm Account"
             />
           </div>
+          <h4 className="text-white text-center mt-5">
+            Lost your code?
+            <Link
+              to="/resend-code"
+              className="font-body text-quad cursor-pointer rounded-md font-bold px-2  border-transparent focus:outline-none focus:ring-1 focus:ring-quad focus:border-transparent"
+            >
+              Resend Code
+            </Link>
+          </h4>
         </form>
       </div>
     </section>

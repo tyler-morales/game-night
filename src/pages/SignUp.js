@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Auth } from 'aws-amplify'
 import { Link, useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { AuthContext } from '../context/AuthContext'
 
 const schema = yup.object().shape({
   username: yup.string().min(4).max(20).required(),
@@ -12,6 +13,8 @@ const schema = yup.object().shape({
 })
 
 export const SignUp = () => {
+  const { setUser } = useContext(AuthContext)
+
   let history = useHistory()
   const {
     register,
@@ -26,15 +29,15 @@ export const SignUp = () => {
   const onSubmit = async (data) => {
     console.log(data, data.username)
     try {
-      const { user } = await Auth.signUp({
+      await Auth.signUp({
         username: data.username,
         password: data.password,
         attributes: {
           email: data.email,
         },
       })
-      history.push('/confirmsignup')
-      console.log(user)
+      history.push('/verify-account')
+      setUser(data.username)
     } catch (error) {
       console.error('error signing up:', error)
       setServerError({
