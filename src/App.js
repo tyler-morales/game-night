@@ -4,6 +4,7 @@ import logo from './logo.svg'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { SignUp } from './pages/SignUp'
+import { ConfirmSignUp } from './pages/ConfirmSignUp'
 Amplify.configure(awsconfig)
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/signup" component={SignUp} />
+          <Route path="/confirmsignup" component={ConfirmSignUp} />
           <Route path="/" />
         </Switch>
       </Router>

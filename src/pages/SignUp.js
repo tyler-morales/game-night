@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Auth } from 'aws-amplify'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -12,6 +12,7 @@ const schema = yup.object().shape({
 })
 
 export const SignUp = () => {
+  let history = useHistory()
   const {
     register,
     handleSubmit,
@@ -32,10 +33,14 @@ export const SignUp = () => {
           email: data.email,
         },
       })
+      history.push('/confirmsignup')
       console.log(user)
     } catch (error) {
       console.error('error signing up:', error)
-      setServerError({ status: true, message: error.message })
+      setServerError({
+        status: true,
+        message: (error.message += ': Either Log in or use a different name'),
+      })
     }
   }
 
@@ -56,15 +61,15 @@ export const SignUp = () => {
               Family/ Friend Group Name
             </label>
             <input
-              value="test1234"
               type="text"
               {...register('username')}
               className={
-                errors.username || serverError
+                errors.username || serverError.status
                   ? 'focus:ring-error transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2'
                   : 'focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2'
               }
               placeholder="ahslandboys2000"
+              autofocus="true"
             />
             <p className="text-error text-sm">
               {errors.username &&
