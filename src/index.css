@@ -4,6 +4,7 @@
   --color-tertiary: #49d3ad;
   --color-quad: #5cd5dd;
   --color-white: #ffffff;
+  --color-error: #FF3456;
 }
 
 @tailwind base;
