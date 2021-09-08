@@ -8,6 +8,7 @@ module.exports = {
       tertiary: 'var(--color-tertiary)',
       quad: 'var(--color-quad)',
       white: 'var(--color-white)',
+      error: 'var(--color-error)',
     },
     fontFamily: {
       body: ['Poppins', 'sans-serif'],
