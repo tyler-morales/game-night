@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 import { Auth } from 'aws-amplify'
 import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -24,20 +24,19 @@ export const ResendCode = () => {
 
   // const [serverError, setServerError] = useState({ status: false, message: '' })
 
-  const onSubmit = async (data) => {
+  const onSubmit = async ({ username }) => {
+    console.log(username)
     try {
       // TODO: Add auth context to store account name for quick access
-      await Auth.resendSignUp('moralesfam')
+      await Auth.resendSignUp(username)
       history.push('/verify-account')
-      console.log('code resent successfully')
+      setUser(username)
     } catch (err) {
-      setUser(data.username)
-      history.push('/verify-account')
-      console.log('error resending code: ', err)
       // setServerError({
       //   status: true,
-      //   message: 'Account name and confirmation code do no match',
+      //   message: err,
       // })
+      console.log(err)
     }
   }
 

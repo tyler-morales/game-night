@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Auth } from 'aws-amplify'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -14,6 +14,10 @@ const schema = yup.object().shape({
 export const VerifyAccount = () => {
   const { user } = useContext(AuthContext)
 
+  useEffect(() => {
+    return user
+  }, [user])
+
   const {
     register,
     handleSubmit,
@@ -22,16 +26,18 @@ export const VerifyAccount = () => {
     resolver: yupResolver(schema),
   })
 
+  console.log(errors)
+
   const [serverError, setServerError] = useState({ status: false, message: '' })
 
   const onSubmit = async ({ username, authCode }) => {
     try {
-      // TODO: Add auth context to store account name for quick access
       await Auth.confirmSignUp(username, authCode)
+      console.log('Account Verified')
     } catch (error) {
       setServerError({
         status: true,
-        message: 'Account name and confirmation code do no match',
+        message: error.message,
       })
     }
   }
@@ -57,7 +63,7 @@ export const VerifyAccount = () => {
               Family/ Friend Group Name
             </label>
             <input
-              name="accountname"
+              name="username"
               defaultValue={user}
               type="text"
               {...register('username')}
@@ -67,8 +73,12 @@ export const VerifyAccount = () => {
                   : 'focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2'
               }
               placeholder="ahslandboys2000"
+              autoFocus={true}
             />
-            {/* <p className="text-error text-sm">{serverError.message}</p> */}
+            <p className="text-error text-sm">
+              {errors.username && renderError(errors.username.message)}
+              {serverError.message}
+            </p>
           </div>
 
           <div className="flex gap-3 flex-col">
@@ -84,13 +94,11 @@ export const VerifyAccount = () => {
                   : 'focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2'
               }
               placeholder="123456"
-              autoFocus
             />
 
             <p className="text-error text-sm">
               {errors.authCode &&
                 renderError('Confirmation code must be 6 digits long')}
-              {serverError.message}
             </p>
             <input
               className="transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent"

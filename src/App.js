@@ -5,6 +5,7 @@ import logo from './logo.svg'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { SignUp } from './pages/SignUp'
+import { Login } from './pages/Login'
 import { VerifyAccount } from './pages/VerifyAccount'
 import { ResendCode } from './pages/ResendCode'
 import { AuthContext } from './context/AuthContext'
@@ -30,6 +31,7 @@ function App() {
         <Router>
           <Switch>
             <Route path="/signup" component={SignUp} />
+            <Route path="/login" component={Login} />
             <Route path="/verify-account" component={VerifyAccount} />
             <Route path="/resend-code" component={ResendCode} />
             <Route path="/" />
