@@ -64,7 +64,7 @@ export const Login = () => {
                     : 'focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2'
                 }
                 placeholder="ahslandboys2000"
-                autofocus="true"
+                autoFocus={true}
               />
               <p className="text-error text-sm">
                 {errors.username &&
