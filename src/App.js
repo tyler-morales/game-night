@@ -1,13 +1,13 @@
 import { useState, useMemo } from 'react'
 import Amplify from 'aws-amplify'
 import awsconfig from './aws-exports'
-import logo from './logo.svg'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { SignUp } from './pages/SignUp'
 import { Login } from './pages/Login'
 import { VerifyAccount } from './pages/VerifyAccount'
 import { ResendCode } from './pages/ResendCode'
+import { Dashboard } from './pages/Dashboard'
 import { AuthContext } from './context/AuthContext'
 
 Amplify.configure(awsconfig)
@@ -20,20 +20,14 @@ function App() {
   return (
     <AuthContext.Provider value={value}>
       <div className="bg-primary min-h-screen py-6 m-auto">
-        <header className="m-auto">
-          <img
-            style={{ width: '150px' }}
-            className="m-auto"
-            src={logo}
-            alt="Game Night Logo"
-          />
-        </header>
+        
         <Router>
           <Switch>
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={Login} />
             <Route path="/verify-account" component={VerifyAccount} />
             <Route path="/resend-code" component={ResendCode} />
+            <Route path="/dashboard" component={Dashboard} />
             <Route path="/" />
           </Switch>
         </Router>

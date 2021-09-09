@@ -3,8 +3,9 @@
   --color-secondary: #fce17d;
   --color-tertiary: #49d3ad;
   --color-quad: #5cd5dd;
+  --color-dark-green: #264053;
   --color-white: #ffffff;
-  --color-error: #FF3456;
+  --color-error: #ff3456;
 }
 
 @tailwind base;
@@ -16,6 +17,10 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+#dashboard {
+  height: calc(100vh - 50px);
 }
 
 body {
