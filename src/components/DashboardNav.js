@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import logo from '../logo.svg'
 import { HiMenuAlt4 } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 import {
   RiBarChart2Fill,
   RiSettings5Fill,
@@ -9,6 +10,8 @@ import {
 } from 'react-icons/ri'
 
 export const DashboardNav = () => {
+  const { signOut } = useAuth()
+
   const [toggleMenu, setToggleMenu] = useState(false)
   const [size, setSize] = useState(window.innerWidth)
 
@@ -45,7 +48,6 @@ export const DashboardNav = () => {
 
       {/* Dashboard & settings buttons */}
       <div
-        // className="flex-col md:gap-3 md:mt-10 md:h-full md:justify-between"
         className={`flex-col md:gap-3 md:mt-10 md:h-full md:justify-between ${
           toggleMenu || size > 768 ? 'flex' : 'hidden'
         }`}
@@ -68,13 +70,13 @@ export const DashboardNav = () => {
         </div>
 
         {/* Logout button */}
-        <Link
-          to="/"
+        <button
+          onClick={signOut}
           className=" tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen"
         >
           <RiLogoutBoxRLine />
           <span className=" place-self-end">Logout</span>
-        </Link>
+        </button>
       </div>
     </nav>
   )

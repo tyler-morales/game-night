@@ -1,8 +1,10 @@
 import React from 'react'
 import { DashboardNav } from '../components/DashboardNav'
-import { Account } from './Account'
+import useAuth from '../hooks/useAuth'
 
 export const Dashboard = () => {
+  const { currentUser } = useAuth()
+
   return (
     <main
       id="dashboard"
@@ -10,7 +12,13 @@ export const Dashboard = () => {
     >
       <DashboardNav />
       <section className="bg-darkGreen w-full h-full rounded-xl">
-        <Account />
+        <h1>
+          {currentUser === null ? (
+            <div>Loading...</div>
+          ) : (
+            <div>Welcome, {currentUser.username}</div>
+          )}
+        </h1>
       </section>
     </main>
   )

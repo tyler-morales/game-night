@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { AuthHeader } from '../components/AuthHeader'
 import { AuthContext } from '../context/AuthContext'
 
 const schema = yup.object().shape({
@@ -45,7 +44,6 @@ export const ResendCode = () => {
 
   return (
     <>
-      <AuthHeader />
       <section className="flex justify-center md:flex-row-reverse gap-16 mt-9 md:mt-14 w-11/12 lg:max-w-screen-xl m-auto">
         <div className="max-w-md">
           <h1 className="font-bold text-center text-white text-3xl">
