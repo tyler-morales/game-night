@@ -1,8 +1,10 @@
-export const SignUp = () => {
+import React from 'react'
+
+function SignUp({ updateFormState, signUp }) {
   return (
     <>
       <div className="flex flex-col gap-10 md:flex-row-reverse">
-        <form className="md:w-full flex gap-2 flex-col">
+        <div className="md:w-full flex gap-2 flex-col">
           <h1 className="font-bold text-white text-3xl md:text-left">
             Create an Account
           </h1>
@@ -11,7 +13,12 @@ export const SignUp = () => {
               Family/ Friend Group Name
             </label>
             <input
+              name="username"
               type="text"
+              onChange={(e) => {
+                e.persist()
+                updateFormState(e)
+              }}
               className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
               placeholder="ahslandboys2000"
               autoFocus={true}
@@ -23,6 +30,11 @@ export const SignUp = () => {
             </label>
             <input
               type="email"
+              name="email"
+              onChange={(e) => {
+                e.persist()
+                updateFormState(e)
+              }}
               className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
               placeholder="anjay@gmail.com"
             />
@@ -33,16 +45,22 @@ export const SignUp = () => {
             </label>
             <input
               type="text"
+              name="password"
+              onChange={(e) => {
+                e.persist()
+                updateFormState(e)
+              }}
               className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
               placeholder="qwerty123"
             />
           </div>
-          <input
+          <button
+            onClick={signUp}
             className="transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent"
-            type="submit"
-            value="Create Account"
-          />
-        </form>
+          >
+            Create Account
+          </button>
+        </div>
 
         {/* Marketing Section */}
         <section className="md:w-full ">
@@ -68,3 +86,5 @@ export const SignUp = () => {
     </>
   )
 }
+
+export default SignUp

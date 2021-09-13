@@ -4,7 +4,7 @@ function ForgotPassword(props) {
       <h1 className="font-bold text-white text-3xl md:text-left mb-4">
         Reset Password
       </h1>
-      <form className="mt-4 flex gap-2 flex-col">
+      <div className="mt-4 flex gap-2 flex-col">
         <div className="flex gap-3 flex-col">
           <label className="text-white text-xs" htmlFor="username">
             Account name
@@ -26,7 +26,7 @@ function ForgotPassword(props) {
             Reset Password
           </button>
         </div>
-      </form>
+      </div>
     </>
   )
 }

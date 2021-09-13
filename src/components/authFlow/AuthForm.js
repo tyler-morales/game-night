@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Auth } from 'aws-amplify'
 import { SignIn } from './SignIn'
-import { SignUp } from './SignUp'
-import { ConfirmSignUp } from './ConfirmSignUp'
+import SignUp from './SignUp'
+import ConfirmSignUp from './ConfirmSignUp'
 import ForgotPassword from './ForgotPassword'
 import ForgotPasswordSubmit from './ForgotPasswordSubmit'
 
@@ -32,7 +32,7 @@ async function confirmSignUp({ username, confirmationCode }, updateFormType) {
     await Auth.confirmSignUp(username, confirmationCode)
     updateFormType('signIn')
   } catch (err) {
-    console.log('error signing up..', err)
+    console.log('error confirming account..', err)
   }
 }
 
@@ -42,7 +42,7 @@ async function signIn({ username, password }, setUser) {
     const userInfo = { username: user.username, ...user.attributes }
     setUser(userInfo)
   } catch (err) {
-    console.log('error signing up..', err)
+    console.log('error signing in..', err)
   }
 }
 
@@ -67,7 +67,7 @@ async function forgotPasswordSubmit(
   }
 }
 
-export const Form = (props) => {
+export const AuthForm = (props) => {
   const [formType, updateFormType] = useState('signIn')
   const [formState, updateFormState] = useState(initialFormState)
   function updateForm(event) {
@@ -76,6 +76,7 @@ export const Form = (props) => {
       [event.target.name]: event.target.value,
     }
     updateFormState(newFormState)
+    console.log(formState)
   }
 
   function renderForm() {

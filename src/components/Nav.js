@@ -5,7 +5,7 @@ const Nav = (props) => {
   const { current } = props
   return (
     <div>
-      <div selectedKeys={[current]} mode="horizontal">
+      <div selectedkeys={[current]} mode="horizontal">
         <div key="home">
           <Link to={`/`}>Home</Link>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Auth, Hub } from 'aws-amplify'
 import Container from '../layout/Container'
-import { Form } from '../components/authFlow/AuthForm'
+import { AuthForm } from '../components/authFlow/AuthForm'
 
 function Profile() {
   useEffect(() => {
@@ -37,7 +37,7 @@ function Profile() {
       </Container>
     )
   }
-  return <Form setUser={setUser} />
+  return <AuthForm setUser={setUser} />
 }
 
 export default Profile
