@@ -1,9 +1,31 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { Auth, Hub } from 'aws-amplify'
 import { DashboardNav } from '../components/DashboardNav'
-import useAuth from '../hooks/useAuth'
 
-export const Dashboard = () => {
-  const { currentUser } = useAuth()
+import protectedRoute from './protectedRoute'
+
+const Dashboard = () => {
+  useEffect(() => {
+    checkUser()
+    Hub.listen('auth', (data) => {
+      const { payload } = data
+      if (payload.event === 'signOut') {
+        setUser(null)
+      }
+    })
+  }, [])
+
+  const [user, setUser] = useState(null)
+
+  async function checkUser() {
+    try {
+      const data = await Auth.currentUserPoolUser()
+      const userInfo = { username: data.username, ...data.attributes }
+      setUser(userInfo)
+    } catch (err) {
+      console.log('error: ', err)
+    }
+  }
 
   return (
     <main
@@ -13,13 +35,15 @@ export const Dashboard = () => {
       <DashboardNav />
       <section className="bg-darkGreen w-full h-full rounded-xl">
         <h1>
-          {currentUser === null ? (
+          {user === null ? (
             <div>Loading...</div>
           ) : (
-            <div>Welcome, {currentUser.username}</div>
+            <div>Welcome, {user.username}</div>
           )}
         </h1>
       </section>
     </main>
   )
 }
+
+export default protectedRoute(Dashboard)

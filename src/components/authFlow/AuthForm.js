@@ -6,6 +6,8 @@ import ConfirmSignUp from './ConfirmSignUp'
 import ForgotPassword from './ForgotPassword'
 import ForgotPasswordSubmit from './ForgotPasswordSubmit'
 
+import { AuthNav } from '../nav/AuthNav'
+
 const initialFormState = {
   username: '',
   password: '',
@@ -124,60 +126,63 @@ export const AuthForm = (props) => {
   }
 
   return (
-    <div
-      className={`flex flex-col w-11/12 m-auto justify-center mt-9 md:mt-14 py-6 ${
-        formType === 'signUp' ? 'md:max-w-2xl' : 'md:max-w-md'
-      }`}
-    >
-      {renderForm()}
-      {formType === 'signUp' && (
-        <div className="mt-6">
-          <p className="font-body text-white">
-            Already have an account?{' '}
-            <span
-              className="text-quad cursor-pointer"
-              onClick={() => updateFormType('signIn')}
-            >
-              Sign In
-            </span>
-          </p>
-        </div>
-      )}
-      {formType === 'forgotPassword' && (
-        <div className="mt-6">
-          <p className="font-body text-white">
-            Remembered your password?{' '}
-            <span
-              className="text-quad cursor-pointer"
-              onClick={() => updateFormType('signIn')}
-            >
-              Sign in
-            </span>
-          </p>
-        </div>
-      )}
-      {formType === 'signIn' && (
-        <div className="mt-6">
-          <p className="font-body text-white">
-            Don't have an Account?{' '}
-            <span
-              className="text-quad cursor-pointer"
-              onClick={() => updateFormType('signUp')}
-            >
-              Sign Up
-            </span>
-          </p>
-          <p className="font-body text-white">
-            Forget your password?{' '}
-            <span
-              className="text-quad cursor-pointer"
-              onClick={() => updateFormType('forgotPassword')}
-            >
-              Reset Password
-            </span>
-          </p>
-        </div>
-      )}
-    </div>
+    <>
+      <AuthNav />
+      <div
+        className={`flex flex-col w-11/12 m-auto justify-center mt-9 md:mt-14 py-6 ${
+          formType === 'signUp' ? 'md:max-w-2xl' : 'md:max-w-md'
+        }`}
+      >
+        {renderForm()}
+        {formType === 'signUp' && (
+          <div className="mt-6">
+            <p className="font-body text-white">
+              Already have an account?{' '}
+              <span
+                className="text-quad cursor-pointer"
+                onClick={() => updateFormType('signIn')}
+              >
+                Sign In
+              </span>
+            </p>
+          </div>
+        )}
+        {formType === 'forgotPassword' && (
+          <div className="mt-6">
+            <p className="font-body text-white">
+              Remembered your password?{' '}
+              <span
+                className="text-quad cursor-pointer"
+                onClick={() => updateFormType('signIn')}
+              >
+                Sign in
+              </span>
+            </p>
+          </div>
+        )}
+        {formType === 'signIn' && (
+          <div className="mt-6">
+            <p className="font-body text-white">
+              Don't have an Account?{' '}
+              <span
+                className="text-quad cursor-pointer"
+                onClick={() => updateFormType('signUp')}
+              >
+                Sign Up
+              </span>
+            </p>
+            <p className="font-body text-white">
+              Forget your password?{' '}
+              <span
+                className="text-quad cursor-pointer"
+                onClick={() => updateFormType('forgotPassword')}
+              >
+                Reset Password
+              </span>
+            </p>
+          </div>
+        )}
+      </div>
+    </>
   )
 }

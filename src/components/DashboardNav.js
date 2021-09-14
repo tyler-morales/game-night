@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
+import { Auth, Hub } from 'aws-amplify'
 import logo from '../logo.svg'
 import { HiMenuAlt4 } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
-import useAuth from '../hooks/useAuth'
 import {
   RiBarChart2Fill,
   RiSettings5Fill,
@@ -10,8 +10,32 @@ import {
 } from 'react-icons/ri'
 
 export const DashboardNav = () => {
-  const { signOut } = useAuth()
+  // handle sign out
+  useEffect(() => {
+    checkUser()
+    Hub.listen('auth', (data) => {
+      const { payload } = data
+      if (payload.event === 'signOut') {
+        setUser(null)
+      }
+    })
+  }, [])
+  const [user, setUser] = useState(null)
+  console.log(user)
+  async function checkUser() {
+    try {
+      const data = await Auth.currentUserPoolUser()
+      const userInfo = { username: data.username, ...data.attributes }
+      setUser(userInfo)
+    } catch (err) {
+      console.log('error: ', err)
+    }
+  }
+  function signOut() {
+    Auth.signOut().catch((err) => console.log('error signing out: ', err))
+  }
 
+  // change nav based on responsive seize
   const [toggleMenu, setToggleMenu] = useState(false)
   const [size, setSize] = useState(window.innerWidth)
 
@@ -19,7 +43,6 @@ export const DashboardNav = () => {
     toggleMenu ? setToggleMenu(false) : setToggleMenu(true)
 
   const updateSize = () => setSize(window.innerWidth)
-
   useEffect(() => (window.onresize = updateSize))
 
   return (
@@ -61,7 +84,7 @@ export const DashboardNav = () => {
             <span>Dashboard</span>
           </Link>
           <Link
-            to="/account"
+            to="/profile"
             className="tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen"
           >
             <RiSettings5Fill />
