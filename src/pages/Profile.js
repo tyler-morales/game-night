@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Auth, Hub } from 'aws-amplify'
-import Container from '../layout/Container'
+import { Dashboard } from '../layout/Dashboard'
 import { AuthForm } from '../components/authFlow/AuthForm'
 
 function Profile() {
@@ -29,13 +29,13 @@ function Profile() {
   }
   if (user) {
     return (
-      <Container>
+      <Dashboard>
         <h1>Profile</h1>
         <h2>Username: {user.username}</h2>
         <h3>Email: {user.email}</h3>
         <h4>Phone: {user.phone_number}</h4>
         <button onClick={signOut}>Sign Out</button>
-      </Container>
+      </Dashboard>
     )
   }
   return <AuthForm setUser={setUser} />
