@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 
-import Nav from '../components/Nav'
-// import { AuthNav } from '../components/AuthNav'
+// import Nav from '../components/Nav'
+import { AuthNav } from '../components/AuthNav'
 import Public from './Public'
 import About from './About'
 import Profile from './Profile'
 import Protected from './Protected'
 
 export const Router = () => {
-  // const pageTypes = {
-  //   authFlow: 'authFlow',
-  //   dashboard: 'dashboard',
-  //   landing: 'landing',
-  // }
+  const pageTypes = {
+    authFlow: 'authFlow',
+    dashboard: 'dashboard',
+    landing: 'landing',
+  }
 
-  // const [pageType, setPageType] = useState(pageTypes.authFlow)
+  const [pageType, setPageType] = useState(pageTypes.authFlow)
 
   const [current, setCurrent] = useState('home')
   useEffect(() => {
@@ -29,16 +29,16 @@ export const Router = () => {
     const location = window.location.href.split('/')
     const pathname = location[location.length - 1]
     // TODO: Set 'setPageType' to change nav component
-    // setPageType(pageTypes.authFlow)
+    setPageType(pageTypes.authFlow)
 
-    // console.log(pathname)
+    console.log(pathname)
     setCurrent(pathname ? pathname : 'home')
   }
 
   return (
     <HashRouter>
-      <Nav current={current} />
-      {/* {pageType === pageTypes.authFlow && <AuthNav />} */}
+      {/* <Nav current={current} /> */}
+      {pageType === pageTypes.authFlow && <AuthNav />}
       {/* {pageType === pageTypes.authFlow && <AuthNav current={current} />} */}
       <Switch>
         <Route exact path="/" component={Public} />
