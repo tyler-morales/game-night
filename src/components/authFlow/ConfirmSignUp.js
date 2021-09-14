@@ -16,6 +16,7 @@ function ConfirmSignUp(props) {
                 Authentication Code
               </label>
               <input
+                name="confirmationCode"
                 type="text"
                 onChange={(e) => {
                   e.persist()

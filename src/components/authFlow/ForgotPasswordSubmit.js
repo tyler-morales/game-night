@@ -1,7 +1,7 @@
 function ForgotPasswordSubmit(props) {
   return (
     <>
-      <h1 className="font-bold text-white text-3xl md:text-left mb-4 text-center md:text-left">
+      <h1 className="font-bold text-white text-3xl md:text-left mb-4 text-center">
         Reset your Password
       </h1>
       <p className="text-white text-sm mt-4 mb-12 font-body text-center md:text-left">
@@ -45,26 +45,6 @@ function ForgotPasswordSubmit(props) {
           Sign in
         </button>
       </div>
-      {/* <div>
-        <input
-          name="confirmationCode"
-          placeholder="Confirmation code"
-          onChange={(e) => {
-            e.persist()
-            props.updateFormState(e)
-          }}
-        />
-        <input
-          name="password"
-          placeholder="New password"
-          type="text"
-          onChange={(e) => {
-            e.persist()
-            props.updateFormState(e)
-          }}
-        />
-        <button onClick={props.forgotPasswordSubmit}>Save new password</button>
-      </div> */}
     </>
   )
 }
