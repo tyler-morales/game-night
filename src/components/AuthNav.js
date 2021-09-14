@@ -1,6 +1,6 @@
 import logo from '../logo.svg'
 
-export const AuthHeader = () => {
+export const AuthNav = () => {
   return (
     <header className="m-auto">
       <img
