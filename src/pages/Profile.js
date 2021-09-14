@@ -4,6 +4,7 @@ import Container from '../layout/Container'
 import { AuthForm } from '../components/authFlow/AuthForm'
 
 function Profile() {
+  // handle sign out
   useEffect(() => {
     checkUser()
     Hub.listen('auth', (data) => {
