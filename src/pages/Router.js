@@ -19,11 +19,11 @@ export const Router = () => {
   }, [])
 
   function setRoute() {
-    const location = window.location.href.split('/')
-    const pathname = location[location.length - 1]
+    // const location = window.location.href.split('/')
+    // const pathname = location[location.length - 1]
     // TODO: Set 'setPageType' to change nav component
 
-    console.log(pathname)
+    // console.log(pathname)
     // setCurrent(pathname ? pathname : 'home')
   }
 
