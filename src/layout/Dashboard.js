@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import logo from '../logo.svg'
 import { HiMenuAlt4 } from 'react-icons/hi'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import {
   RiBarChart2Fill,
   RiSettings5Fill,
@@ -40,12 +40,12 @@ export const Dashboard = ({ children }) => {
         </div>
 
         {/* Record a Game  */}
-        <Link
+        <NavLink
           to="/"
           className="text-lg py-3 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-10"
         >
           <span>Record a Game</span>
-        </Link>
+        </NavLink>
 
         {/* Dashboard & settings buttons */}
         <div
@@ -54,20 +54,22 @@ export const Dashboard = ({ children }) => {
           }`}
         >
           <div className="w-full">
-            <Link
+            <NavLink
               to="/dashboard"
-              className="md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen"
+              activeClassName="bg-darkGreen"
+              className="md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen mb-3"
             >
               <RiBarChart2Fill />
               <span>Dashboard</span>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/profile"
+              activeClassName="bg-darkGreen"
               className="tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen"
             >
               <RiSettings5Fill />
               <span>Settings</span>
-            </Link>
+            </NavLink>
           </div>
 
           {/* Logout button */}
@@ -80,7 +82,7 @@ export const Dashboard = ({ children }) => {
           </button>
         </div>
       </nav>
-      <section className="bg-darkGreen w-full h-full rounded-xl">
+      <section className="p-4 bg-darkGreen w-full h-full rounded-xl">
         {children}
       </section>
     </main>
