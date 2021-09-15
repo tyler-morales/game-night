@@ -4,8 +4,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom'
 import Public from './Public'
 import About from './About'
 import Profile from './Profile'
-import Protected from './Protected'
-import Dashboard from './Dashboard'
+import Stats from './Stats'
 
 export const Router = () => {
   // const [pageType, setPageType] = useState(pageTypes.authFlow)
@@ -34,9 +33,8 @@ export const Router = () => {
       <Switch>
         <Route exact path="/" component={Public} />
         <Route exact path="/about" component={About} />
-        <Route exact path="/protected" component={Protected} />
+        <Route exact path="/dashboard" component={Stats} />
         <Route exact path="/profile" component={Profile} />
-        <Route exact path="/dashboard" component={Dashboard} />
         <Route component={Public} />
       </Switch>
     </HashRouter>

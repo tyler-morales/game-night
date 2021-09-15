@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Auth } from 'aws-amplify'
 import { Dashboard } from '../layout/Dashboard'
 
 import protectedRoute from './protectedRoute'
 
-function Profile() {
+const Stats = () => {
   useEffect(() => {
     checkUser()
   }, [])
 
   const [user, setUser] = useState(null)
+
   async function checkUser() {
     try {
       const data = await Auth.currentUserPoolUser()
-      const userInfo = { username: data.username, ...data.attributes }
+      const userInfo = { username: data.username }
       setUser(userInfo)
     } catch (err) {
       console.log('error: ', err)
@@ -22,18 +23,15 @@ function Profile() {
 
   return (
     <Dashboard>
-      {user === null ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          <h1>Profile</h1>
-          <h2>Username: {user.username}</h2>
-          <h3>Email: {user.email}</h3>
-          <h4>Phone: {user.phone_number}</h4>
-        </>
-      )}
+      <h1>
+        {user === null ? (
+          <div>Loading...</div>
+        ) : (
+          <div>Welcome, {user.username}</div>
+        )}
+      </h1>
     </Dashboard>
   )
 }
 
-export default protectedRoute(Profile)
+export default protectedRoute(Stats)
