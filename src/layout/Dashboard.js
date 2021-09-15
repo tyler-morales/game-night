@@ -55,25 +55,25 @@ export const Dashboard = ({ children }) => {
         >
           <div className="w-full">
             <Link
-              to="dashboard"
-              className="md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen"
+              to="/dashboard"
+              className="md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen"
             >
               <RiBarChart2Fill />
               <span>Dashboard</span>
             </Link>
             <Link
               to="/profile"
-              className="tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen"
+              className="tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen"
             >
               <RiSettings5Fill />
-              <span>Settings</span>
+              <span>Profile</span>
             </Link>
           </div>
 
           {/* Logout button */}
           <button
             // onClick={signOut}
-            className=" tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen"
+            className=" tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen"
           >
             <RiLogoutBoxRLine />
             <span className=" place-self-end">Logout</span>
