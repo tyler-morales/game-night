@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Auth, Hub } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 import { Dashboard } from '../layout/Dashboard'
 
 import protectedRoute from './protectedRoute'
@@ -7,12 +7,6 @@ import protectedRoute from './protectedRoute'
 const Stats = () => {
   useEffect(() => {
     checkUser()
-    Hub.listen('auth', (data) => {
-      const { payload } = data
-      if (payload.event === 'signOut') {
-        setUser(null)
-      }
-    })
   }, [])
 
   const [user, setUser] = useState(null)
@@ -20,7 +14,7 @@ const Stats = () => {
   async function checkUser() {
     try {
       const data = await Auth.currentUserPoolUser()
-      const userInfo = { username: data.username, ...data.attributes }
+      const userInfo = { username: data.username }
       setUser(userInfo)
     } catch (err) {
       console.log('error: ', err)
