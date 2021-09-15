@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Auth, Hub } from 'aws-amplify'
-import { DashboardNav } from '../components/DashboardNav'
+import { Dashboard } from '../layout/Dashboard'
 
 import protectedRoute from './protectedRoute'
 
-const Dashboard = () => {
+const Stats = () => {
   useEffect(() => {
     checkUser()
     Hub.listen('auth', (data) => {
@@ -28,22 +28,16 @@ const Dashboard = () => {
   }
 
   return (
-    <main
-      id="dashboard"
-      className="flex flex-col md:grid gap-5 grid-cols-1 md:grid-cols-dashboard text-white text-3xl text-center px-5 m-auto"
-    >
-      <DashboardNav />
-      <section className="bg-darkGreen w-full h-full rounded-xl">
-        <h1>
-          {user === null ? (
-            <div>Loading...</div>
-          ) : (
-            <div>Welcome, {user.username}</div>
-          )}
-        </h1>
-      </section>
-    </main>
+    <Dashboard>
+      <h1>
+        {user === null ? (
+          <div>Loading...</div>
+        ) : (
+          <div>Welcome, {user.username}</div>
+        )}
+      </h1>
+    </Dashboard>
   )
 }
 
-export default protectedRoute(Dashboard)
+export default protectedRoute(Stats)

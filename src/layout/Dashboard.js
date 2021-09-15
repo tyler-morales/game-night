@@ -66,7 +66,7 @@ export const Dashboard = ({ children }) => {
               className="tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen"
             >
               <RiSettings5Fill />
-              <span>Profile</span>
+              <span>Settings</span>
             </Link>
           </div>
 
