@@ -112,7 +112,7 @@ export const Dashboard = ({ children }) => {
             </button>
           </div>
         </nav>
-        <section className="p-4 bg-darkGreen w-full h-full rounded-xl">
+        <section className="p-7 bg-darkGreen w-full h-full rounded-xl">
           {children}
         </section>
       </main>
