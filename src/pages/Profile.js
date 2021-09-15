@@ -7,6 +7,7 @@ import protectedRoute from './protectedRoute'
 import { Members } from '../components/profile/Members'
 import { Games } from '../components/profile/Games'
 
+
 function Profile() {
   useEffect(() => {
     checkUser()
@@ -50,6 +51,7 @@ function Profile() {
           {/* Games */}
           <Games />
         </div>
+
       )}
     </Dashboard>
   )
