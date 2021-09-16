@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-gamenight-dev-141013-authRole",
+      "UnauthRoleArn": "arn:aws:iam::022932606714:role/amplify-gamenight-dev-141013-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::022932606714:role/amplify-gamenight-dev-141013-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-gamenight-dev-141013-deployment",
+      "UnauthRoleName": "amplify-gamenight-dev-141013-unauthRole",
+      "StackName": "amplify-gamenight-dev-141013",
+      "StackId": "arn:aws:cloudformation:us-east-2:022932606714:stack/amplify-gamenight-dev-141013/bc692610-1721-11ec-81a6-06ec4f04d57a",
+      "AmplifyAppId": "d1d1v5354cqfi"
+    },
+    "categories": {
+      "auth": {
+        "gamenightdaf88a9d": {}
+      }
+    }
+  }
+}
