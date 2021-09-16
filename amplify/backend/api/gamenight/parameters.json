@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "gamenight",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authgamenightdaf88a9d",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
