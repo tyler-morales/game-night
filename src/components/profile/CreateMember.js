@@ -47,6 +47,7 @@ export const CreateMember = ({ updateMembers, members }) => {
       const { username } = await Auth.currentAuthenticatedUser()
       updateMembers([...members, { ...memberInfo, owner: username }])
       updateFormState((currentState) => ({ ...currentState, saving: false }))
+      updateFormState(initialState)
       // updateOverlayVisibility(false)
     } catch (err) {
       console.log('error: ', err)
@@ -69,6 +70,7 @@ export const CreateMember = ({ updateMembers, members }) => {
           <input
             name="name"
             onChange={onChangeText}
+            value={formState.name}
             className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 text-base text-primary py-2 px-4 rounded-md max-w-xs"
             type="text"
             placeholder="Tim"
@@ -83,6 +85,7 @@ export const CreateMember = ({ updateMembers, members }) => {
           </button>
         </div>
       </form>
+      {formState.saving && <p className="text-sm">Saving post...</p>}
     </div>
     // </div>
   )
