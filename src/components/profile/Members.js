@@ -5,6 +5,7 @@ import { API, Auth } from 'aws-amplify'
 
 // import query definition
 import { listMembers } from '../../graphql/queries'
+import { deleteMember } from '../../graphql/mutations'
 
 import { FiTool } from 'react-icons/fi'
 import { RiDeleteBinLine } from 'react-icons/ri'
@@ -20,6 +21,7 @@ export const Members = () => {
     fetchMembers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   async function fetchMembers() {
     /* query the API, ask for 100 items */
     let memberData = await API.graphql({
@@ -44,6 +46,19 @@ export const Members = () => {
     updateMembers(membersArray)
   }
 
+  const destroyMember = async () => {
+    try {
+      await API.graphql({
+        query: deleteMember,
+        variables: { input: { id: '1bba9ac5-a59a-487a-a456-8b8f49f22421' } },
+      })
+      fetchMembers()
+      console.log('Member Deleted Succesfully')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const memberItems = members.map((member) => {
     return (
       <div
@@ -60,7 +75,7 @@ export const Members = () => {
         <div className="flex gap-3">
           <FiTool className="cursor-pointer" size=".75em" />
           <RiDeleteBinLine
-            // onClick={deleteMember}
+            onClick={destroyMember}
             className="cursor-pointer"
             size=".75em"
           />
