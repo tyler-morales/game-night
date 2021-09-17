@@ -4,6 +4,7 @@ import { FiTool } from 'react-icons/fi'
 import { RiDeleteBinLine } from 'react-icons/ri'
 
 export const Games = () => {
+  // eslint-disable-next-line no-unused-vars
   const [games, setGames] = useState(['Dominoes', 'Chess'])
 
   const gameItems = games.map((game, i) => {
@@ -30,7 +31,7 @@ export const Games = () => {
   return (
     <div>
       <h2 className="text-white text-2xl text-left mb-5">Your Games</h2>
-      <div class="flex flex-col gap-6">{gameItems}</div>
+      <div className="flex flex-col gap-6">{gameItems}</div>
       <span className="cursor-pointer text-xs uppercase mt-6 block">
         + Add a new Game
       </span>

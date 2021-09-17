@@ -1,5 +1,5 @@
-type Todo @model {
+type Member @model {
   id: ID!
-  name: String!
-  description: String
+  name: String
+  owner: String
 }
