@@ -85,7 +85,9 @@ export const CreateMember = ({ updateMembers, members }) => {
           </button>
         </div>
       </form>
-      {formState.saving && <p className="text-sm">Saving post...</p>}
+      {formState.saving && (
+        <p className="text-sm">Saving {formState.name}...</p>
+      )}
     </div>
     // </div>
   )

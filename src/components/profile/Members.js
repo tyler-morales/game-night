@@ -39,9 +39,9 @@ export const Members = () => {
 
   async function setMemberState(membersArray) {
     const user = await Auth.currentAuthenticatedUser()
-    const myPostData = membersArray.filter((p) => p.owner === user.username)
+    const myMemberData = membersArray.filter((p) => p.owner === user.username)
     console.log('membersArray:', membersArray)
-    updateMyMembers(myPostData)
+    updateMyMembers(myMemberData)
     updateMembers(membersArray)
   }
 
@@ -51,6 +51,7 @@ export const Members = () => {
         query: deleteMember,
         variables: { input: { id } },
       })
+
       fetchMembers()
       console.log('Member Deleted Succesfully')
     } catch (err) {
@@ -65,7 +66,6 @@ export const Members = () => {
         className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg"
       >
         <div className="flex items-center gap-4">
-          {/* TODO: Create user avatars */}
           <div className="text-primary flex items-center justify-center rounded-full text-base bg-tertiary h-12 w-12">
             {member.name.substring(0, 1).toUpperCase()}
           </div>
