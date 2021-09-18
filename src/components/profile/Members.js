@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+import { CreateMember } from './CreateMember'
+
 // import API from Amplify library
 import { API, Auth } from 'aws-amplify'
 
@@ -9,10 +11,12 @@ import { updateMember, deleteMember } from '../../graphql/mutations'
 
 import { FiTool } from 'react-icons/fi'
 import { RiDeleteBinLine } from 'react-icons/ri'
-import { CreateMember } from './CreateMember'
+import { CgCheckO } from 'react-icons/cg'
+import { GiCancel } from 'react-icons/gi'
 
 export const Members = () => {
-  const [MemberName, setMemberName] = useState('')
+  const [editingMemberName, setEditingMemberName] = useState(false)
+  const [memberName, setMemberName] = useState('')
   const [members, updateMembers] = useState([])
   // eslint-disable-next-line no-unused-vars
   const [myMembers, updateMyMembers] = useState([])
@@ -61,15 +65,23 @@ export const Members = () => {
     }
   }
 
+  const handleChangeName = (e) => {
+    setMemberName(e.target.value)
+  }
   // Update member name
+  const editMemberName = async (e) => {
+    setEditingMemberName(true)
+  }
+
   const updateMemberName = async (id) => {
+    setEditingMemberName(false)
     try {
       await API.graphql({
         query: updateMember,
         variables: {
           input: {
             id,
-            name: 'Luke Skywalker',
+            name: memberName,
           },
         },
       })
@@ -87,25 +99,48 @@ export const Members = () => {
         key={member.id}
         className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg"
       >
-        <div className="flex items-center gap-4">
-          <div className="text-primary flex items-center justify-center rounded-full text-base bg-tertiary h-12 w-12">
-            {member.name.substring(0, 1).toUpperCase()}
-          </div>
-          <h3 className="text-white text-lg">{member.name}</h3>
+        <div className="flex items-center gap-4 w-full">
+          {editingMemberName ? (
+            <input
+              className="text-primary text-base py-2 px-4 rounded-md w-11/12"
+              type="text"
+              placeholder="Johnny Appleseed"
+              onChange={handleChangeName}
+            />
+          ) : (
+            <>
+              <div className="text-primary flex items-center justify-center rounded-full text-base bg-tertiary h-12 w-12">
+                {member.name.substring(0, 1).toUpperCase()}
+              </div>
+              <h3 className="text-white text-lg">{member.name}</h3>
+            </>
+          )}
         </div>
         <div className="flex gap-3">
           <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-quad focus:stroke-current focus:text-primary">
-            <FiTool
-              onClick={() => updateMemberName(member.id)}
-              className="cursor-pointer"
-              size=".75em"
-            />
+            {editingMemberName ? (
+              <CgCheckO
+                onClick={() => updateMemberName(member.id)}
+                className="cursor-pointer"
+                size=".75em"
+              />
+            ) : (
+              <FiTool
+                onClick={() => editMemberName(member.id)}
+                className="cursor-pointer"
+                size=".75em"
+              />
+            )}
           </button>
           <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-error">
-            <RiDeleteBinLine
-              onClick={() => destroyMember(member.id)}
-              size=".75em"
-            />
+            {editingMemberName ? (
+              <GiCancel onClick={() => destroyMember(member.id)} size=".75em" />
+            ) : (
+              <RiDeleteBinLine
+                onClick={() => destroyMember(member.id)}
+                size=".75em"
+              />
+            )}
           </button>
         </div>
       </div>
