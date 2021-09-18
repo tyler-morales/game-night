@@ -60,6 +60,10 @@ export const CreateMember = ({ updateMembers, members }) => {
     setToggleModal(true)
   }
 
+  const handleCancel = () => {
+    setToggleModal(false)
+  }
+
   return (
     // <div className="absolute top-1/3 left-1/2">
     // TOOO: Make into a modal
@@ -85,7 +89,10 @@ export const CreateMember = ({ updateMembers, members }) => {
               />
             </div>
             <div className="flex gap-5 mt-8">
-              <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 bg-error">
+              <button
+                onClick={handleCancel}
+                className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 bg-error"
+              >
                 Cancel
               </button>
               <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary">
@@ -98,12 +105,12 @@ export const CreateMember = ({ updateMembers, members }) => {
           )}
         </div>
       )}
-      <span
+      <button
         onClick={handleToggleModal}
-        className="cursor-pointer text-xs uppercase mt-6 block"
+        className="transition-all focus:ring-white focus:outline-none focus:ring-2 text-xs uppercase mt-6 py-2 px-4 rounded-sm"
       >
         + Add a member
-      </span>
+      </button>
     </>
     // </div>
   )
