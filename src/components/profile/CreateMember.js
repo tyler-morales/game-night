@@ -11,6 +11,7 @@ const initialState = {
 }
 
 export const CreateMember = ({ updateMembers, members }) => {
+  const [toggleModal, setToggleModal] = useState(false)
   /* 1. Create local state with useState hook */
   const [formState, updateFormState] = useState(initialState)
 
@@ -48,47 +49,62 @@ export const CreateMember = ({ updateMembers, members }) => {
       updateMembers([...members, { ...memberInfo, owner: username }])
       updateFormState((currentState) => ({ ...currentState, saving: false }))
       updateFormState(initialState)
+      setToggleModal(false)
       // updateOverlayVisibility(false)
     } catch (err) {
       console.log('error: ', err)
     }
   }
 
+  const handleToggleModal = () => {
+    setToggleModal(true)
+  }
+
   return (
     // <div className="absolute top-1/3 left-1/2">
     // TOOO: Make into a modal
-    <div className="w-max flex flex-col gap-3 bg-primary rounded-lg p-8 text-left">
-      <div className="flex items-center gap-4">
-        <BsFillPersonPlusFill size=".75em" />
-        <h3 className="text-2xl">Add Member</h3>
-      </div>
-      <form onSubmit={addMember} className="mt-4">
-        <div className="flex flex-col gap-2">
-          <label className="text-sm" htmlFor="member-name">
-            Member's Name
-          </label>
-          <input
-            name="name"
-            onChange={onChangeText}
-            value={formState.name}
-            className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 text-base text-primary py-2 px-4 rounded-md max-w-xs"
-            type="text"
-            placeholder="Tim"
-          />
+    <>
+      {toggleModal && (
+        <div className="w-max flex flex-col gap-3 bg-primary rounded-lg p-8 text-left">
+          <div className="flex items-center gap-4">
+            <BsFillPersonPlusFill size=".75em" />
+            <h3 className="text-2xl">Add Member</h3>
+          </div>
+          <form onSubmit={addMember} className="mt-4">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm" htmlFor="member-name">
+                Member's Name
+              </label>
+              <input
+                name="name"
+                onChange={onChangeText}
+                value={formState.name}
+                className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 text-base text-primary py-2 px-4 rounded-md max-w-xs"
+                type="text"
+                placeholder="Tim"
+              />
+            </div>
+            <div className="flex gap-5 mt-8">
+              <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 bg-error">
+                Cancel
+              </button>
+              <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary">
+                Add Member
+              </button>
+            </div>
+          </form>
+          {formState.saving && (
+            <p className="text-sm">Saving {formState.name}...</p>
+          )}
         </div>
-        <div className="flex gap-5 mt-8">
-          <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 bg-error">
-            Cancel
-          </button>
-          <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary">
-            Add Member
-          </button>
-        </div>
-      </form>
-      {formState.saving && (
-        <p className="text-sm">Saving {formState.name}...</p>
       )}
-    </div>
+      <span
+        onClick={handleToggleModal}
+        className="cursor-pointer text-xs uppercase mt-6 block"
+      >
+        + Add a member
+      </span>
+    </>
     // </div>
   )
 }

@@ -5,13 +5,14 @@ import { API, Auth } from 'aws-amplify'
 
 // import query definition
 import { listMembers } from '../../graphql/queries'
-import { deleteMember } from '../../graphql/mutations'
+import { updateMember, deleteMember } from '../../graphql/mutations'
 
 import { FiTool } from 'react-icons/fi'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { CreateMember } from './CreateMember'
 
 export const Members = () => {
+  const [MemberName, setMemberName] = useState('')
   const [members, updateMembers] = useState([])
   // eslint-disable-next-line no-unused-vars
   const [myMembers, updateMyMembers] = useState([])
@@ -45,6 +46,7 @@ export const Members = () => {
     updateMembers(membersArray)
   }
 
+  // Delete member
   const destroyMember = async (id) => {
     try {
       await API.graphql({
@@ -54,6 +56,26 @@ export const Members = () => {
 
       fetchMembers()
       console.log('Member Deleted Succesfully')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  // Update member name
+  const updateMemberName = async (id) => {
+    try {
+      await API.graphql({
+        query: updateMember,
+        variables: {
+          input: {
+            id,
+            name: 'Luke Skywalker',
+          },
+        },
+      })
+
+      fetchMembers()
+      console.log('Member name udpated Succesfully')
     } catch (err) {
       console.log(err)
     }
@@ -70,11 +92,14 @@ export const Members = () => {
             {member.name.substring(0, 1).toUpperCase()}
           </div>
           <h3 className="text-white text-lg">{member.name}</h3>
-          <span className="text-white text-xs">{member.id}</span>
         </div>
         <div className="flex gap-3">
           <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-quad focus:stroke-current focus:text-primary">
-            <FiTool className="cursor-pointer" size=".75em" />
+            <FiTool
+              onClick={() => updateMemberName(member.id)}
+              className="cursor-pointer"
+              size=".75em"
+            />
           </button>
           <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-error">
             <RiDeleteBinLine
@@ -90,7 +115,21 @@ export const Members = () => {
   return (
     <div>
       <h2 className="text-white text-2xl text-left mb-5">Members</h2>
-      <div className="flex flex-col gap-6">{memberItems}</div>
+      <div className="flex flex-col gap-6">
+        {memberItems.length > 0 ? (
+          memberItems
+        ) : (
+          <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
+            <h4 className="text-2xl border-b-2 border-quad pb-4">
+              You haven't added any members
+            </h4>
+            <p className="text-sm">
+              💡 Click the Add member text below to start adding members to your
+              family or friend group
+            </p>
+          </div>
+        )}
+      </div>
       <CreateMember updateMembers={setMemberState} members={members} />
     </div>
   )
