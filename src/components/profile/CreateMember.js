@@ -77,10 +77,10 @@ export const CreateMember = ({ updateMembers, members }) => {
           />
         </div>
         <div className="flex gap-5 mt-8">
-          <button className="ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 bg-error">
+          <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 bg-error">
             Cancel
           </button>
-          <button className="ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary">
+          <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary">
             Add Member
           </button>
         </div>
