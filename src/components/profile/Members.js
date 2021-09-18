@@ -28,16 +28,15 @@ export const Members = () => {
       query: listMembers,
       variables: { limit: 100 },
     })
+
     let membersArray = memberData.data.listMembers.items
     /* map over the image keys in the members array, get signed image URLs for each image */
-    membersArray = await Promise.all(
-      membersArray.map(async (member) => {
-        return member
-      })
-    )
+    membersArray = await Promise.all(membersArray.map(async (member) => member))
+
     /* update the members array in the local state */
     setMemberState(membersArray)
   }
+
   async function setMemberState(membersArray) {
     const user = await Auth.currentAuthenticatedUser()
     const myPostData = membersArray.filter((p) => p.owner === user.username)
@@ -46,11 +45,11 @@ export const Members = () => {
     updateMembers(membersArray)
   }
 
-  const destroyMember = async () => {
+  const destroyMember = async (id) => {
     try {
       await API.graphql({
         query: deleteMember,
-        variables: { input: { id: '1bba9ac5-a59a-487a-a456-8b8f49f22421' } },
+        variables: { input: { id } },
       })
       fetchMembers()
       console.log('Member Deleted Succesfully')
@@ -71,14 +70,18 @@ export const Members = () => {
             {member.name.substring(0, 1).toUpperCase()}
           </div>
           <h3 className="text-white text-lg">{member.name}</h3>
+          <span className="text-white text-xs">{member.id}</span>
         </div>
         <div className="flex gap-3">
-          <FiTool className="cursor-pointer" size=".75em" />
-          <RiDeleteBinLine
-            onClick={destroyMember}
-            className="cursor-pointer"
-            size=".75em"
-          />
+          <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-quad focus:stroke-current focus:text-primary">
+            <FiTool className="cursor-pointer" size=".75em" />
+          </button>
+          <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-error">
+            <RiDeleteBinLine
+              onClick={() => destroyMember(member.id)}
+              size=".75em"
+            />
+          </button>
         </div>
       </div>
     )
