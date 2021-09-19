@@ -15,7 +15,6 @@ import { CgCheckO } from 'react-icons/cg'
 import { GiCancel } from 'react-icons/gi'
 
 export const Members = () => {
-  const [editingMemberName, setEditingMemberName] = useState(false)
   const [memberName, setMemberName] = useState('')
   const [members, updateMembers] = useState([])
   // eslint-disable-next-line no-unused-vars
@@ -50,6 +49,10 @@ export const Members = () => {
     updateMembers(membersArray)
   }
 
+  const [editingMemberName, setEditingMemberName] = useState(
+    members.map(() => false)
+  )
+
   // Delete member
   const destroyMember = async (id) => {
     try {
@@ -69,12 +72,24 @@ export const Members = () => {
     setMemberName(e.target.value)
   }
   // Update member name
-  const editMemberName = async (e) => {
-    setEditingMemberName(true)
+  const editMemberName = async (_, index) => {
+    let new_editing_members_state = members.map(() => false)
+    new_editing_members_state[index] = true
+    setEditingMemberName(new_editing_members_state)
   }
 
-  const updateMemberName = async (id) => {
-    setEditingMemberName(false)
+  const cancelEditMemberName = async (_, index) => {
+    let new_editing_members_state = members.map(() => false)
+    new_editing_members_state[index] = false
+    setEditingMemberName(new_editing_members_state)
+  }
+
+  // UPDATE name in database
+  const updateMemberName = async (index, id) => {
+    let new_editing_members_state = members.map(() => false)
+    new_editing_members_state[index] = false
+    setEditingMemberName(new_editing_members_state)
+
     try {
       await API.graphql({
         query: updateMember,
@@ -93,14 +108,14 @@ export const Members = () => {
     }
   }
 
-  const memberItems = members.map((member) => {
+  const memberItems = members.map((member, index) => {
     return (
       <div
         key={member.id}
         className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg"
       >
         <div className="flex items-center gap-4 w-full">
-          {editingMemberName ? (
+          {editingMemberName[index] ? (
             <input
               className="text-primary text-base py-2 px-4 rounded-md w-11/12"
               type="text"
@@ -117,24 +132,27 @@ export const Members = () => {
           )}
         </div>
         <div className="flex gap-3">
-          <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-quad focus:stroke-current focus:text-primary">
-            {editingMemberName ? (
-              <CgCheckO
-                onClick={() => updateMemberName(member.id)}
-                className="cursor-pointer"
-                size=".75em"
-              />
-            ) : (
-              <FiTool
-                onClick={() => editMemberName(member.id)}
-                className="cursor-pointer"
-                size=".75em"
-              />
-            )}
-          </button>
+          {editingMemberName[index] ? (
+            <button
+              onClick={() => updateMemberName(index, member.id)}
+              className="transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-quad focus:stroke-current focus:text-primary"
+            >
+              <CgCheckO size=".75em" />
+            </button>
+          ) : (
+            <button
+              onClick={() => editMemberName(member.id, index)}
+              className="transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-quad focus:stroke-current focus:text-primary"
+            >
+              <FiTool size=".75em" />
+            </button>
+          )}
           <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-error">
-            {editingMemberName ? (
-              <GiCancel onClick={() => destroyMember(member.id)} size=".75em" />
+            {editingMemberName[index] ? (
+              <GiCancel
+                onClick={() => cancelEditMemberName(member.id, index)}
+                size=".75em"
+              />
             ) : (
               <RiDeleteBinLine
                 onClick={() => destroyMember(member.id)}
