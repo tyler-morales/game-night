@@ -9,10 +9,7 @@ import { API, Auth } from 'aws-amplify'
 import { listMembers } from '../../graphql/queries'
 import { updateMember, deleteMember } from '../../graphql/mutations'
 
-import { FiTool } from 'react-icons/fi'
-import { RiDeleteBinLine } from 'react-icons/ri'
-import { CgCheckO } from 'react-icons/cg'
-import { GiCancel } from 'react-icons/gi'
+import { MemberItem } from './MemberItem'
 
 export const Members = () => {
   const [memberName, setMemberName] = useState('')
@@ -71,6 +68,7 @@ export const Members = () => {
   const handleChangeName = (e) => {
     setMemberName(e.target.value)
   }
+
   // Update member name
   const editMemberName = async (_, index) => {
     let new_editing_members_state = members.map(() => false)
@@ -110,58 +108,17 @@ export const Members = () => {
 
   const memberItems = members.map((member, index) => {
     return (
-      <div
-        key={member.id}
-        className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg"
-      >
-        <div className="flex items-center gap-4 w-full">
-          {editingMemberName[index] ? (
-            <input
-              className="text-primary text-base py-2 px-4 rounded-md w-11/12"
-              type="text"
-              placeholder="Johnny Appleseed"
-              onChange={handleChangeName}
-            />
-          ) : (
-            <>
-              <div className="text-primary flex items-center justify-center rounded-full text-base bg-tertiary h-12 w-12">
-                {member.name.substring(0, 1).toUpperCase()}
-              </div>
-              <h3 className="text-white text-lg">{member.name}</h3>
-            </>
-          )}
-        </div>
-        <div className="flex gap-3">
-          {editingMemberName[index] ? (
-            <button
-              onClick={() => updateMemberName(index, member.id)}
-              className="transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-quad focus:stroke-current focus:text-primary"
-            >
-              <CgCheckO size=".75em" />
-            </button>
-          ) : (
-            <button
-              onClick={() => editMemberName(member.id, index)}
-              className="transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-quad focus:stroke-current focus:text-primary"
-            >
-              <FiTool size=".75em" />
-            </button>
-          )}
-          <button className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 rounded-sm p-1 focus:bg-error">
-            {editingMemberName[index] ? (
-              <GiCancel
-                onClick={() => cancelEditMemberName(member.id, index)}
-                size=".75em"
-              />
-            ) : (
-              <RiDeleteBinLine
-                onClick={() => destroyMember(member.id)}
-                size=".75em"
-              />
-            )}
-          </button>
-        </div>
-      </div>
+      <MemberItem
+        key={index}
+        member={member}
+        index={index}
+        editingMemberName={editingMemberName}
+        editMemberName={editMemberName}
+        handleChangeName={handleChangeName}
+        updateMemberName={updateMemberName}
+        cancelEditMemberName={cancelEditMemberName}
+        destroyMember={destroyMember}
+      />
     )
   })
 
