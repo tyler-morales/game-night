@@ -50,8 +50,14 @@ export const Members = () => {
     members.map(() => false)
   )
 
+  const [deletingMember, setDeletingMember] = useState(members.map(() => false))
+
   // Delete member
-  const destroyMember = async (id) => {
+  const destroyMember = async (id, index) => {
+    let new_deleting_member_state = members.map(() => false)
+    new_deleting_member_state[index] = true
+    setDeletingMember(new_deleting_member_state)
+
     try {
       await API.graphql({
         query: deleteMember,
@@ -76,6 +82,7 @@ export const Members = () => {
     setEditingMemberName(new_editing_members_state)
   }
 
+  // Cancel editing mode
   const cancelEditMemberName = async (_, index) => {
     let new_editing_members_state = members.map(() => false)
     new_editing_members_state[index] = false
@@ -118,15 +125,16 @@ export const Members = () => {
         updateMemberName={updateMemberName}
         cancelEditMemberName={cancelEditMemberName}
         destroyMember={destroyMember}
+        deletingMember={deletingMember}
       />
     )
   })
-
   return (
     <div>
       <h2 className="text-white text-2xl text-left mb-5">Members</h2>
       <div className="flex flex-col gap-6">
         {memberItems.length > 0 ? (
+          // TODO: Sort by "createdAt property"
           memberItems
         ) : (
           <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
