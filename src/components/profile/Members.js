@@ -11,6 +11,8 @@ import { updateMember, deleteMember } from '../../graphql/mutations'
 
 import { MemberItem } from './MemberItem'
 
+import '../../Spinner.css'
+
 export const Members = () => {
   const [memberName, setMemberName] = useState('')
   const [loading, updateLoading] = useState(true)
@@ -135,26 +137,31 @@ export const Members = () => {
     <div>
       <h2 className="text-white text-2xl text-left mb-5">Members</h2>
       {!loading ? (
-        <div className="flex flex-col gap-6">
-          {memberItems.length > 0 ? (
-            // TODO: Sort by "createdAt property"
-            memberItems
-          ) : (
-            <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
-              <h4 className="text-2xl border-b-2 border-quad pb-4">
-                You haven't added any members
-              </h4>
-              <p className="text-sm">
-                💡 Click the Add member text below to start adding members to
-                your family or friend group
-              </p>
-            </div>
-          )}
-        </div>
+        <>
+          <div className="flex flex-col gap-6">
+            {memberItems.length > 0 ? (
+              // TODO: Sort by "createdAt property"
+              memberItems
+            ) : (
+              <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
+                <h4 className="text-2xl border-b-2 border-quad pb-4">
+                  You haven't added any members
+                </h4>
+                <p className="text-sm">
+                  💡 Click the Add member text below to start adding members to
+                  your family or friend group
+                </p>
+              </div>
+            )}
+          </div>
+          <CreateMember updateMembers={setMemberState} members={members} />
+        </>
       ) : (
-        <h3>Loading...</h3>
+        <div className="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
       )}
-      <CreateMember updateMembers={setMemberState} members={members} />
     </div>
   )
 }
