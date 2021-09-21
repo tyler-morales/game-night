@@ -13,6 +13,7 @@ import { MemberItem } from './MemberItem'
 
 export const Members = () => {
   const [memberName, setMemberName] = useState('')
+  const [loading, updateLoading] = useState(true)
   const [members, updateMembers] = useState([])
   // eslint-disable-next-line no-unused-vars
   const [myMembers, updateMyMembers] = useState([])
@@ -29,6 +30,7 @@ export const Members = () => {
       query: listMembers,
       variables: { limit: 100 },
     })
+    updateLoading(false)
 
     let membersArray = memberData.data.listMembers.items
     /* map over the image keys in the members array, get signed image URLs for each image */
@@ -132,22 +134,26 @@ export const Members = () => {
   return (
     <div>
       <h2 className="text-white text-2xl text-left mb-5">Members</h2>
-      <div className="flex flex-col gap-6">
-        {memberItems.length > 0 ? (
-          // TODO: Sort by "createdAt property"
-          memberItems
-        ) : (
-          <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
-            <h4 className="text-2xl border-b-2 border-quad pb-4">
-              You haven't added any members
-            </h4>
-            <p className="text-sm">
-              💡 Click the Add member text below to start adding members to your
-              family or friend group
-            </p>
-          </div>
-        )}
-      </div>
+      {!loading ? (
+        <div className="flex flex-col gap-6">
+          {memberItems.length > 0 ? (
+            // TODO: Sort by "createdAt property"
+            memberItems
+          ) : (
+            <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
+              <h4 className="text-2xl border-b-2 border-quad pb-4">
+                You haven't added any members
+              </h4>
+              <p className="text-sm">
+                💡 Click the Add member text below to start adding members to
+                your family or friend group
+              </p>
+            </div>
+          )}
+        </div>
+      ) : (
+        <h3>Loading...</h3>
+      )}
       <CreateMember updateMembers={setMemberState} members={members} />
     </div>
   )
