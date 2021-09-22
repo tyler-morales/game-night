@@ -10,15 +10,12 @@ import { listMembers } from '../../graphql/queries'
 import { updateMember, deleteMember } from '../../graphql/mutations'
 
 import { MemberItem } from './MemberItem'
-
-import '../../Spinner.css'
+import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
 export const Members = () => {
   const [memberName, setMemberName] = useState('')
   const [loading, updateLoading] = useState(true)
   const [members, updateMembers] = useState([])
-  // eslint-disable-next-line no-unused-vars
-  const [myMembers, updateMyMembers] = useState([])
 
   /* fetch members when component loads */
   useEffect(() => {
@@ -26,7 +23,7 @@ export const Members = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  async function fetchMembers(index) {
+  const fetchMembers = async (index) => {
     try {
       /* query the API, ask for 100 items */
       let memberData = await API.graphql({
@@ -47,11 +44,11 @@ export const Members = () => {
     }
   }
 
-  async function setFilteredMembers(allMembers) {
+  const setFilteredMembers = async (allMembers) => {
     const { username } = await Auth.currentAuthenticatedUser()
     const myMemberData = allMembers.filter((p) => p.owner === username)
 
-    updateMyMembers(myMemberData)
+    // updateMyMembers(myMemberData)
     updateMembers(myMemberData)
   }
 
@@ -98,8 +95,6 @@ export const Members = () => {
       })
 
       fetchMembers(index)
-      // new_deleting_member_state[index] = false
-      console.log('Member Deleted Succesfully')
     } catch (err) {
       console.log(err)
     }
@@ -137,7 +132,6 @@ export const Members = () => {
       })
 
       fetchMembers()
-      console.log('Member name udpated Succesfully')
     } catch (err) {
       console.log(err)
     }
@@ -184,10 +178,7 @@ export const Members = () => {
           <CreateMember updateMembers={setFilteredMembers} members={members} />
         </>
       ) : (
-        <div className="lds-ripple">
-          <div></div>
-          <div></div>
-        </div>
+        <LoadingRipple />
       )}
     </div>
   )
