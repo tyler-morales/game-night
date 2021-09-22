@@ -26,7 +26,7 @@ export const Members = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  async function fetchMembers() {
+  async function fetchMembers(index) {
     try {
       /* query the API, ask for 100 items */
       let memberData = await API.graphql({
@@ -35,77 +35,95 @@ export const Members = () => {
       })
 
       updateLoading(false)
+      handleIndividualOperation(index, false, 'DELETE_MEMBER')
+      handleIndividualOperation(index, false, 'UPDATE_NAME')
 
       let allMembers = memberData.data.listMembers.items
 
       /* update the members array in the local state */
-      setMemberState(allMembers)
+      setFilteredMembers(allMembers)
     } catch (err) {
       console.log(err)
     }
   }
 
-  async function setMemberState(allMembers) {
+  async function setFilteredMembers(allMembers) {
     const { username } = await Auth.currentAuthenticatedUser()
     const myMemberData = allMembers.filter((p) => p.owner === username)
-
-    console.log(username)
-    console.log('Members Array', allMembers)
-    console.log('Member Data', myMemberData)
 
     updateMyMembers(myMemberData)
     updateMembers(myMemberData)
   }
 
+  // Editing member name state
   const [editingMemberName, setEditingMemberName] = useState(
     members.map(() => false)
   )
 
+  // Deleting member state
   const [deletingMember, setDeletingMember] = useState(members.map(() => false))
+
+  // Updating member name state
+  const [updatingMemberName, setUpdatingMemberName] = useState(
+    members.map(() => false)
+  )
+
+  const handleIndividualOperation = async (index, state, operation) => {
+    let newState = members.map(() => false)
+    newState[index] = state
+    console.log(operation)
+
+    switch (operation) {
+      case 'EDIT_NAME':
+        setEditingMemberName(newState)
+        break
+      case 'DELETE_MEMBER':
+        setDeletingMember(newState)
+        break
+      case 'UPDATE_NAME':
+        setUpdatingMemberName(newState)
+        break
+      default:
+        return
+    }
+  }
 
   // Delete member
   const destroyMember = async (id, index) => {
-    let new_deleting_member_state = members.map(() => false)
-    new_deleting_member_state[index] = true
-    setDeletingMember(new_deleting_member_state)
-
     try {
+      handleIndividualOperation(index, true, 'DELETE_MEMBER')
       await API.graphql({
         query: deleteMember,
         variables: { input: { id } },
       })
 
-      fetchMembers()
-      new_deleting_member_state[index] = false
+      fetchMembers(index)
+      // new_deleting_member_state[index] = false
       console.log('Member Deleted Succesfully')
     } catch (err) {
       console.log(err)
     }
   }
 
+  // Helper fn: Get user's input data
   const handleChangeName = (e) => {
     setMemberName(e.target.value)
   }
 
-  // Update member name
+  // UPDATE member name
   const editMemberName = async (_, index) => {
-    let new_editing_members_state = members.map(() => false)
-    new_editing_members_state[index] = true
-    setEditingMemberName(new_editing_members_state)
+    handleIndividualOperation(index, true, 'EDIT_NAME')
   }
 
-  // Cancel editing mode
+  // CANCEL editing mode
   const cancelEditMemberName = async (_, index) => {
-    let new_editing_members_state = members.map(() => false)
-    new_editing_members_state[index] = false
-    setEditingMemberName(new_editing_members_state)
+    handleIndividualOperation(index, false, 'EDIT_NAME')
   }
 
   // UPDATE name in database
   const updateMemberName = async (index, id) => {
-    let new_editing_members_state = members.map(() => false)
-    new_editing_members_state[index] = false
-    setEditingMemberName(new_editing_members_state)
+    handleIndividualOperation(index, false, 'EDIT_NAME')
+    handleIndividualOperation(index, true, 'UPDATE_NAME')
 
     try {
       await API.graphql({
@@ -138,6 +156,7 @@ export const Members = () => {
         cancelEditMemberName={cancelEditMemberName}
         destroyMember={destroyMember}
         deletingMember={deletingMember}
+        updatingMemberName={updatingMemberName}
       />
     )
   })
@@ -162,7 +181,7 @@ export const Members = () => {
               </div>
             )}
           </div>
-          <CreateMember updateMembers={setMemberState} members={members} />
+          <CreateMember updateMembers={setFilteredMembers} members={members} />
         </>
       ) : (
         <div className="lds-ripple">

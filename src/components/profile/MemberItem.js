@@ -13,6 +13,7 @@ export const MemberItem = ({
   cancelEditMemberName,
   destroyMember,
   deletingMember,
+  updatingMemberName,
 }) => {
   const UpdateNameBtn = () => {
     return (
@@ -62,6 +63,8 @@ export const MemberItem = ({
     <div className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg">
       {deletingMember[index] ? (
         <p className="text-sm">Deleting {member.name}...</p>
+      ) : updatingMemberName[index] ? (
+        <p className="text-sm">Updating...</p>
       ) : (
         <div className="flex items-center gap-4 w-full">
           {editingMemberName[index] ? (
