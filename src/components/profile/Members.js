@@ -76,6 +76,7 @@ export const Members = () => {
       })
 
       fetchMembers()
+      new_deleting_member_state[index] = false
       console.log('Member Deleted Succesfully')
     } catch (err) {
       console.log(err)
