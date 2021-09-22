@@ -67,7 +67,7 @@ export const Members = () => {
   const handleIndividualOperation = async (index, state, operation) => {
     let newState = members.map(() => false)
     newState[index] = state
-    console.log(operation)
+    // console.log(operation)
 
     switch (operation) {
       case 'EDIT_NAME':
@@ -101,7 +101,7 @@ export const Members = () => {
 
   // Helper fn: Get user's input data
   const handleChangeName = (e) => {
-    setMemberName(e.target.value)
+    if (e.target.value.length > 0) setMemberName(e.target.value.trim())
   }
 
   // UPDATE member name
@@ -116,23 +116,34 @@ export const Members = () => {
 
   // UPDATE name in database
   const updateMemberName = async (index, id) => {
-    handleIndividualOperation(index, false, 'EDIT_NAME')
-    handleIndividualOperation(index, true, 'UPDATE_NAME')
+    console.log({
+      new: memberName,
+      old: members[index].name,
+      length: memberName.length,
+    })
 
-    try {
-      await API.graphql({
-        query: updateMember,
-        variables: {
-          input: {
-            id,
-            name: memberName,
+    if (memberName !== members[index].name && memberName !== '') {
+      handleIndividualOperation(index, false, 'EDIT_NAME')
+      handleIndividualOperation(index, true, 'UPDATE_NAME')
+
+      try {
+        await API.graphql({
+          query: updateMember,
+          variables: {
+            input: {
+              id,
+              name: memberName,
+            },
           },
-        },
-      })
+        })
 
-      fetchMembers()
-    } catch (err) {
-      console.error(err)
+        fetchMembers()
+      } catch (err) {
+        console.error(err)
+      }
+    } else {
+      // TODO: Create an alert (modal, dialogue etc...)
+      alert(`Input field can't be empty: Either enter a new name or cancel`)
     }
   }
 
