@@ -7,6 +7,7 @@ export const getMember = /* GraphQL */ `
       id
       name
       owner
+      type
       createdAt
       updatedAt
     }
@@ -23,6 +24,36 @@ export const listMembers = /* GraphQL */ `
         id
         name
         owner
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const membersByDate = /* GraphQL */ `
+  query MembersByDate(
+    $type: String
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMemberFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    membersByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        owner
+        type
         createdAt
         updatedAt
       }

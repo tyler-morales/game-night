@@ -22,7 +22,6 @@ export const CreateMember = ({ updateMembers, members }) => {
       ...currentState,
       [e.target.name]: e.target.value,
     }))
-    console.log(formState)
   }
 
   /* 3. Upload member to db*/
@@ -39,6 +38,7 @@ export const CreateMember = ({ updateMembers, members }) => {
         name,
         id: memberId,
         owner: username,
+        type: 'Member',
       }
 
       await API.graphql({
@@ -47,14 +47,12 @@ export const CreateMember = ({ updateMembers, members }) => {
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
 
-      // const { username } = await Auth.currentAuthenticatedUser()
       updateMembers([...members, { ...memberInfo, owner: username }])
       updateFormState((currentState) => ({ ...currentState, saving: false }))
       updateFormState(initialState)
       setToggleModal(false)
-      // updateOverlayVisibility(false)
     } catch (err) {
-      console.log('error: ', err)
+      console.error(err)
     }
   }
 

@@ -5,8 +5,8 @@ import { CreateMember } from './CreateMember'
 // import API from Amplify library
 import { API, Auth } from 'aws-amplify'
 
-// import query definition
-import { listMembers } from '../../graphql/queries'
+// import all members by 'createdAt'
+import { membersByDate } from '../../graphql/queries'
 import { updateMember, deleteMember } from '../../graphql/mutations'
 
 import { MemberItem } from './MemberItem'
@@ -25,22 +25,21 @@ export const Members = () => {
 
   const fetchMembers = async (index) => {
     try {
-      /* query the API, ask for 100 items */
       let memberData = await API.graphql({
-        query: listMembers,
-        variables: { limit: 100 },
+        query: membersByDate,
+        variables: { limit: 100, type: 'Member', sortDirection: 'ASC' },
       })
 
       updateLoading(false)
       handleIndividualOperation(index, false, 'DELETE_MEMBER')
       handleIndividualOperation(index, false, 'UPDATE_NAME')
 
-      let allMembers = memberData.data.listMembers.items
+      let allMembers = memberData.data.membersByDate.items
 
       /* update the members array in the local state */
       setFilteredMembers(allMembers)
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -96,7 +95,7 @@ export const Members = () => {
 
       fetchMembers(index)
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -133,7 +132,7 @@ export const Members = () => {
 
       fetchMembers()
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -161,7 +160,6 @@ export const Members = () => {
         <>
           <div className="flex flex-col gap-6">
             {memberItems.length > 0 ? (
-              // TODO: Sort by "createdAt property"
               memberItems
             ) : (
               <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">

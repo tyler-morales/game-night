@@ -7,6 +7,7 @@ export const onCreateMember = /* GraphQL */ `
       id
       name
       owner
+      type
       createdAt
       updatedAt
     }
@@ -18,6 +19,7 @@ export const onUpdateMember = /* GraphQL */ `
       id
       name
       owner
+      type
       createdAt
       updatedAt
     }
@@ -29,6 +31,7 @@ export const onDeleteMember = /* GraphQL */ `
       id
       name
       owner
+      type
       createdAt
       updatedAt
     }

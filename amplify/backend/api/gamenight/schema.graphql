@@ -1,5 +1,10 @@
 type Member
   @model
+  @key(
+    name: "membersByDate"
+    fields: ["type", "createdAt"]
+    queryField: "membersByDate"
+  )
   @auth(
     rules: [
       { allow: owner }
@@ -10,4 +15,6 @@ type Member
   id: ID!
   name: String!
   owner: String!
+  type: String!
+  createdAt: String!
 }
