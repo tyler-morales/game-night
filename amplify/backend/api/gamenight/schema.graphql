@@ -2,8 +2,9 @@ type Member
   @model
   @auth(
     rules: [
-      { allow: owner, operations: [create, update, delete, read] }
-      # { allow: private, operations: [create, update, delete, read] }
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
     ]
   ) {
   id: ID!

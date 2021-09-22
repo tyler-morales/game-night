@@ -36,18 +36,25 @@ export const Members = () => {
 
       updateLoading(false)
 
-      let membersArray = memberData.data.listMembers.items
+      let allMembers = memberData.data.listMembers.items
 
       /* update the members array in the local state */
-      setMemberState(membersArray)
-    } catch (err) {}
+      setMemberState(allMembers)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  async function setMemberState(membersArray) {
-    const user = await Auth.currentAuthenticatedUser()
-    const myMemberData = membersArray.filter((p) => p.owner === user.username)
+  async function setMemberState(allMembers) {
+    const { username } = await Auth.currentAuthenticatedUser()
+    const myMemberData = allMembers.filter((p) => p.owner === username)
+
+    console.log(username)
+    console.log('Members Array', allMembers)
+    console.log('Member Data', myMemberData)
+
     updateMyMembers(myMemberData)
-    updateMembers(membersArray)
+    updateMembers(myMemberData)
   }
 
   const [editingMemberName, setEditingMemberName] = useState(
