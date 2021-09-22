@@ -20,32 +20,32 @@ export const Members = () => {
   // eslint-disable-next-line no-unused-vars
   const [myMembers, updateMyMembers] = useState([])
 
-  /* fetch member's when component loads */
+  /* fetch members when component loads */
   useEffect(() => {
     fetchMembers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   async function fetchMembers() {
-    /* query the API, ask for 100 items */
-    let memberData = await API.graphql({
-      query: listMembers,
-      variables: { limit: 100 },
-    })
-    updateLoading(false)
+    try {
+      /* query the API, ask for 100 items */
+      let memberData = await API.graphql({
+        query: listMembers,
+        variables: { limit: 100 },
+      })
 
-    let membersArray = memberData.data.listMembers.items
-    /* map over the image keys in the members array, get signed image URLs for each image */
-    membersArray = await Promise.all(membersArray.map(async (member) => member))
+      updateLoading(false)
 
-    /* update the members array in the local state */
-    setMemberState(membersArray)
+      let membersArray = memberData.data.listMembers.items
+
+      /* update the members array in the local state */
+      setMemberState(membersArray)
+    } catch (err) {}
   }
 
   async function setMemberState(membersArray) {
     const user = await Auth.currentAuthenticatedUser()
     const myMemberData = membersArray.filter((p) => p.owner === user.username)
-    console.log('membersArray:', membersArray)
     updateMyMembers(myMemberData)
     updateMembers(membersArray)
   }

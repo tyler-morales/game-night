@@ -32,20 +32,22 @@ export const CreateMember = ({ updateMembers, members }) => {
     try {
       const { name } = formState
       if (!name) return
+      const { username } = await Auth.currentAuthenticatedUser()
       updateFormState((currentState) => ({ ...currentState, saving: true }))
       const memberId = uuid()
       const memberInfo = {
         name,
         id: memberId,
+        owner: username,
       }
 
       await API.graphql({
         query: createMember,
         variables: { input: memberInfo },
-        // authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
 
-      const { username } = await Auth.currentAuthenticatedUser()
+      // const { username } = await Auth.currentAuthenticatedUser()
       updateMembers([...members, { ...memberInfo, owner: username }])
       updateFormState((currentState) => ({ ...currentState, saving: false }))
       updateFormState(initialState)

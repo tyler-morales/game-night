@@ -1,5 +1,12 @@
-type Member @model {
+type Member
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, update, delete, read] }
+      # { allow: private, operations: [create, update, delete, read] }
+    ]
+  ) {
   id: ID!
-  name: String
-  owner: String
+  name: String!
+  owner: String!
 }
