@@ -1,18 +1,9 @@
-import { useEffect } from 'react'
-// import { stateLogger } from '../../stateLogger'
-// import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import './styles.css'
 
 const Backdrop = ({ children, onClick }) => {
-  // Log state
-  useEffect(() => {
-    // stateLogger('Backdrop', true)
-    // return () => stateLogger('Backdrop', false)
-  }, [])
-
   return (
-    // <motion.div
-    <div
+    <motion.div
       className="backdrop"
       onClick={onClick}
       initial={{ opacity: 0 }}
@@ -20,8 +11,7 @@ const Backdrop = ({ children, onClick }) => {
       exit={{ opacity: 0 }}
     >
       {children}
-    </div>
-    // {</motion.div>}
+    </motion.div>
   )
 }
 

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { API, Auth } from 'aws-amplify'
+import { AnimatePresence } from 'framer-motion'
+
 import { createMember } from '../../graphql/mutations'
 
 import useModal from '../../hooks/useModal'
 import Modal from '../../components/global/modal/Modal'
-
-// import { BsFillPersonPlusFill } from 'react-icons/bs'
 
 const initialState = {
   name: '',
@@ -17,7 +17,6 @@ export const CreateMember = ({ updateMembers, members }) => {
   // Modal state
   const { modalOpen, close, open } = useModal()
 
-  // const [toggleModal, setToggleModal] = useState(false)
   /* 1. Create local state with useState hook */
   const [formState, updateFormState] = useState(initialState)
 
@@ -65,15 +64,17 @@ export const CreateMember = ({ updateMembers, members }) => {
 
   return (
     <>
-      {modalOpen && (
-        <Modal
-          modalOpen={modalOpen}
-          handleClose={close}
-          addMember={addMember}
-          onChangeText={onChangeText}
-          formState={formState}
-        />
-      )}
+      <AnimatePresence initial={false} exitBeforeEnter={true}>
+        {modalOpen && (
+          <Modal
+            modalOpen={modalOpen}
+            handleClose={close}
+            addMember={addMember}
+            onChangeText={onChangeText}
+            formState={formState}
+          />
+        )}
+      </AnimatePresence>
 
       <button
         onClick={open}
