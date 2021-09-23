@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 
 import { CreateGame } from './CreateGame'
 
+import { motion } from 'framer-motion'
+
 // import API from Amplify library
 import { API, Auth } from 'aws-amplify'
 
@@ -47,14 +49,11 @@ export const Games = () => {
     const { username } = await Auth.currentAuthenticatedUser()
     const myGameData = allGames.filter((p) => p.owner === username)
 
-    // updateMyGames(myGameData)
     updateGames(myGameData)
   }
 
   // Editing game name state
-  const [editingGameName, setEditingGameName] = useState(
-    games.map(() => false)
-  )
+  const [editingGameName, setEditingGameName] = useState(games.map(() => false))
 
   // Deleting game state
   const [deletingGame, setDeletingGame] = useState(games.map(() => false))
@@ -67,7 +66,6 @@ export const Games = () => {
   const handleIndividualOperation = async (index, state, operation) => {
     let newState = games.map(() => false)
     newState[index] = state
-    // console.log(operation)
 
     switch (operation) {
       case 'EDIT_NAME':
@@ -147,29 +145,43 @@ export const Games = () => {
     }
   }
 
-  const gameItems = games.map((game, index) => {
-    return (
-      <GameItem
-        key={index}
-        game={game}
-        index={index}
-        editingGameName={editingGameName}
-        editGameName={editGameName}
-        handleChangeName={handleChangeName}
-        updateGameName={updateGameName}
-        cancelEditGameName={cancelEditGameName}
-        destroyGame={destroyGame}
-        deletingGame={deletingGame}
-        updatingGameName={updatingGameName}
-      />
-    )
-  })
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.5,
+      },
+    },
+  }
+
+  const gameItems = games.map((game, index) => (
+    <GameItem
+      key={index}
+      game={game}
+      index={index}
+      editingGameName={editingGameName}
+      editGameName={editGameName}
+      handleChangeName={handleChangeName}
+      updateGameName={updateGameName}
+      cancelEditGameName={cancelEditGameName}
+      destroyGame={destroyGame}
+      deletingGame={deletingGame}
+      updatingGameName={updatingGameName}
+    />
+  ))
+
   return (
     <div>
       <h2 className="text-white text-2xl text-left mb-5">Games</h2>
       {!loading ? (
         <>
-          <div className="flex flex-col gap-6">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col gap-6"
+          >
             {gameItems.length > 0 ? (
               gameItems
             ) : (
@@ -178,12 +190,12 @@ export const Games = () => {
                   You haven't added any games
                 </h4>
                 <p className="text-sm">
-                  💡 Click the Add game text below to start adding games to
-                  your family or friend group
+                  💡 Click the Add game text below to start adding games to your
+                  family or friend group
                 </p>
               </div>
             )}
-          </div>
+          </motion.div>
           <CreateGame updateGames={setFilteredGames} games={games} />
         </>
       ) : (

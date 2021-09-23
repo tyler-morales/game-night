@@ -41,8 +41,6 @@ const Modal = ({
         exit="exit"
       >
         <div className="flex flex-col gap-3 bg-primary rounded-lg p-3 text-left">
-          {/* <ModalTitle type={type} /> */}
-
           {type === 'ADD_MEMBER' ? (
             <>
               <div className="flex items-center gap-4">
@@ -64,7 +62,7 @@ const Modal = ({
                   />
                 </div>
                 <div className="flex gap-5 mt-8">
-                  <ModalButton onClick={handleClose} label="Close" />
+                  <ModalCloseButton onClick={handleClose} label="Close" />
                   <button className="w-full transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary">
                     Add Member
                   </button>
@@ -92,7 +90,7 @@ const Modal = ({
                   />
                 </div>
                 <div className="flex gap-5 mt-8">
-                  <ModalButton onClick={handleClose} label="Close" />
+                  <ModalCloseButton onClick={handleClose} label="Close" />
                   <button className="w-full transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary">
                     Add Game
                   </button>
@@ -110,23 +108,7 @@ const Modal = ({
   )
 }
 
-// const ModalTitle = (type) => (
-//   <div className="flex items-center gap-4">
-//     {type === 'ADD_MEMBER' ? (
-//       <>
-//         <BsFillPersonPlusFill size=".75em" />
-//         <h3 className="text-2xl">Add Member</h3>
-//       </>
-//     ) : (
-//       <>
-//         <FaChessQueen size=".75em" />
-//         <h3 className="text-2xl">Add Game</h3>
-//       </>
-//     )}
-//   </div>
-// )
-
-const ModalButton = ({ onClick, label }) => (
+const ModalCloseButton = ({ onClick, label }) => (
   <button
     className="transition-all ring-offset-primary ring-offset-2 focus:ring-error focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 bg-error"
     type="button"

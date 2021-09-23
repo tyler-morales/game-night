@@ -1,3 +1,5 @@
+import { motion, AnimatePresence } from 'framer-motion'
+
 import { FiTool } from 'react-icons/fi'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { CgCheckO } from 'react-icons/cg'
@@ -15,6 +17,7 @@ export const GameItem = ({
   deletingGame,
   updatingGameName,
 }) => {
+  console.log(index, (index + 1) * 100)
   const UpdateNameBtn = () => {
     return (
       <button
@@ -59,8 +62,16 @@ export const GameItem = ({
     )
   }
 
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+  }
+
   return (
-    <div className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg">
+    <motion.div
+      variants={item}
+      className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg"
+    >
       {deletingGame[index] ? (
         <p className="text-sm">Deleting {game.name}...</p>
       ) : updatingGameName[index] ? (
@@ -89,6 +100,6 @@ export const GameItem = ({
         {editingGameName[index] ? <UpdateNameBtn /> : <EditNameBtn />}
         {editingGameName[index] ? <CancelEditBtn /> : <DeleteGameBtn />}
       </div>
-    </div>
+    </motion.div>
   )
 }
