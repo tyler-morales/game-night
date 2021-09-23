@@ -3,6 +3,8 @@ import { RiDeleteBinLine } from 'react-icons/ri'
 import { CgCheckO } from 'react-icons/cg'
 import { GiCancel } from 'react-icons/gi'
 
+import { motion } from 'framer-motion'
+
 export const GameItem = ({
   game,
   index,
@@ -58,9 +60,19 @@ export const GameItem = ({
       </button>
     )
   }
-
   return (
-    <div className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{
+        type: 'spring',
+        velocity: 4,
+        delay: index / 5,
+        stiffness: 50,
+      }}
+      className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg"
+    >
       {deletingGame[index] ? (
         <p className="text-sm">Deleting {game.name}...</p>
       ) : updatingGameName[index] ? (
@@ -89,6 +101,6 @@ export const GameItem = ({
         {editingGameName[index] ? <UpdateNameBtn /> : <EditNameBtn />}
         {editingGameName[index] ? <CancelEditBtn /> : <DeleteGameBtn />}
       </div>
-    </div>
+    </motion.div>
   )
 }

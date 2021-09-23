@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 
 import { CreateGame } from './CreateGame'
 
-import { motion } from 'framer-motion'
-
 // import API from Amplify library
 import { API, Auth } from 'aws-amplify'
 

@@ -3,6 +3,8 @@ import { RiDeleteBinLine } from 'react-icons/ri'
 import { CgCheckO } from 'react-icons/cg'
 import { GiCancel } from 'react-icons/gi'
 
+import { motion } from 'framer-motion'
+
 export const MemberItem = ({
   member,
   index,
@@ -60,7 +62,18 @@ export const MemberItem = ({
   }
 
   return (
-    <div className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{
+        type: 'spring',
+        velocity: 4,
+        delay: index / 5,
+        stiffness: 50,
+      }}
+      className="flex justify-between bg-primary p-4 items-center text-left rounded-lg border-2 border-white shadow-lg"
+    >
       {deletingMember[index] ? (
         <p className="text-sm">Deleting {member.name}...</p>
       ) : updatingMemberName[index] ? (
@@ -89,6 +102,6 @@ export const MemberItem = ({
         {editingMemberName[index] ? <UpdateNameBtn /> : <EditNameBtn />}
         {editingMemberName[index] ? <CancelEditBtn /> : <DeleteMemberBtn />}
       </div>
-    </div>
+    </motion.div>
   )
 }
