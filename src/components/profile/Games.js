@@ -145,16 +145,6 @@ export const Games = () => {
     }
   }
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.5,
-      },
-    },
-  }
-
   const gameItems = games.map((game, index) => (
     <GameItem
       key={index}
@@ -176,12 +166,7 @@ export const Games = () => {
       <h2 className="text-white text-2xl text-left mb-5">Games</h2>
       {!loading ? (
         <>
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="flex flex-col gap-6"
-          >
+          <div className="flex flex-col gap-6">
             {gameItems.length > 0 ? (
               gameItems
             ) : (
@@ -195,7 +180,7 @@ export const Games = () => {
                 </p>
               </div>
             )}
-          </motion.div>
+          </div>
           <CreateGame updateGames={setFilteredGames} games={games} />
         </>
       ) : (
