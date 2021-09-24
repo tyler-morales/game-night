@@ -8,6 +8,10 @@
   --color-error: #ff3456;
 }
 
+body {
+  background-color: var(--color-primary);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
