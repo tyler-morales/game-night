@@ -73,7 +73,7 @@ function RecordGame() {
               What did you play?
             </label>
             <select
-              className="mt-3 bg-quad rounded-md text-base text-primary py-2 px-4"
+              className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 mt-3 bg-quad rounded-md text-base text-primary py-2 px-4"
               name="games"
               id="game-select"
             >
