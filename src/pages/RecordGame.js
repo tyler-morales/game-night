@@ -6,9 +6,38 @@ import protectedRoute from './protectedRoute'
 
 import { listGames } from '../graphql/queries'
 
+import './checkbox.css'
+
+const loadedPlayers = [
+  { name: 'Pupa' },
+  { name: 'Korvo' },
+  { name: 'Jesse' },
+  { name: 'Terry' },
+  { name: 'Gobblins' },
+]
+
 function RecordGame() {
   const [games, updateGames] = useState([])
   const [loading, updateLoading] = useState(true)
+
+  const [checkedState, setCheckedState] = useState(
+    new Array(loadedPlayers.length).fill(false)
+  )
+
+  let playingPlayers = []
+  for (var index in checkedState) {
+    if (checkedState[index] === true) {
+      playingPlayers.push(loadedPlayers[index])
+    }
+  }
+
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((player, index) =>
+      index === position ? !player : player
+    )
+
+    setCheckedState(updatedCheckedState)
+  }
 
   useEffect(() => {
     // checkUser()
@@ -24,14 +53,9 @@ function RecordGame() {
       })
 
       updateLoading(false)
-      // handleIndividualOperation(index, false, 'DELETE_MEMBER')
-      // handleIndividualOperation(index, false, 'UPDATE_NAME')
 
       let allGames = gameData.data.listGames.items
       setFilteredGames(allGames)
-
-      /* update the games array in the local state */
-      // setFilteredGames(allGames)
     } catch (err) {
       console.error(err)
     }
@@ -43,18 +67,6 @@ function RecordGame() {
 
     updateGames(myGameData)
   }
-
-  // const [user, setUser] = useState(null)
-
-  // async function checkUser() {
-  //   try {
-  //     const data = await Auth.currentUserPoolUser()
-  //     const userInfo = { username: data.username, ...data.attributes }
-  //     setUser(userInfo)
-  //   } catch (err) {
-  //     console.log('error: ', err)
-  //   }
-  // }
 
   const gamesOptions = games.map((game, index) => (
     <option key={index} value={game.name} className="rounded-md">
@@ -87,19 +99,32 @@ function RecordGame() {
             <label className=" text-lg text-left" htmlFor="players">
               Who Played?
             </label>
-            <div className="flex wrap gap-4 mt-3">
-              <div className="flex gap-2">
-                <input type="checkbox" id="pupa" name="pupa" />
-                <label className="text-base" htmlFor="pupa">
-                  Pupa
-                </label>
-              </div>
-              <div className="flex gap-2">
-                <input type="checkbox" id="korvo" name="korvo" />
-                <label className="text-base" htmlFor="korvo">
-                  Korvo
-                </label>
-              </div>
+            <div className="flex flex-wrap gap-4 mt-3">
+              {loadedPlayers.map((player, index) => {
+                return (
+                  <div key={index} className="flex gap-2">
+                    <label htmlFor={player.name} className="cursor-pointer">
+                      <input
+                        type="checkbox"
+                        id={player.name}
+                        name={player.name}
+                        checked={checkedState[index]}
+                        onChange={() => handleOnChange(index)}
+                        className="opacity-0 cursor-pointer hidden"
+                      />
+                      <span
+                        className={`py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
+                          checkedState[index]
+                            ? 'bg-quad text-primary'
+                            : 'bg-transparent'
+                        }`}
+                      >
+                        {player.name}
+                      </span>
+                    </label>
+                  </div>
+                )
+              })}
             </div>
           </div>
 
