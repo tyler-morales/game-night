@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { API, Auth } from 'aws-amplify'
+import React, { useState } from 'react'
 import { Dashboard } from '../layout/Dashboard'
 
 import useLoadMembers from '../hooks/useLoadMembers'
-import protectedRoute from './protectedRoute'
+import useLoadGames from '../hooks/useLoadGames'
 
-import { listGames } from '../graphql/queries'
+import protectedRoute from './protectedRoute'
 
 function RecordGame() {
   const dummyPlayers = [
@@ -17,10 +16,10 @@ function RecordGame() {
   ]
 
   const { members } = useLoadMembers()
+  const { games } = useLoadGames()
 
-  console.log(members)
-  const [games, updateGames] = useState([])
-  const [loading, updateLoading] = useState(true)
+  console.log(typeof members)
+  // const [loading, updateLoading] = useState(true)
 
   const [checkedState, setCheckedState] = useState(
     new Array(dummyPlayers.length).fill(false)
@@ -33,7 +32,7 @@ function RecordGame() {
     }
   }
 
-  console.log(playingPlayers)
+  console.log('Players: ' + playingPlayers)
 
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((player, index) =>
@@ -41,35 +40,6 @@ function RecordGame() {
     )
 
     setCheckedState(updatedCheckedState)
-  }
-
-  useEffect(() => {
-    // checkUser()
-    fetchGames()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const fetchGames = async () => {
-    try {
-      let gameData = await API.graphql({
-        query: listGames,
-        variables: { limit: 100 },
-      })
-
-      updateLoading(false)
-
-      let allGames = gameData.data.listGames.items
-      setFilteredGames(allGames)
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  const setFilteredGames = async (allGames) => {
-    const { username } = await Auth.currentAuthenticatedUser()
-    const myGameData = allGames.filter((p) => p.owner === username)
-
-    updateGames(myGameData)
   }
 
   // Rendered elements
@@ -118,7 +88,8 @@ function RecordGame() {
               name="games"
               id="game-select"
             >
-              <option value="">{loading ? 'Loading' : 'Select Game'}</option>
+              <option value="">Select Game</option>
+              {/* <option value="">{loading ? 'Loading' : 'Select Game'}</option> */}
               {gamesOptions}
             </select>
           </div>
