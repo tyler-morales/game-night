@@ -2,32 +2,38 @@ import React, { useState, useEffect } from 'react'
 import { API, Auth } from 'aws-amplify'
 import { Dashboard } from '../layout/Dashboard'
 
+import useLoadMembers from '../hooks/useLoadMembers'
 import protectedRoute from './protectedRoute'
 
 import { listGames } from '../graphql/queries'
 
-const loadedPlayers = [
-  { name: 'Pupa' },
-  { name: 'Korvo' },
-  { name: 'Jesse' },
-  { name: 'Terry' },
-  { name: 'Gobblins' },
-]
-
 function RecordGame() {
+  const dummyPlayers = [
+    { name: 'Pupa' },
+    { name: 'Korvo' },
+    { name: 'Jesse' },
+    { name: 'Terry' },
+    { name: 'Gobblins' },
+  ]
+
+  const { members } = useLoadMembers()
+
+  console.log(members)
   const [games, updateGames] = useState([])
   const [loading, updateLoading] = useState(true)
 
   const [checkedState, setCheckedState] = useState(
-    new Array(loadedPlayers.length).fill(false)
+    new Array(dummyPlayers.length).fill(false)
   )
 
   let playingPlayers = []
   for (var index in checkedState) {
     if (checkedState[index] === true) {
-      playingPlayers.push(loadedPlayers[index])
+      playingPlayers.push(dummyPlayers[index])
     }
   }
+
+  console.log(playingPlayers)
 
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((player, index) =>
@@ -73,7 +79,7 @@ function RecordGame() {
     </option>
   ))
 
-  const playerCheckboxes = loadedPlayers.map((player, index) => {
+  const playerCheckboxes = dummyPlayers.map((player, index) => {
     return (
       <div key={index} className="flex gap-2">
         <label htmlFor={player.name} className="cursor-pointer">
