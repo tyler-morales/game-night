@@ -3,7 +3,7 @@ import { API, Auth } from 'aws-amplify'
 import { listGames } from '../graphql/queries'
 
 // Centralizes modal control
-const useLoadGames = () => {
+const useLoadGames = (updateLoading) => {
   const [games, updateGames] = useState([])
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const useLoadGames = () => {
         variables: { limit: 100 },
       })
 
-      // updateLoading(false)
+      updateLoading(false)
 
       let allGames = gameData.data.listGames.items
       setFilteredGames(allGames)

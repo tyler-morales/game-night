@@ -3,7 +3,7 @@ import { API, Auth } from 'aws-amplify'
 import { listMembers } from '../graphql/queries'
 
 // Centralizes modal control
-const useLoadMembers = () => {
+const useLoadMembers = (updateLoading) => {
   const [members, updateMembers] = useState([])
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const useLoadMembers = () => {
         variables: { limit: 100 },
       })
 
-      // updateLoading(false)
+      updateLoading(false)
 
       let allMembers = memberData.data.listMembers.items
       setFilteredMembers(allMembers)
