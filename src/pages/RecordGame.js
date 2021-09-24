@@ -8,6 +8,7 @@ import { listGames } from '../graphql/queries'
 
 function RecordGame() {
   const [games, updateGames] = useState([])
+  const [loading, updateLoading] = useState(true)
 
   useEffect(() => {
     // checkUser()
@@ -22,7 +23,7 @@ function RecordGame() {
         variables: { limit: 100 },
       })
 
-      // updateLoading(false)
+      updateLoading(false)
       // handleIndividualOperation(index, false, 'DELETE_MEMBER')
       // handleIndividualOperation(index, false, 'UPDATE_NAME')
 
@@ -76,7 +77,7 @@ function RecordGame() {
               name="games"
               id="game-select"
             >
-              <option value="">Select Game</option>
+              <option value="">{loading ? 'Loading' : 'Select Game'}</option>
               {gamesOptions}
             </select>
           </div>
