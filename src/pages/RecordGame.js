@@ -6,8 +6,6 @@ import protectedRoute from './protectedRoute'
 
 import { listGames } from '../graphql/queries'
 
-import './checkbox.css'
-
 const loadedPlayers = [
   { name: 'Pupa' },
   { name: 'Korvo' },
