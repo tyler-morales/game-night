@@ -66,11 +66,36 @@ function RecordGame() {
     updateGames(myGameData)
   }
 
+  // Rendered elements
   const gamesOptions = games.map((game, index) => (
     <option key={index} value={game.name} className="rounded-md">
       {game.name}
     </option>
   ))
+
+  const playerCheckboxes = loadedPlayers.map((player, index) => {
+    return (
+      <div key={index} className="flex gap-2">
+        <label htmlFor={player.name} className="cursor-pointer">
+          <input
+            type="checkbox"
+            id={player.name}
+            name={player.name}
+            checked={checkedState[index]}
+            onChange={() => handleOnChange(index)}
+            className="opacity-0 cursor-pointer hidden"
+          />
+          <span
+            className={`py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
+              checkedState[index] ? 'bg-quad text-primary' : 'bg-transparent'
+            }`}
+          >
+            {player.name}
+          </span>
+        </label>
+      </div>
+    )
+  })
 
   return (
     <Dashboard>
@@ -97,33 +122,7 @@ function RecordGame() {
             <label className=" text-lg text-left" htmlFor="players">
               Who Played?
             </label>
-            <div className="flex flex-wrap gap-4 mt-3">
-              {loadedPlayers.map((player, index) => {
-                return (
-                  <div key={index} className="flex gap-2">
-                    <label htmlFor={player.name} className="cursor-pointer">
-                      <input
-                        type="checkbox"
-                        id={player.name}
-                        name={player.name}
-                        checked={checkedState[index]}
-                        onChange={() => handleOnChange(index)}
-                        className="opacity-0 cursor-pointer hidden"
-                      />
-                      <span
-                        className={`py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
-                          checkedState[index]
-                            ? 'bg-quad text-primary'
-                            : 'bg-transparent'
-                        }`}
-                      >
-                        {player.name}
-                      </span>
-                    </label>
-                  </div>
-                )
-              })}
-            </div>
+            <div className="flex flex-wrap gap-4 mt-3">{playerCheckboxes}</div>
           </div>
 
           {/* Winners */}
