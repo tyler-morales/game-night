@@ -18,3 +18,23 @@ type Member
   type: String!
   createdAt: String!
 }
+type Game
+  @model
+  @key(
+    name: "gamesByDate"
+    fields: ["type", "createdAt"]
+    queryField: "gamesByDate"
+  )
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  owner: String!
+  type: String!
+  createdAt: String!
+}

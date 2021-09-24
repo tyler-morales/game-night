@@ -3,17 +3,17 @@ import { v4 as uuid } from 'uuid'
 import { API, Auth } from 'aws-amplify'
 import { AnimatePresence } from 'framer-motion'
 
-import { createMember } from '../../graphql/mutations'
+import { createGame } from '../../graphql/mutations'
 
 import useModal from '../../hooks/useModal'
-import Modal from '../../components/global/modal/Modal'
+import Modal from '../global/modal/Modal'
 
 const initialState = {
   name: '',
   saving: false,
 }
 
-export const CreateMember = ({ updateMembers, members }) => {
+export const CreateGame = ({ updateGames, games }) => {
   // Modal state
   const { modalOpen, close, open } = useModal()
 
@@ -29,8 +29,8 @@ export const CreateMember = ({ updateMembers, members }) => {
     }))
   }
 
-  /* 3. Upload member to db*/
-  const addMember = async (e) => {
+  /* 3. Upload game to db*/
+  const addGame = async (e) => {
     e.preventDefault()
 
     try {
@@ -39,21 +39,21 @@ export const CreateMember = ({ updateMembers, members }) => {
       const { username } = await Auth.currentAuthenticatedUser()
       updateFormState((currentState) => ({ ...currentState, saving: true }))
 
-      const memberId = uuid()
-      const memberInfo = {
+      const gameId = uuid()
+      const gameInfo = {
         name,
-        id: memberId,
+        id: gameId,
         owner: username,
-        type: 'Member',
+        type: 'Game',
       }
 
       await API.graphql({
-        query: createMember,
-        variables: { input: memberInfo },
+        query: createGame,
+        variables: { input: gameInfo },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
 
-      updateMembers([...members, { ...memberInfo, owner: username }])
+      updateGames([...games, { ...gameInfo, owner: username }])
       updateFormState((currentState) => ({ ...currentState, saving: false }))
       updateFormState(initialState)
       close()
@@ -69,10 +69,10 @@ export const CreateMember = ({ updateMembers, members }) => {
           <Modal
             modalOpen={modalOpen}
             handleClose={close}
-            addMember={addMember}
+            addGame={addGame}
             onChangeText={onChangeText}
             formState={formState}
-            type="ADD_MEMBER"
+            type='ADD_GAME'
           />
         )}
       </AnimatePresence>
@@ -81,7 +81,7 @@ export const CreateMember = ({ updateMembers, members }) => {
         onClick={open}
         className="transition-all focus:ring-white focus:outline-none focus:ring-2 text-xs uppercase mt-6 py-2 px-4 rounded-sm"
       >
-        + Add a member
+        + Add a game
       </button>
     </>
   )
