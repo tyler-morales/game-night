@@ -19,21 +19,32 @@ function RecordGame() {
   const { user } = useUser()
 
   const [checkedStatus, setCheckedStatus] = useState(members.map(() => false))
+  const [checkedWinnerStatus, setCheckedWinnerStatus] = useState(
+    members.map(() => false)
+  )
 
-  const handleSetChecked = async (index) => {
+  const checkPlayers = async (index) => {
     let newState = [...checkedStatus] // make a copy of the current state of the checkedStatus
     newState[index] = !checkedStatus[index] // update the relevant index based on the previous state. If its checked, uncheck it and vice versa.
     setCheckedStatus(newState)
   }
-  console.log(checkedStatus)
 
-  // Rendered elements
+  const checkWinners = async (index) => {
+    let newState = [...checkedWinnerStatus]
+    newState[index] = !checkedWinnerStatus[index]
+    setCheckedWinnerStatus(newState)
+  }
+
+  console.log(checkedStatus, checkedWinnerStatus)
+
+  // Rendered Game Options
   const gamesOptions = games.map((game, index) => (
     <option key={index} value={game.name} className="rounded-md">
       {game.name}
     </option>
   ))
 
+  // Render All Players
   const playerCheckboxes = members.map((player, index) => {
     return (
       <div
@@ -43,7 +54,7 @@ function RecordGame() {
         <label htmlFor={player.name} className="cursor-pointer">
           <Field
             type="checkbox"
-            onClick={() => handleSetChecked(index)}
+            onClick={() => checkPlayers(index)}
             id={player.name}
             name="players"
             value={player.name}
@@ -52,6 +63,36 @@ function RecordGame() {
           <span
             className={`block h-full py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
               checkedStatus[index] ? 'bg-quad text-primary' : 'bg-transparent'
+            }`}
+          >
+            {player.name}
+          </span>
+        </label>
+      </div>
+    )
+  })
+
+  // Render All Possible winners
+  const winnerCheckboxes = members.map((player, index) => {
+    return (
+      <div
+        key={index}
+        className="rounded-md ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 flex gap-2"
+      >
+        <label htmlFor={'W' + player.name} className="cursor-pointer">
+          <Field
+            type="checkbox"
+            onClick={() => checkWinners(index)}
+            id={'W' + player.name}
+            name="winners"
+            value={player.name}
+            className="opacity-0 cursor-pointer hidden"
+          />
+          <span
+            className={`block h-full py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
+              checkedWinnerStatus[index]
+                ? 'bg-quad text-primary'
+                : 'bg-transparent'
             }`}
           >
             {player.name}
@@ -72,6 +113,7 @@ function RecordGame() {
             initialValues={{
               gamePlayed: '',
               players: [],
+              winners: [],
             }}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
@@ -101,9 +143,7 @@ function RecordGame() {
 
               {/* Game Players */}
               <div>
-                <label className=" text-lg text-left" htmlFor="players">
-                  Who Played?
-                </label>
+                <label className=" text-lg text-left">Who Played?</label>
                 <div
                   role="group"
                   aria-labelledby="checkbox-group"
@@ -115,22 +155,15 @@ function RecordGame() {
 
               {/* Winners */}
               <div>
-                <label className=" text-lg text-left" htmlFor="winner">
+                <label className=" text-lg text-left" htmlFor="winners">
                   Who Won?
                 </label>
-                <div className="flex wrap gap-4 mt-3">
-                  <div className="flex gap-2">
-                    <input type="checkbox" id="pupa" name="pupa" />
-                    <label className="text-base" htmlFor="pupa">
-                      Pupa
-                    </label>
-                  </div>
-                  <div className="flex gap-2">
-                    <input type="checkbox" id="korvo" name="korvo" />
-                    <label className="text-base" htmlFor="korvo">
-                      Korvo
-                    </label>
-                  </div>
+                <div
+                  role="group"
+                  aria-labelledby="checkbox-group"
+                  className="flex flex-wrap gap-4 mt-3"
+                >
+                  {loading ? <LoadingRipple /> : winnerCheckboxes}
                 </div>
               </div>
 
