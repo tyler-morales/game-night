@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Formik, Field, Form } from 'formik'
+import * as Yup from 'yup'
 
 import { Dashboard } from '../layout/Dashboard'
 
@@ -12,6 +13,13 @@ import useUser from '../hooks/useUser'
 import protectedRoute from './protectedRoute'
 
 import './checkboxStyles.css'
+
+const RecordGameSchema = Yup.object().shape({
+  gamePlayed: Yup.string().required('Required'),
+  //TODO: Add error messages in UI
+  players: Yup.array().required('Required'),
+  winners: Yup.array().required('Required'),
+})
 
 function RecordGame() {
   const [loading, updateLoading] = useState(true)
@@ -117,6 +125,7 @@ function RecordGame() {
               players: [],
               winners: [],
             }}
+            validationSchema={RecordGameSchema}
             onSubmit={(values, { setSubmitting }) => {
               alert(JSON.stringify(values, null, 2))
               setSubmitting(false)
@@ -126,59 +135,66 @@ function RecordGame() {
               // }, 400)
             }}
           >
-            <Form className="flex flex-col gap-4">
-              {/* Game Played */}
-              <div className="flex flex-col gap-3">
-                <label className="text-lg text-left" htmlFor="game-select">
-                  What did you play?
-                </label>
-                <Field
-                  component="select"
-                  className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 mt-3 bg-quad rounded-md text-base text-primary py-2 px-4"
-                  name="gamePlayed"
-                  id="game-select"
-                >
-                  <option value="">
-                    {loading ? 'Loading' : 'Select Game'}
-                  </option>
-                  {gamesOptions}
-                </Field>
-              </div>
-
-              {/* Game Players */}
-              <div>
-                <label className=" text-lg text-left">Who Played?</label>
-                <div
-                  role="group"
-                  aria-labelledby="checkbox-group"
-                  className="flex flex-wrap gap-4 mt-3"
-                >
-                  {loading ? <LoadingRipple /> : playerCheckboxes}
+            {({ errors, touched }) => (
+              <Form className="flex flex-col gap-4">
+                {/* Game Played */}
+                <div className="flex flex-col gap-3">
+                  <label className="text-lg text-left" htmlFor="game-select">
+                    What did you play?
+                  </label>
+                  <Field
+                    component="select"
+                    className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 mt-3 bg-quad rounded-md text-base text-primary py-2 px-4"
+                    name="gamePlayed"
+                    id="game-select"
+                  >
+                    <option value="">
+                      {loading ? 'Loading' : 'Select Game'}
+                    </option>
+                    {gamesOptions}
+                  </Field>
+                  {errors.gamePlayed && touched.gamePlayed ? (
+                    <div className="text-sm text-error">
+                      🚨 Please select a game
+                    </div>
+                  ) : null}
                 </div>
-              </div>
 
-              {/* Winners */}
-              <div>
-                <label className=" text-lg text-left" htmlFor="winners">
-                  Who Won?
-                </label>
-                <div
-                  role="group"
-                  aria-labelledby="checkbox-group"
-                  className="flex flex-wrap gap-4 mt-3"
-                >
-                  {loading ? <LoadingRipple /> : winnerCheckboxes}
+                {/* Game Players */}
+                <div>
+                  <label className=" text-lg text-left">Who Played?</label>
+                  <div
+                    role="group"
+                    aria-labelledby="checkbox-group"
+                    className="flex flex-wrap gap-4 mt-3"
+                  >
+                    {loading ? <LoadingRipple /> : playerCheckboxes}
+                  </div>
                 </div>
-              </div>
 
-              {/* Submit */}
-              <button
-                type="submit"
-                className="w-full transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary mt-5"
-              >
-                Record Game
-              </button>
-            </Form>
+                {/* Winners */}
+                <div>
+                  <label className=" text-lg text-left" htmlFor="winners">
+                    Who Won?
+                  </label>
+                  <div
+                    role="group"
+                    aria-labelledby="checkbox-group"
+                    className="flex flex-wrap gap-4 mt-3"
+                  >
+                    {loading ? <LoadingRipple /> : winnerCheckboxes}
+                  </div>
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  className="w-full transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary mt-5"
+                >
+                  Record Game
+                </button>
+              </Form>
+            )}
           </Formik>
         </div>
       )}
