@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
+import { v4 as uuid } from 'uuid'
+
+import { createRecordGame } from '../graphql/mutations'
+
+import { API } from 'aws-amplify'
 
 import { Dashboard } from '../layout/Dashboard'
 
@@ -127,8 +132,30 @@ function RecordGame() {
             }}
             validationSchema={RecordGameSchema}
             onSubmit={(values, { setSubmitting }) => {
-              alert(JSON.stringify(values, null, 2))
+              // alert(JSON.stringify(values, null, 2))
               setSubmitting(false)
+              try {
+                const recordGameID = uuid()
+                const { gamePlayed, players, winners } = values
+
+                const recordGameInfo = {
+                  id: recordGameID,
+                  name: gamePlayed,
+                  players: players,
+                  winners: winners,
+                  owner: user.username,
+                  type: 'RecordGame',
+                }
+
+                API.graphql({
+                  query: createRecordGame,
+                  variables: { input: recordGameInfo },
+                  authMode: 'AMAZON_COGNITO_USER_POOLS',
+                })
+              } catch (err) {
+                console.error(err)
+              }
+
               // setTimeout(() => {
               //   alert(JSON.stringify(values, null, 2))
               //   setSubmitting(false)
