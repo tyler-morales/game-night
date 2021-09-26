@@ -11,7 +11,7 @@
   display: block;
   padding: 6px;
   font-size: 1rem;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 /*style and hide original checkbox*/
@@ -37,7 +37,7 @@
   opacity: 1;
 }
 
-/* focus styles*/
+/* focus state */
 .wrapper input:focus + label::before {
   outline: 2px solid var(--color-quad);
   outline-offset: 2px;

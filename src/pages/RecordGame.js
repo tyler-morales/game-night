@@ -25,19 +25,24 @@ function RecordGame() {
     members.map(() => false)
   )
 
-  const checkPlayers = async (index) => {
-    let newState = [...checkedStatus] // make a copy of the current state of the checkedStatus
-    newState[index] = !checkedStatus[index] // update the relevant index based on the previous state. If its checked, uncheck it and vice versa.
-    setCheckedStatus(newState)
-  }
+  const checkboxStatus = (index, type) => {
+    let state
 
-  const checkWinners = async (index) => {
-    let newState = [...checkedWinnerStatus]
-    newState[index] = !checkedWinnerStatus[index]
-    setCheckedWinnerStatus(newState)
+    switch (type) {
+      case 'PLAYERS':
+        state = [...checkedStatus]
+        state[index] = !checkedStatus[index]
+        setCheckedStatus(state)
+        break
+      case 'WINNERS':
+        state = [...checkedWinnerStatus]
+        state[index] = !checkedWinnerStatus[index]
+        setCheckedWinnerStatus(state)
+        break
+      default:
+        break
+    }
   }
-
-  console.log(checkedStatus, checkedWinnerStatus)
 
   // Rendered Game Options
   const gamesOptions = games.map((game, index) => (
@@ -52,14 +57,14 @@ function RecordGame() {
       <div key={index} className="wrapper">
         <Field
           type="checkbox"
-          onClick={() => checkPlayers(index)}
+          onClick={() => checkboxStatus(index, 'PLAYERS')}
           id={player.name}
           name="players"
           value={player.name}
         />
         <label
           htmlFor={player.name}
-          className={`block h-full py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
+          className={`block h-full py-1 px-2 rounded-md transition-all border-2 border-quad text-base cursor-pointer ${
             checkedStatus[index] ? 'bg-quad text-primary' : 'bg-transparent'
           }`}
         >
@@ -75,10 +80,11 @@ function RecordGame() {
       <div key={index} className="wrapper">
         <Field
           type="checkbox"
-          onClick={() => checkWinners(index)}
+          onClick={() => checkboxStatus(index, 'WINNERS')}
           id={player.id}
           name="winners"
           value={player.name}
+          disabled={!checkedStatus[index]}
         />
         <label
           htmlFor={player.id}
@@ -86,6 +92,10 @@ function RecordGame() {
             checkedWinnerStatus[index]
               ? 'bg-quad text-primary'
               : 'bg-transparent'
+          } ${
+            !checkedStatus[index]
+              ? 'opacity-40 cursor-not-allowed'
+              : 'cursor-pointer'
           }`}
         >
           {player.name}
@@ -108,10 +118,12 @@ function RecordGame() {
               winners: [],
             }}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2))
-                setSubmitting(false)
-              }, 400)
+              alert(JSON.stringify(values, null, 2))
+              setSubmitting(false)
+              // setTimeout(() => {
+              //   alert(JSON.stringify(values, null, 2))
+              //   setSubmitting(false)
+              // }, 400)
             }}
           >
             <Form className="flex flex-col gap-4">
