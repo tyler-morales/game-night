@@ -91,3 +91,54 @@ export const deleteGame = /* GraphQL */ `
     }
   }
 `;
+export const createRecordGame = /* GraphQL */ `
+  mutation CreateRecordGame(
+    $input: CreateRecordGameInput!
+    $condition: ModelRecordGameConditionInput
+  ) {
+    createRecordGame(input: $input, condition: $condition) {
+      id
+      name
+      players
+      winners
+      owner
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateRecordGame = /* GraphQL */ `
+  mutation UpdateRecordGame(
+    $input: UpdateRecordGameInput!
+    $condition: ModelRecordGameConditionInput
+  ) {
+    updateRecordGame(input: $input, condition: $condition) {
+      id
+      name
+      players
+      winners
+      owner
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteRecordGame = /* GraphQL */ `
+  mutation DeleteRecordGame(
+    $input: DeleteRecordGameInput!
+    $condition: ModelRecordGameConditionInput
+  ) {
+    deleteRecordGame(input: $input, condition: $condition) {
+      id
+      name
+      players
+      winners
+      owner
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;

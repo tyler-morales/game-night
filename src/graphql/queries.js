@@ -121,3 +121,69 @@ export const gamesByDate = /* GraphQL */ `
     }
   }
 `;
+export const getRecordGame = /* GraphQL */ `
+  query GetRecordGame($id: ID!) {
+    getRecordGame(id: $id) {
+      id
+      name
+      players
+      winners
+      owner
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listRecordGames = /* GraphQL */ `
+  query ListRecordGames(
+    $filter: ModelRecordGameFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRecordGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        players
+        winners
+        owner
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const recordGamesByDate = /* GraphQL */ `
+  query RecordGamesByDate(
+    $type: String
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelRecordGameFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    recordGamesByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        players
+        winners
+        owner
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
