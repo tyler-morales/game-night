@@ -5,6 +5,7 @@ import Public from './Public'
 import About from './About'
 import Profile from './Profile'
 import Stats from './Stats'
+import RecordGame from './RecordGame'
 
 export const Router = () => {
   // const [pageType, setPageType] = useState(pageTypes.authFlow)
@@ -22,7 +23,6 @@ export const Router = () => {
     // const location = window.location.href.split('/')
     // const pathname = location[location.length - 1]
     // TODO: Set 'setPageType' to change nav component
-
     // console.log(pathname)
     // setCurrent(pathname ? pathname : 'home')
   }
@@ -34,6 +34,7 @@ export const Router = () => {
         <Route exact path="/" component={Public} />
         <Route exact path="/about" component={About} />
         <Route exact path="/dashboard" component={Stats} />
+        <Route exact path="/record-game" component={RecordGame} />
         <Route exact path="/profile" component={Profile} />
         <Route component={Public} />
       </Switch>

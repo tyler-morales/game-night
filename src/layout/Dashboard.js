@@ -71,7 +71,7 @@ export const Dashboard = ({ children }) => {
 
           {/* Record a Game  */}
           <NavLink
-            to="/"
+            to="/record-game"
             className="text-lg py-3 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-10"
           >
             <span>Record a Game</span>
@@ -112,7 +112,7 @@ export const Dashboard = ({ children }) => {
             </button>
           </div>
         </nav>
-        <section className="p-7 bg-darkGreen w-full h-full rounded-xl">
+        <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl">
           {children}
         </section>
       </main>

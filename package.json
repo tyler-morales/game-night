@@ -6,13 +6,15 @@
     "@aws-amplify/datastore": "^3.4.3",
     "@craco/craco": "^6.2.0",
     "aws-amplify": "^4.2.9",
+    "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
-    "uuidv4": "^6.2.12"
+    "uuidv4": "^6.2.12",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "craco start",
