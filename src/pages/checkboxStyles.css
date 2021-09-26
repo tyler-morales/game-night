@@ -1,0 +1,45 @@
+/*  ✨ Checkbox Styling ✨ */
+
+/*style wrapper to give some space*/
+.wrapper {
+  position: relative;
+  width: max-content;
+}
+
+/*style label to give some more space*/
+.wrapper label {
+  display: block;
+  padding: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/*style and hide original checkbox*/
+.wrapper input {
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+}
+
+/*position new box*/
+.wrapper input + label::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+/*reveal check for 'on' state*/
+.wrapper input:checked + label::after {
+  opacity: 1;
+}
+
+/* focus styles*/
+.wrapper input:focus + label::before {
+  outline: 2px solid var(--color-quad);
+  outline-offset: 2px;
+  border-radius: 5px;
+}

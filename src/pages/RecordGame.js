@@ -11,6 +11,8 @@ import useUser from '../hooks/useUser'
 
 import protectedRoute from './protectedRoute'
 
+import './checkboxStyles.css'
+
 function RecordGame() {
   const [loading, updateLoading] = useState(true)
 
@@ -47,26 +49,21 @@ function RecordGame() {
   // Render All Players
   const playerCheckboxes = members.map((player, index) => {
     return (
-      <div
-        key={index}
-        className="rounded-md ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 flex gap-2"
-      >
-        <label htmlFor={player.name} className="cursor-pointer">
-          <Field
-            type="checkbox"
-            onClick={() => checkPlayers(index)}
-            id={player.name}
-            name="players"
-            value={player.name}
-            className="opacity-0 cursor-pointer hidden"
-          />
-          <span
-            className={`block h-full py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
-              checkedStatus[index] ? 'bg-quad text-primary' : 'bg-transparent'
-            }`}
-          >
-            {player.name}
-          </span>
+      <div key={index} className="wrapper">
+        <Field
+          type="checkbox"
+          onClick={() => checkPlayers(index)}
+          id={player.name}
+          name="players"
+          value={player.name}
+        />
+        <label
+          htmlFor={player.name}
+          className={`block h-full py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
+            checkedStatus[index] ? 'bg-quad text-primary' : 'bg-transparent'
+          }`}
+        >
+          {player.name}
         </label>
       </div>
     )
@@ -75,28 +72,23 @@ function RecordGame() {
   // Render All Possible winners
   const winnerCheckboxes = members.map((player, index) => {
     return (
-      <div
-        key={index}
-        className="rounded-md ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 flex gap-2"
-      >
-        <label htmlFor={'W' + player.name} className="cursor-pointer">
-          <Field
-            type="checkbox"
-            onClick={() => checkWinners(index)}
-            id={'W' + player.name}
-            name="winners"
-            value={player.name}
-            className="opacity-0 cursor-pointer hidden"
-          />
-          <span
-            className={`block h-full py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
-              checkedWinnerStatus[index]
-                ? 'bg-quad text-primary'
-                : 'bg-transparent'
-            }`}
-          >
-            {player.name}
-          </span>
+      <div key={index} className="wrapper">
+        <Field
+          type="checkbox"
+          onClick={() => checkWinners(index)}
+          id={player.id}
+          name="winners"
+          value={player.name}
+        />
+        <label
+          htmlFor={player.id}
+          className={`block h-full py-1 px-2 rounded-md transition-all border-2 border-quad text-base ${
+            checkedWinnerStatus[index]
+              ? 'bg-quad text-primary'
+              : 'bg-transparent'
+          }`}
+        >
+          {player.name}
         </label>
       </div>
     )
