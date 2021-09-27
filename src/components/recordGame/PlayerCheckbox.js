@@ -1,4 +1,5 @@
 import { Field } from 'formik'
+import '../../styles/checkboxStyles.css'
 
 export const PlayerCheckbox = ({
   player,
