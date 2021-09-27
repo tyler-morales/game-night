@@ -70,3 +70,8 @@ li:nth-child(3):before {
   margin-left: 0;
   margin-right: 15px;
 }
+
+/* Tables */
+tr:nth-child(even) {
+  background-color: var(--color-dark-green);
+}
