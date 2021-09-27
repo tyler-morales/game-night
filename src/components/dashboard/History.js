@@ -75,10 +75,10 @@ export const History = () => {
       <table className="w-full">
         <tbody>
           <tr className="w-full">
-            <th className="text-left text-base py-3">Date</th>
-            <th className="text-left text-base py-3">Game Name</th>
-            <th className="text-left text-base py-3">Winners</th>
-            <th className="text-left text-base py-3">Players</th>
+            <th className="text-left text-base pb-3">Date</th>
+            <th className="text-left text-base pb-3">Game Name</th>
+            <th className="text-left text-base pb-3">Winners</th>
+            <th className="text-left text-base pb-3">Players</th>
           </tr>
           {recordedGameItems}
         </tbody>
