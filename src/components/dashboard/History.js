@@ -5,11 +5,13 @@ import { API, Auth } from 'aws-amplify'
 import { recordGamesByDate } from '../../graphql/queries'
 
 import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
+import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
 // import useUser from '../../hooks/useUser'
 
 export const History = () => {
   // const { user } = useUser()
+  const [loading, updateLoading] = useState(true)
   const [recordedGames, updateRecordedGames] = useState([])
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export const History = () => {
         variables: { limit: 100, type: 'RecordGame', sortDirection: 'ASC' },
       })
 
-      // updateLoading(false)
+      updateLoading(false)
 
       let allRecordedGamess = recordedGameata.data.recordGamesByDate.items
 
@@ -45,20 +47,11 @@ export const History = () => {
     updateRecordedGames(myRecordedGamesData)
   }
 
-  const GameItem = (game) => {
-    return (
-      <tr>
-        <th>{game.createdAt}</th>
-        <th>{game.name}</th>
-        <th>{game.winners}</th>
-      </tr>
-    )
-  }
-
-  const recordedGameItems = recordedGames.map((game, index) => {
+  const GameItem = ({ game }) => {
     const formatArray = (arr) => String(arr).split(',').join(', ')
+
     return (
-      <tr key={index} className="w-full">
+      <tr className="w-full">
         <th className="text-left text-base font-thin py-3 ">
           {game.createdAt.slice(0, 10)}
         </th>
@@ -71,16 +64,21 @@ export const History = () => {
         </th>
       </tr>
     )
-  })
+  }
+
+  const recordedGameItems = recordedGames.map((game, index) => (
+    <GameItem key={index} game={game} />
+  ))
 
   const GameTable = () => {
     return (
-      <table>
+      <table className="w-full">
         <tbody>
-          <tr>
-            <th>Date</th>
-            <th>Game Name</th>
-            <th>Winners</th>
+          <tr className="w-full">
+            <th className="text-left text-base py-3">Date</th>
+            <th className="text-left text-base py-3">Game Name</th>
+            <th className="text-left text-base py-3">Winners</th>
+            <th className="text-left text-base py-3">Players</th>
           </tr>
           {recordedGameItems}
         </tbody>
@@ -90,23 +88,26 @@ export const History = () => {
 
   return (
     <DashboardItemContainer title="Game History">
-      <div>
-        {recordedGameItems.length > 0 ? (
-          <table className="w-full">
-            <tbody>
-              <tr className="w-full">
-                <th className="text-left text-base py-3 ">Date</th>
-                <th className="text-left text-base">Game Name</th>
-                <th className="text-left text-base">Winners</th>
-                <th className="text-left text-base">Players</th>
-              </tr>
-              {recordedGameItems}
-            </tbody>
-          </table>
-        ) : (
-          <span>No Games added</span>
-        )}
-      </div>
+      {!loading ? (
+        <>
+          <div className="flex flex-col gap-6">
+            {recordedGameItems.length > 0 ? (
+              <GameTable />
+            ) : (
+              <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
+                <h4 className="text-2xl border-b-2 border-quad pb-4">
+                  You haven't played any games
+                </h4>
+                <p className="text-sm">
+                  💡 Click the Record a Game button to record your first game!
+                </p>
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        <LoadingRipple />
+      )}
     </DashboardItemContainer>
   )
 }
