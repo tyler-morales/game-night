@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 import { v4 as uuid } from 'uuid'
+import { useHistory } from 'react-router-dom'
 
 import { createRecordGame } from '../graphql/mutations'
 
@@ -17,16 +18,17 @@ import useUser from '../hooks/useUser'
 
 import protectedRoute from './protectedRoute'
 
-import './checkboxStyles.css'
+import '../styles/checkboxStyles.css'
 
 const RecordGameSchema = Yup.object().shape({
   gamePlayed: Yup.string().required('Required'),
   //TODO: Add error messages in UI
-  players: Yup.array().required('Required'),
-  winners: Yup.array().required('Required'),
+  players: Yup.array().min(2),
+  winners: Yup.array().min(1),
 })
 
 function RecordGame() {
+  let history = useHistory()
   const [loading, updateLoading] = useState(true)
 
   const { members } = useLoadMembers(updateLoading)
@@ -57,6 +59,31 @@ function RecordGame() {
     }
   }
 
+  const addGameToDB = (values) => {
+    try {
+      const recordGameID = uuid()
+      const { gamePlayed, players, winners } = values
+
+      const recordGameInfo = {
+        id: recordGameID,
+        name: gamePlayed,
+        players: players,
+        winners: winners,
+        owner: user.username,
+        type: 'RecordGame',
+      }
+
+      API.graphql({
+        query: createRecordGame,
+        variables: { input: recordGameInfo },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      })
+      history.push('/dashboard')
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   // Rendered Game Options
   const gamesOptions = games.map((game, index) => (
     <option key={index} value={game.name} className="rounded-md">
@@ -65,7 +92,7 @@ function RecordGame() {
   ))
 
   // Render All Players
-  const playerCheckboxes = members.map((player, index) => {
+  const playerCheckboxes = members.map((player, index, errors) => {
     return (
       <div key={index} className="wrapper">
         <Field
@@ -117,6 +144,18 @@ function RecordGame() {
     )
   })
 
+  const renderErrors = (errors, touched, type) => {
+    let responses = {
+      GAMES: 'Please select a game',
+      PLAYERS: 'Please select at least two players',
+      WINNERS: 'Please select at least one winner',
+    }
+
+    return errors.players && touched ? (
+      <div className="text-sm text-error">🚨 {responses[type]}</div>
+    ) : null
+  }
+
   return (
     <Dashboard>
       <h1>Record a Game</h1>
@@ -132,34 +171,8 @@ function RecordGame() {
             }}
             validationSchema={RecordGameSchema}
             onSubmit={(values, { setSubmitting }) => {
-              // alert(JSON.stringify(values, null, 2))
               setSubmitting(false)
-              try {
-                const recordGameID = uuid()
-                const { gamePlayed, players, winners } = values
-
-                const recordGameInfo = {
-                  id: recordGameID,
-                  name: gamePlayed,
-                  players: players,
-                  winners: winners,
-                  owner: user.username,
-                  type: 'RecordGame',
-                }
-
-                API.graphql({
-                  query: createRecordGame,
-                  variables: { input: recordGameInfo },
-                  authMode: 'AMAZON_COGNITO_USER_POOLS',
-                })
-              } catch (err) {
-                console.error(err)
-              }
-
-              // setTimeout(() => {
-              //   alert(JSON.stringify(values, null, 2))
-              //   setSubmitting(false)
-              // }, 400)
+              addGameToDB(values)
             }}
           >
             {({ errors, touched }) => (
@@ -171,7 +184,7 @@ function RecordGame() {
                   </label>
                   <Field
                     component="select"
-                    className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 mt-3 bg-quad rounded-md text-base text-primary py-2 px-4"
+                    className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 bg-quad rounded-md text-base text-primary py-2 px-4"
                     name="gamePlayed"
                     id="game-select"
                   >
@@ -180,37 +193,35 @@ function RecordGame() {
                     </option>
                     {gamesOptions}
                   </Field>
-                  {errors.gamePlayed && touched.gamePlayed ? (
-                    <div className="text-sm text-error">
-                      🚨 Please select a game
-                    </div>
-                  ) : null}
+                  {renderErrors(errors, touched, 'GAMES')}
                 </div>
 
                 {/* Game Players */}
-                <div>
+                <div className="flex flex-col gap-3">
                   <label className=" text-lg text-left">Who Played?</label>
                   <div
                     role="group"
                     aria-labelledby="checkbox-group"
-                    className="flex flex-wrap gap-4 mt-3"
+                    className="flex flex-wrap gap-4"
                   >
                     {loading ? <LoadingRipple /> : playerCheckboxes}
                   </div>
+                  {renderErrors(errors, touched, 'PLAYERS')}
                 </div>
 
                 {/* Winners */}
-                <div>
+                <div className="flex flex-col gap-3">
                   <label className=" text-lg text-left" htmlFor="winners">
                     Who Won?
                   </label>
                   <div
                     role="group"
                     aria-labelledby="checkbox-group"
-                    className="flex flex-wrap gap-4 mt-3"
+                    className="flex flex-wrap gap-4"
                   >
                     {loading ? <LoadingRipple /> : winnerCheckboxes}
                   </div>
+                  {renderErrors(errors, touched, 'WINNERS')}
                 </div>
 
                 {/* Submit */}
