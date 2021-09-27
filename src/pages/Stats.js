@@ -3,6 +3,7 @@ import { Auth } from 'aws-amplify'
 import { Dashboard } from '../layout/Dashboard'
 
 import protectedRoute from './protectedRoute'
+import { Grid } from '../components/dashboard/Grid'
 
 const Stats = () => {
   useEffect(() => {
@@ -23,13 +24,7 @@ const Stats = () => {
 
   return (
     <Dashboard>
-      <h1>
-        {user === null ? (
-          <div>Loading...</div>
-        ) : (
-          <div>Welcome, {user.username}</div>
-        )}
-      </h1>
+      <h1>{user === null ? <div>Loading...</div> : <Grid />}</h1>
     </Dashboard>
   )
 }
