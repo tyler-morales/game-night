@@ -18,14 +18,15 @@ import useUser from '../hooks/useUser'
 
 import protectedRoute from './protectedRoute'
 
+import { RecordGameSchema } from '../formik/RecordGameValidation'
+
 import '../styles/checkboxStyles.css'
 
-const RecordGameSchema = Yup.object().shape({
-  gamePlayed: Yup.string().required('Required'),
-  //TODO: Add error messages in UI
-  players: Yup.array().min(2),
-  winners: Yup.array().min(1),
-})
+// const RecordGameSchema = Yup.object().shape({
+//   gamePlayed: Yup.string().required('Required'),
+//   players: Yup.array().min(2),
+//   winners: Yup.array().min(1),
+// })
 
 function RecordGame() {
   let history = useHistory()
@@ -73,12 +74,12 @@ function RecordGame() {
         type: 'RecordGame',
       }
 
-      API.graphql({
-        query: createRecordGame,
-        variables: { input: recordGameInfo },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
-      })
-      history.push('/dashboard')
+      // API.graphql({
+      //   query: createRecordGame,
+      //   variables: { input: recordGameInfo },
+      //   authMode: 'AMAZON_COGNITO_USER_POOLS',
+      // })
+      // history.push('/dashboard')
     } catch (err) {
       console.error(err)
     }
@@ -146,12 +147,12 @@ function RecordGame() {
 
   const renderErrors = (errors, touched, type) => {
     let responses = {
-      GAMES: 'Please select a game',
-      PLAYERS: 'Please select at least two players',
-      WINNERS: 'Please select at least one winner',
+      gamePlayed: 'Please select a game',
+      players: 'Please select at least two players',
+      winners: 'Please select at least one winner',
     }
 
-    return errors.players && touched ? (
+    return errors[type] && touched[type] ? (
       <div className="text-sm text-error">🚨 {responses[type]}</div>
     ) : null
   }
@@ -193,7 +194,7 @@ function RecordGame() {
                     </option>
                     {gamesOptions}
                   </Field>
-                  {renderErrors(errors, touched, 'GAMES')}
+                  {renderErrors(errors, touched, 'gamePlayed')}
                 </div>
 
                 {/* Game Players */}
@@ -206,7 +207,7 @@ function RecordGame() {
                   >
                     {loading ? <LoadingRipple /> : playerCheckboxes}
                   </div>
-                  {renderErrors(errors, touched, 'PLAYERS')}
+                  {renderErrors(errors, touched, 'players')}
                 </div>
 
                 {/* Winners */}
@@ -221,7 +222,7 @@ function RecordGame() {
                   >
                     {loading ? <LoadingRipple /> : winnerCheckboxes}
                   </div>
-                  {renderErrors(errors, touched, 'WINNERS')}
+                  {renderErrors(errors, touched, 'winners')}
                 </div>
 
                 {/* Submit */}
