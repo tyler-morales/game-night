@@ -110,6 +110,7 @@ export const RecordGameForm = () => {
   const renderErrors = (errors, touched, type) => {
     return <RecordGameErrors errors={errors} touched={touched} type={type} />
   }
+
   return (
     <Formik
       initialValues={RecordGameValues}
