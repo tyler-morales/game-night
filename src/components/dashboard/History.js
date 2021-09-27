@@ -23,7 +23,7 @@ export const History = () => {
     try {
       let recordedGameata = await API.graphql({
         query: recordGamesByDate,
-        variables: { limit: 100, type: 'RecordGame', sortDirection: 'ASC' },
+        variables: { limit: 100, type: 'RecordGame', sortDirection: 'DESC' },
       })
 
       updateLoading(false)
@@ -90,7 +90,7 @@ export const History = () => {
     <DashboardItemContainer title="Game History">
       {!loading ? (
         <>
-          <div className="flex flex-col gap-6">
+          <div className="overscroll-auto overflow-auto h-80 flex flex-col gap-6">
             {recordedGameItems.length > 0 ? (
               <GameTable />
             ) : (
