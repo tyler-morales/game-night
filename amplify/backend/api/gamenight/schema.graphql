@@ -38,3 +38,25 @@ type Game
   type: String!
   createdAt: String!
 }
+type RecordGame
+  @model
+  @key(
+    name: "recordGamesByDate"
+    fields: ["type", "createdAt"]
+    queryField: "recordGamesByDate"
+  )
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  players: [String!]
+  winners: [String!]
+  owner: String!
+  type: String!
+  createdAt: String!
+}

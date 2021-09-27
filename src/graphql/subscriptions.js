@@ -73,3 +73,45 @@ export const onDeleteGame = /* GraphQL */ `
     }
   }
 `;
+export const onCreateRecordGame = /* GraphQL */ `
+  subscription OnCreateRecordGame {
+    onCreateRecordGame {
+      id
+      name
+      players
+      winners
+      owner
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateRecordGame = /* GraphQL */ `
+  subscription OnUpdateRecordGame {
+    onUpdateRecordGame {
+      id
+      name
+      players
+      winners
+      owner
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteRecordGame = /* GraphQL */ `
+  subscription OnDeleteRecordGame {
+    onDeleteRecordGame {
+      id
+      name
+      players
+      winners
+      owner
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
