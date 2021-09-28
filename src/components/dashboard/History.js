@@ -4,6 +4,8 @@ import { API, Auth } from 'aws-amplify'
 
 import { recordGamesByDate } from '../../graphql/queries'
 
+import useLoading from '../../hooks/useLoading'
+
 import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
@@ -11,7 +13,7 @@ import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
 export const History = () => {
   // const { user } = useUser()
-  const [loading, updateLoading] = useState(true)
+  const { dataLoaded, loading } = useLoading()
   const [recordedGames, updateRecordedGames] = useState([])
 
   useEffect(() => {
@@ -21,12 +23,12 @@ export const History = () => {
 
   const fetchRecordedGamess = async () => {
     try {
+      dataLoaded()
+
       let recordedGameata = await API.graphql({
         query: recordGamesByDate,
         variables: { limit: 100, type: 'RecordGame', sortDirection: 'DESC' },
       })
-
-      updateLoading(false)
 
       let allRecordedGamess = recordedGameata.data.recordGamesByDate.items
 
