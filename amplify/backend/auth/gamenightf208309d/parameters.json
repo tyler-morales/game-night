@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "gamenightdaf88a9d_identitypool_daf88a9d",
+    "identityPoolName": "gamenightf208309d_identitypool_f208309d",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "gamenidaf88a9d",
-    "userPoolName": "gamenightdaf88a9d_userpool_daf88a9d",
+    "resourceNameTruncated": "gamenif208309d",
+    "userPoolName": "gamenightf208309d_userpool_f208309d",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -31,10 +31,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "gamenidaf88a9d_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "gamenif208309d_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "daf88a9d",
-    "resourceName": "gamenightdaf88a9d",
+    "sharedId": "f208309d",
+    "resourceName": "gamenightf208309d",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
