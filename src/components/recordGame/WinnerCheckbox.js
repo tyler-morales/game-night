@@ -14,7 +14,7 @@ export const WinnerCheckbox = ({
         onClick={() => checkboxStatus(index, 'WINNERS')}
         id={player.id}
         name="winners"
-        value={player.id}
+        value={player.name}
         disabled={!checkedStatus[index]}
       />
       <label
