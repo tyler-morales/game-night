@@ -15,10 +15,24 @@ type Member
   id: ID!
   name: String!
   owner: String!
+  wins: [Wins!]
   type: String!
   createdAt: String!
 }
-type Game
+type Games
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  wins: String!
+}
+type Wins
   @model
   @key(
     name: "gamesByDate"
