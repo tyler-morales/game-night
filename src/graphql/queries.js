@@ -101,24 +101,24 @@ export const syncMembers = /* GraphQL */ `
     }
   }
 `;
-export const getGames = /* GraphQL */ `
-  query GetGames($id: ID!) {
-    getGames(id: $id) {
+export const getGame = /* GraphQL */ `
+  query GetGame($id: ID!) {
+    getGame(id: $id) {
       id
       name
-      wins
+      owner
+      type
+      createdAt
       _version
       _deleted
       _lastChangedAt
-      createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const listGames = /* GraphQL */ `
   query ListGames(
-    $filter: ModelGamesFilterInput
+    $filter: ModelGameFilterInput
     $limit: Int
     $nextToken: String
   ) {
@@ -126,13 +126,46 @@ export const listGames = /* GraphQL */ `
       items {
         id
         name
-        wins
+        owner
+        type
+        createdAt
         _version
         _deleted
         _lastChangedAt
-        createdAt
         updatedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const gamesByDate = /* GraphQL */ `
+  query GamesByDate(
+    $type: String
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gamesByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
         owner
+        type
+        createdAt
+        _version
+        _deleted
+        _lastChangedAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -141,7 +174,7 @@ export const listGames = /* GraphQL */ `
 `;
 export const syncGames = /* GraphQL */ `
   query SyncGames(
-    $filter: ModelGamesFilterInput
+    $filter: ModelGameFilterInput
     $limit: Int
     $nextToken: String
     $lastSync: AWSTimestamp
@@ -155,13 +188,13 @@ export const syncGames = /* GraphQL */ `
       items {
         id
         name
-        wins
+        owner
+        type
+        createdAt
         _version
         _deleted
         _lastChangedAt
-        createdAt
         updatedAt
-        owner
       }
       nextToken
       startedAt
