@@ -8,8 +8,8 @@ type MemberMetaData = {
   readOnlyFields: 'updatedAt';
 }
 
-type GamesMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
+type GameMetaData = {
+  readOnlyFields: 'updatedAt';
 }
 
 type RecordGameMetaData = {
@@ -27,14 +27,15 @@ export declare class Member {
   static copyOf(source: Member, mutator: (draft: MutableModel<Member, MemberMetaData>) => MutableModel<Member, MemberMetaData> | void): Member;
 }
 
-export declare class Games {
+export declare class Game {
   readonly id: string;
   readonly name: string;
-  readonly wins: string;
-  readonly createdAt?: string;
+  readonly owner: string;
+  readonly type: string;
+  readonly createdAt: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<Games, GamesMetaData>);
-  static copyOf(source: Games, mutator: (draft: MutableModel<Games, GamesMetaData>) => MutableModel<Games, GamesMetaData> | void): Games;
+  constructor(init: ModelInit<Game, GameMetaData>);
+  static copyOf(source: Game, mutator: (draft: MutableModel<Game, GameMetaData>) => MutableModel<Game, GameMetaData> | void): Game;
 }
 
 export declare class RecordGame {

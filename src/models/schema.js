@@ -104,8 +104,8 @@ export const schema = {
                 }
             ]
         },
-        "Games": {
-            "name": "Games",
+        "Game": {
+            "name": "Game",
             "fields": {
                 "id": {
                     "name": "id",
@@ -121,8 +121,15 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "wins": {
-                    "name": "wins",
+                "owner": {
+                    "name": "owner",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
@@ -131,10 +138,9 @@ export const schema = {
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "updatedAt": {
                     "name": "updatedAt",
@@ -151,6 +157,17 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "gamesByDate",
+                        "fields": [
+                            "type",
+                            "createdAt"
+                        ],
+                        "queryField": "gamesByDate"
+                    }
                 },
                 {
                     "type": "auth",
@@ -314,5 +331,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "2d9c1d6d965279e9ba730a0b1f8ea840"
+    "version": "88f267ef3bb9665c8ac674eb0cf345cb"
 };
