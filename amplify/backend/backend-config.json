@@ -33,7 +33,7 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 365,
-              "description": "API_KEY"
+              "description": "gamenightAPI"
             }
           },
           "additionalAuthenticationProviders": [

@@ -12,10 +12,19 @@ export const createMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
+      wins {
+        items {
+          id
+          gameID
+          name
+          wins
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -30,10 +39,19 @@ export const updateMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
+      wins {
+        items {
+          id
+          gameID
+          name
+          wins
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -48,10 +66,100 @@ export const deleteMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
+      wins {
+        items {
+          id
+          gameID
+          name
+          wins
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createWin = /* GraphQL */ `
+  mutation CreateWin(
+    $input: CreateWinInput!
+    $condition: ModelWinConditionInput
+  ) {
+    createWin(input: $input, condition: $condition) {
+      id
+      gameID
+      name
+      wins
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const updateWin = /* GraphQL */ `
+  mutation UpdateWin(
+    $input: UpdateWinInput!
+    $condition: ModelWinConditionInput
+  ) {
+    updateWin(input: $input, condition: $condition) {
+      id
+      gameID
+      name
+      wins
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const deleteWin = /* GraphQL */ `
+  mutation DeleteWin(
+    $input: DeleteWinInput!
+    $condition: ModelWinConditionInput
+  ) {
+    deleteWin(input: $input, condition: $condition) {
+      id
+      gameID
+      name
+      wins
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+      owner
     }
   }
 `;
@@ -66,9 +174,6 @@ export const createGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -84,9 +189,6 @@ export const updateGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -102,9 +204,6 @@ export const deleteGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -122,9 +221,6 @@ export const createRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -142,9 +238,6 @@ export const updateRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -162,9 +255,6 @@ export const deleteRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }

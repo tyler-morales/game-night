@@ -9,10 +9,19 @@ export const onCreateMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
+      wins {
+        items {
+          id
+          gameID
+          name
+          wins
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -24,10 +33,19 @@ export const onUpdateMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
+      wins {
+        items {
+          id
+          gameID
+          name
+          wins
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -39,10 +57,91 @@ export const onDeleteMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
+      wins {
+        items {
+          id
+          gameID
+          name
+          wins
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onCreateWin = /* GraphQL */ `
+  subscription OnCreateWin {
+    onCreateWin {
+      id
+      gameID
+      name
+      wins
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const onUpdateWin = /* GraphQL */ `
+  subscription OnUpdateWin {
+    onUpdateWin {
+      id
+      gameID
+      name
+      wins
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const onDeleteWin = /* GraphQL */ `
+  subscription OnDeleteWin {
+    onDeleteWin {
+      id
+      gameID
+      name
+      wins
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+      owner
     }
   }
 `;
@@ -54,9 +153,6 @@ export const onCreateGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -69,9 +165,6 @@ export const onUpdateGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -84,9 +177,6 @@ export const onDeleteGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -101,9 +191,6 @@ export const onCreateRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -118,9 +205,6 @@ export const onUpdateRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -135,9 +219,6 @@ export const onDeleteRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }

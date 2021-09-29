@@ -9,10 +9,19 @@ export const getMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
+      wins {
+        items {
+          id
+          gameID
+          name
+          wins
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -29,13 +38,12 @@ export const listMembers = /* GraphQL */ `
         owner
         type
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
+        wins {
+          nextToken
+        }
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -62,42 +70,64 @@ export const membersByDate = /* GraphQL */ `
         owner
         type
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
+        wins {
+          nextToken
+        }
       }
       nextToken
-      startedAt
     }
   }
 `;
-export const syncMembers = /* GraphQL */ `
-  query SyncMembers(
-    $filter: ModelMemberFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncMembers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
+export const getWin = /* GraphQL */ `
+  query GetWin($id: ID!) {
+    getWin(id: $id) {
+      id
+      gameID
+      name
+      wins
+      createdAt
+      updatedAt
+      member {
         id
         name
         owner
         type
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
+        wins {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const listWins = /* GraphQL */ `
+  query ListWins(
+    $filter: ModelWinFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listWins(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        gameID
+        name
+        wins
+        createdAt
+        updatedAt
+        member {
+          id
+          name
+          owner
+          type
+          createdAt
+          updatedAt
+        }
+        owner
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -109,9 +139,6 @@ export const getGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -129,13 +156,9 @@ export const listGames = /* GraphQL */ `
         owner
         type
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -162,42 +185,9 @@ export const gamesByDate = /* GraphQL */ `
         owner
         type
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncGames = /* GraphQL */ `
-  query SyncGames(
-    $filter: ModelGameFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncGames(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        owner
-        type
-        createdAt
-        _version
-        _deleted
-        _lastChangedAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -211,9 +201,6 @@ export const getRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -233,13 +220,9 @@ export const listRecordGames = /* GraphQL */ `
         owner
         type
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -268,44 +251,9 @@ export const recordGamesByDate = /* GraphQL */ `
         owner
         type
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncRecordGames = /* GraphQL */ `
-  query SyncRecordGames(
-    $filter: ModelRecordGameFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncRecordGames(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        players
-        winners
-        owner
-        type
-        createdAt
-        _version
-        _deleted
-        _lastChangedAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
