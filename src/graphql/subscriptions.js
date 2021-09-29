@@ -9,19 +9,10 @@ export const onCreateMember = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
-      wins {
-        items {
-          id
-          gameID
-          name
-          wins
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -33,19 +24,10 @@ export const onUpdateMember = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
-      wins {
-        items {
-          id
-          gameID
-          name
-          wins
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -57,127 +39,55 @@ export const onDeleteMember = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
-      wins {
-        items {
-          id
-          gameID
-          name
-          wins
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
-export const onCreateWin = /* GraphQL */ `
-  subscription OnCreateWin {
-    onCreateWin {
+export const onCreateGames = /* GraphQL */ `
+  subscription OnCreateGames {
+    onCreateGames {
       id
-      gameID
       name
       wins
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
-      member {
-        id
-        name
-        owner
-        type
-        createdAt
-        updatedAt
-        wins {
-          nextToken
-        }
-      }
       owner
     }
   }
 `;
-export const onUpdateWin = /* GraphQL */ `
-  subscription OnUpdateWin {
-    onUpdateWin {
+export const onUpdateGames = /* GraphQL */ `
+  subscription OnUpdateGames {
+    onUpdateGames {
       id
-      gameID
       name
       wins
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
-      member {
-        id
-        name
-        owner
-        type
-        createdAt
-        updatedAt
-        wins {
-          nextToken
-        }
-      }
       owner
     }
   }
 `;
-export const onDeleteWin = /* GraphQL */ `
-  subscription OnDeleteWin {
-    onDeleteWin {
+export const onDeleteGames = /* GraphQL */ `
+  subscription OnDeleteGames {
+    onDeleteGames {
       id
-      gameID
       name
       wins
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
-      member {
-        id
-        name
-        owner
-        type
-        createdAt
-        updatedAt
-        wins {
-          nextToken
-        }
-      }
       owner
-    }
-  }
-`;
-export const onCreateGame = /* GraphQL */ `
-  subscription OnCreateGame {
-    onCreateGame {
-      id
-      name
-      owner
-      type
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateGame = /* GraphQL */ `
-  subscription OnUpdateGame {
-    onUpdateGame {
-      id
-      name
-      owner
-      type
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteGame = /* GraphQL */ `
-  subscription OnDeleteGame {
-    onDeleteGame {
-      id
-      name
-      owner
-      type
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -191,6 +101,9 @@ export const onCreateRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
     }
   }
@@ -205,6 +118,9 @@ export const onUpdateRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
     }
   }
@@ -219,6 +135,9 @@ export const onDeleteRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
     }
   }

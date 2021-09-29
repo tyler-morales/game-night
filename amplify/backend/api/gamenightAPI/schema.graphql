@@ -14,33 +14,12 @@ type Member
   ) {
   id: ID!
   name: String!
-  wins: [Win] @connection(name: "MemberWins")
   owner: String!
   type: String!
   createdAt: String!
 }
-type Win
+type Games
   @model
-  @auth(
-    rules: [
-      { allow: owner }
-      { allow: public, operations: [create, read, update, delete] }
-      { allow: private, operations: [create, read, update, delete] }
-    ]
-  ) {
-  id: ID!
-  gameID: ID!
-  name: String!
-  wins: String!
-  member: Member @connection(name: "MemberWins")
-}
-type Game
-  @model
-  @key(
-    name: "gamesByDate"
-    fields: ["type", "createdAt"]
-    queryField: "gamesByDate"
-  )
   @auth(
     rules: [
       { allow: owner }
@@ -50,9 +29,7 @@ type Game
   ) {
   id: ID!
   name: String!
-  owner: String!
-  type: String!
-  createdAt: String!
+  wins: String!
 }
 type RecordGame
   @model

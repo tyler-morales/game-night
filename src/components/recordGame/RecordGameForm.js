@@ -139,6 +139,7 @@ export const RecordGameForm = () => {
       initialValues={RecordGameValues}
       validationSchema={RecordGameSchema}
       onSubmit={(values, { setSubmitting }) => {
+        console.log(values)
         setSubmitting(false)
         addGameToDB(values)
         // updateWinner(values)

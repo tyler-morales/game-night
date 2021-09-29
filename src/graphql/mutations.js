@@ -12,19 +12,10 @@ export const createMember = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
-      wins {
-        items {
-          id
-          gameID
-          name
-          wins
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -39,19 +30,10 @@ export const updateMember = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
-      wins {
-        items {
-          id
-          gameID
-          name
-          wins
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -66,145 +48,64 @@ export const deleteMember = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
-      wins {
-        items {
-          id
-          gameID
-          name
-          wins
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
-export const createWin = /* GraphQL */ `
-  mutation CreateWin(
-    $input: CreateWinInput!
-    $condition: ModelWinConditionInput
+export const createGames = /* GraphQL */ `
+  mutation CreateGames(
+    $input: CreateGamesInput!
+    $condition: ModelGamesConditionInput
   ) {
-    createWin(input: $input, condition: $condition) {
+    createGames(input: $input, condition: $condition) {
       id
-      gameID
       name
       wins
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
-      member {
-        id
-        name
-        owner
-        type
-        createdAt
-        updatedAt
-        wins {
-          nextToken
-        }
-      }
       owner
     }
   }
 `;
-export const updateWin = /* GraphQL */ `
-  mutation UpdateWin(
-    $input: UpdateWinInput!
-    $condition: ModelWinConditionInput
+export const updateGames = /* GraphQL */ `
+  mutation UpdateGames(
+    $input: UpdateGamesInput!
+    $condition: ModelGamesConditionInput
   ) {
-    updateWin(input: $input, condition: $condition) {
+    updateGames(input: $input, condition: $condition) {
       id
-      gameID
       name
       wins
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
-      member {
-        id
-        name
-        owner
-        type
-        createdAt
-        updatedAt
-        wins {
-          nextToken
-        }
-      }
       owner
     }
   }
 `;
-export const deleteWin = /* GraphQL */ `
-  mutation DeleteWin(
-    $input: DeleteWinInput!
-    $condition: ModelWinConditionInput
+export const deleteGames = /* GraphQL */ `
+  mutation DeleteGames(
+    $input: DeleteGamesInput!
+    $condition: ModelGamesConditionInput
   ) {
-    deleteWin(input: $input, condition: $condition) {
+    deleteGames(input: $input, condition: $condition) {
       id
-      gameID
       name
       wins
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
-      member {
-        id
-        name
-        owner
-        type
-        createdAt
-        updatedAt
-        wins {
-          nextToken
-        }
-      }
       owner
-    }
-  }
-`;
-export const createGame = /* GraphQL */ `
-  mutation CreateGame(
-    $input: CreateGameInput!
-    $condition: ModelGameConditionInput
-  ) {
-    createGame(input: $input, condition: $condition) {
-      id
-      name
-      owner
-      type
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateGame = /* GraphQL */ `
-  mutation UpdateGame(
-    $input: UpdateGameInput!
-    $condition: ModelGameConditionInput
-  ) {
-    updateGame(input: $input, condition: $condition) {
-      id
-      name
-      owner
-      type
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteGame = /* GraphQL */ `
-  mutation DeleteGame(
-    $input: DeleteGameInput!
-    $condition: ModelGameConditionInput
-  ) {
-    deleteGame(input: $input, condition: $condition) {
-      id
-      name
-      owner
-      type
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -221,6 +122,9 @@ export const createRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
     }
   }
@@ -238,6 +142,9 @@ export const updateRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
     }
   }
@@ -255,6 +162,9 @@ export const deleteRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
     }
   }
