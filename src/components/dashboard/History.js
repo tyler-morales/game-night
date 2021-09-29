@@ -93,7 +93,7 @@ export const History = () => {
       {!loading ? (
         <>
           <div className="overscroll-auto overflow-auto h-80 flex flex-col gap-6">
-            {recordedGameItems.length > 0 ? (
+            {recordedGameItems.length !== 0 ? (
               <GameTable />
             ) : (
               <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">

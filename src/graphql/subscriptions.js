@@ -9,9 +9,6 @@ export const onCreateMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -24,9 +21,6 @@ export const onUpdateMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -39,55 +33,43 @@ export const onDeleteMember = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
 `;
-export const onCreateGames = /* GraphQL */ `
-  subscription OnCreateGames {
-    onCreateGames {
+export const onCreateGame = /* GraphQL */ `
+  subscription OnCreateGame {
+    onCreateGame {
       id
       name
-      wins
-      _version
-      _deleted
-      _lastChangedAt
+      owner
+      type
       createdAt
       updatedAt
-      owner
     }
   }
 `;
-export const onUpdateGames = /* GraphQL */ `
-  subscription OnUpdateGames {
-    onUpdateGames {
+export const onUpdateGame = /* GraphQL */ `
+  subscription OnUpdateGame {
+    onUpdateGame {
       id
       name
-      wins
-      _version
-      _deleted
-      _lastChangedAt
+      owner
+      type
       createdAt
       updatedAt
-      owner
     }
   }
 `;
-export const onDeleteGames = /* GraphQL */ `
-  subscription OnDeleteGames {
-    onDeleteGames {
+export const onDeleteGame = /* GraphQL */ `
+  subscription OnDeleteGame {
+    onDeleteGame {
       id
       name
-      wins
-      _version
-      _deleted
-      _lastChangedAt
+      owner
+      type
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -101,9 +83,6 @@ export const onCreateRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -118,9 +97,6 @@ export const onUpdateRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -135,9 +111,6 @@ export const onDeleteRecordGame = /* GraphQL */ `
       owner
       type
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }

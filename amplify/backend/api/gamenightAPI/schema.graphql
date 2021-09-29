@@ -18,8 +18,13 @@ type Member
   type: String!
   createdAt: String!
 }
-type Games
+type Game
   @model
+  @key(
+    name: "gamesByDate"
+    fields: ["type", "createdAt"]
+    queryField: "gamesByDate"
+  )
   @auth(
     rules: [
       { allow: owner }
@@ -29,7 +34,9 @@ type Games
   ) {
   id: ID!
   name: String!
-  wins: String!
+  owner: String!
+  type: String!
+  createdAt: String!
 }
 type RecordGame
   @model
