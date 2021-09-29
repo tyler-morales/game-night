@@ -10,6 +10,19 @@ export const onCreateMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
+      wins {
+        items {
+          id
+          gameId
+          name
+          wins
+          owner
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -22,6 +35,19 @@ export const onUpdateMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
+      wins {
+        items {
+          id
+          gameId
+          name
+          wins
+          owner
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -34,6 +60,94 @@ export const onDeleteMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
+      wins {
+        items {
+          id
+          gameId
+          name
+          wins
+          owner
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onCreateWin = /* GraphQL */ `
+  subscription OnCreateWin {
+    onCreateWin {
+      id
+      gameId
+      name
+      wins
+      owner
+      type
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onUpdateWin = /* GraphQL */ `
+  subscription OnUpdateWin {
+    onUpdateWin {
+      id
+      gameId
+      name
+      wins
+      owner
+      type
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onDeleteWin = /* GraphQL */ `
+  subscription OnDeleteWin {
+    onDeleteWin {
+      id
+      gameId
+      name
+      wins
+      owner
+      type
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
     }
   }
 `;

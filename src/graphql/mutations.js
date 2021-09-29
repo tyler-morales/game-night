@@ -13,6 +13,19 @@ export const createMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
+      wins {
+        items {
+          id
+          gameId
+          name
+          wins
+          owner
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -28,6 +41,19 @@ export const updateMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
+      wins {
+        items {
+          id
+          gameId
+          name
+          wins
+          owner
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -43,6 +69,103 @@ export const deleteMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
+      wins {
+        items {
+          id
+          gameId
+          name
+          wins
+          owner
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createWin = /* GraphQL */ `
+  mutation CreateWin(
+    $input: CreateWinInput!
+    $condition: ModelWinConditionInput
+  ) {
+    createWin(input: $input, condition: $condition) {
+      id
+      gameId
+      name
+      wins
+      owner
+      type
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const updateWin = /* GraphQL */ `
+  mutation UpdateWin(
+    $input: UpdateWinInput!
+    $condition: ModelWinConditionInput
+  ) {
+    updateWin(input: $input, condition: $condition) {
+      id
+      gameId
+      name
+      wins
+      owner
+      type
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deleteWin = /* GraphQL */ `
+  mutation DeleteWin(
+    $input: DeleteWinInput!
+    $condition: ModelWinConditionInput
+  ) {
+    deleteWin(input: $input, condition: $condition) {
+      id
+      gameId
+      name
+      wins
+      owner
+      type
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
     }
   }
 `;
