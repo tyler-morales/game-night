@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 import { API } from 'aws-amplify'
 
 import { createRecordGame } from '../../graphql/mutations'
+import { updateMember } from '../../graphql/mutations'
 
 import { GameOption } from '../recordGame/GameOption'
 import { PlayerCheckbox } from '../recordGame/PlayerCheckbox'
@@ -79,6 +80,28 @@ export const RecordGameForm = () => {
     }
   }
 
+  const updateWinner = async (values) => {
+    const { gamePlayed } = values
+
+    try {
+      await API.graphql({
+        query: updateMember,
+        variables: {
+          input: {
+            id: '38dfc4cd-6d8c-4f3b-8cb4-8bd2998e8a1d',
+            name: 'Patrick Star',
+          },
+        },
+      })
+
+      console.log('Updated wins succesfully')
+
+      // fetchMembers()
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   // Rendered Game Options
   const gamesOptions = games.map((game, index) => (
     <GameOption key={index} game={game} index={index} />
@@ -119,6 +142,7 @@ export const RecordGameForm = () => {
         console.log(values)
         setSubmitting(false)
         addGameToDB(values)
+        // updateWinner(values)
       }}
     >
       {({ errors, touched }) => (

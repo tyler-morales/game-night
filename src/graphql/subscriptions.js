@@ -46,48 +46,48 @@ export const onDeleteMember = /* GraphQL */ `
     }
   }
 `;
-export const onCreateGame = /* GraphQL */ `
-  subscription OnCreateGame {
-    onCreateGame {
+export const onCreateGames = /* GraphQL */ `
+  subscription OnCreateGames {
+    onCreateGames {
       id
       name
-      owner
-      type
-      createdAt
+      wins
       _version
       _deleted
       _lastChangedAt
+      createdAt
       updatedAt
+      owner
     }
   }
 `;
-export const onUpdateGame = /* GraphQL */ `
-  subscription OnUpdateGame {
-    onUpdateGame {
+export const onUpdateGames = /* GraphQL */ `
+  subscription OnUpdateGames {
+    onUpdateGames {
       id
       name
-      owner
-      type
-      createdAt
+      wins
       _version
       _deleted
       _lastChangedAt
+      createdAt
       updatedAt
+      owner
     }
   }
 `;
-export const onDeleteGame = /* GraphQL */ `
-  subscription OnDeleteGame {
-    onDeleteGame {
+export const onDeleteGames = /* GraphQL */ `
+  subscription OnDeleteGames {
+    onDeleteGames {
       id
       name
-      owner
-      type
-      createdAt
+      wins
       _version
       _deleted
       _lastChangedAt
+      createdAt
       updatedAt
+      owner
     }
   }
 `;
