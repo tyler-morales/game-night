@@ -57,15 +57,17 @@ export const RecordGameForm = () => {
   )
 
   const addGameToDB = (values) => {
+    console.log('Adding game to db')
     try {
       const recordGameID = uuid()
       const { gamePlayed, players, winners } = values
+      console.log(winners.map((winner) => winner.split(',')[1]))
 
       const recordGameInfo = {
         id: recordGameID,
-        name: gamePlayed,
+        name: gamePlayed.split(',')[1],
         players: players,
-        winners: winners,
+        winners: winners.map((winner) => winner.split(',')[1]),
         owner: user.username,
         type: 'RecordGame',
       }
@@ -196,8 +198,8 @@ export const RecordGameForm = () => {
       validationSchema={RecordGameSchema}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(false)
-        createMemberWin(values)
         addGameToDB(values)
+        createMemberWin(values)
       }}
     >
       {({ errors, touched }) => (
