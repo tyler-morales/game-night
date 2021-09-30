@@ -57,11 +57,9 @@ export const RecordGameForm = () => {
   )
 
   const addGameToDB = (values) => {
-    console.log('Adding game to db')
     try {
       const recordGameID = uuid()
       const { gamePlayed, players, winners } = values
-      console.log(winners.map((winner) => winner.split(',')[1]))
 
       const recordGameInfo = {
         id: recordGameID,
@@ -114,7 +112,6 @@ export const RecordGameForm = () => {
         )
         totalWins = totalWins[0].wins
         updateMemberWin(winId, winnerName, totalWins)
-        console.log(`${winnerName} has won ${gamePlayedName} already`)
       } else {
         // player has not won this game before; create a new Win
         await API.graphql({
@@ -131,9 +128,6 @@ export const RecordGameForm = () => {
           },
           authMode: 'AMAZON_COGNITO_USER_POOLS',
         })
-        console.log(
-          `${winnerName} has won ${gamePlayedName} for the first time`
-        )
       }
     } catch (err) {
       console.error(err)
@@ -141,7 +135,6 @@ export const RecordGameForm = () => {
   }
 
   const updateMemberWin = async (id, name, wins) => {
-    console.log(`Updating ${name} @ ${id}`)
     wins += 1
     try {
       // Update the Win with the corresponding winner
