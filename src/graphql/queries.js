@@ -10,6 +10,19 @@ export const getMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
+      wins {
+        items {
+          id
+          gameId
+          name
+          wins
+          owner
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -27,6 +40,9 @@ export const listMembers = /* GraphQL */ `
         type
         createdAt
         updatedAt
+        wins {
+          nextToken
+        }
       }
       nextToken
     }
@@ -56,6 +72,63 @@ export const membersByDate = /* GraphQL */ `
         type
         createdAt
         updatedAt
+        wins {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getWin = /* GraphQL */ `
+  query GetWin($id: ID!) {
+    getWin(id: $id) {
+      id
+      gameId
+      name
+      wins
+      owner
+      type
+      createdAt
+      updatedAt
+      member {
+        id
+        name
+        owner
+        type
+        createdAt
+        updatedAt
+        wins {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const listWins = /* GraphQL */ `
+  query ListWins(
+    $filter: ModelWinFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listWins(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        gameId
+        name
+        wins
+        owner
+        type
+        createdAt
+        updatedAt
+        member {
+          id
+          name
+          owner
+          type
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }

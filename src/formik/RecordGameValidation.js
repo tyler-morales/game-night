@@ -9,7 +9,7 @@ const RecordGameValues = {
 
 // Yup validation
 const RecordGameSchema = Yup.object().shape({
-  // gamePlayed: Yup.array(),
+  // gamePlayed: Yup.array().min(1),
   gamePlayed: Yup.string().required('Required'),
   players: Yup.array().min(2),
   winners: Yup.array().min(1),

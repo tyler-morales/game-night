@@ -5,8 +5,9 @@ import { v4 as uuid } from 'uuid'
 import { useHistory } from 'react-router-dom'
 import { API } from 'aws-amplify'
 
-import { createRecordGame } from '../../graphql/mutations'
-import { updateMember } from '../../graphql/mutations'
+import { createWin, updateWin, createRecordGame } from '../../graphql/mutations'
+
+import { getMember } from '../../graphql/queries'
 
 import { GameOption } from '../recordGame/GameOption'
 import { PlayerCheckbox } from '../recordGame/PlayerCheckbox'
@@ -62,9 +63,9 @@ export const RecordGameForm = () => {
 
       const recordGameInfo = {
         id: recordGameID,
-        name: gamePlayed,
+        name: gamePlayed.split(',')[1],
         players: players,
-        winners: winners,
+        winners: winners.map((winner) => winner.split(',')[1]),
         owner: user.username,
         type: 'RecordGame',
       }
@@ -80,23 +81,73 @@ export const RecordGameForm = () => {
     }
   }
 
-  const updateWinner = async (values) => {
-    const { gamePlayed } = values
+  const createMemberWin = async (values) => {
+    const { gamePlayed, winners } = values
+    const gameId = gamePlayed.split(',')[0]
+    const gamePlayedName = gamePlayed.split(',')[1]
 
+    const winnerId = winners.map((winner) => winner.split(',')[0])
+    const winnerName = winners.map((winner) => winner.split(',')[1])
+
+    // get all gameId's from the winner
     try {
-      await API.graphql({
-        query: updateMember,
-        variables: {
-          input: {
-            id: '38dfc4cd-6d8c-4f3b-8cb4-8bd2998e8a1d',
-            name: 'Patrick Star',
-          },
-        },
+      let memberWins = await API.graphql({
+        query: getMember,
+        variables: { id: winnerId[0] },
       })
 
-      console.log('Updated wins succesfully')
+      let gameIds = memberWins.data.getMember.wins.items.map((id) => id.gameId)
 
-      // fetchMembers()
+      // check if the game that was won already exists for the winner
+      if (gameIds.includes(gameId)) {
+        // player already won the same game; no need to create a new record; update the record instead
+        // Find the Win ID
+        let winId = memberWins.data.getMember.wins.items.filter((game) =>
+          game.gameId.includes(gameId)
+        )
+        winId = winId[0].id
+        // Get current wins for the specified game
+        let totalWins = memberWins.data.getMember.wins.items.filter((game) =>
+          game.gameId.includes(gameId)
+        )
+        totalWins = totalWins[0].wins
+        updateMemberWin(winId, winnerName, totalWins)
+      } else {
+        // player has not won this game before; create a new Win
+        await API.graphql({
+          query: createWin,
+          variables: {
+            input: {
+              winMemberId: winnerId[0], // Member ID
+              gameId,
+              name: gamePlayedName,
+              owner: user.username,
+              wins: 1, // Set initial wins to 1 (because they won!!!)
+              type: 'Win',
+            },
+          },
+          authMode: 'AMAZON_COGNITO_USER_POOLS',
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const updateMemberWin = async (id, name, wins) => {
+    wins += 1
+    try {
+      // Update the Win with the corresponding winner
+      await API.graphql({
+        query: updateWin,
+        variables: {
+          input: {
+            id, // Win ID
+            wins: wins, // Increment wins by 1
+          },
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      })
     } catch (err) {
       console.error(err)
     }
@@ -139,10 +190,9 @@ export const RecordGameForm = () => {
       initialValues={RecordGameValues}
       validationSchema={RecordGameSchema}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values)
         setSubmitting(false)
         addGameToDB(values)
-        // updateWinner(values)
+        createMemberWin(values)
       }}
     >
       {({ errors, touched }) => (

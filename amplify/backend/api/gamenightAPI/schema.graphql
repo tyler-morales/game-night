@@ -14,6 +14,25 @@ type Member
   ) {
   id: ID!
   name: String!
+  wins: [Win] @connection(name: "MemberWins")
+  owner: String!
+  type: String!
+  createdAt: String!
+}
+type Win
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]
+  ) {
+  id: ID!
+  gameId: ID!
+  name: String!
+  member: Member @connection(name: "MemberWins")
+  wins: Int
   owner: String!
   type: String!
   createdAt: String!
