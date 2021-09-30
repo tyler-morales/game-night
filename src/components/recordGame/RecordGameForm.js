@@ -197,8 +197,7 @@ export const RecordGameForm = () => {
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(false)
         createMemberWin(values)
-        // updateMemberWin(values)
-        // addGameToDB(values)
+        addGameToDB(values)
       }}
     >
       {({ errors, touched }) => (
