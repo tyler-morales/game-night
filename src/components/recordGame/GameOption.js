@@ -1,7 +1,8 @@
 export const GameOption = ({ game }) => {
+  const { name, id } = game
   return (
-    <option value={game.name} className="rounded-md">
-       {game.name}
+    <option value={`${id},${name}`} className="rounded-md">
+       {name}
     </option>
   )
 }
