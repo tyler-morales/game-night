@@ -9,6 +9,8 @@ import useLoading from '../../hooks/useLoading'
 import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
+import './tablestyles.css'
+
 // import useUser from '../../hooks/useUser'
 
 export const History = () => {
@@ -54,16 +56,19 @@ export const History = () => {
 
     return (
       <tr className="w-full">
-        <th className="text-left text-base font-thin py-3 ">
-          {game.createdAt.slice(0, 10)}
-        </th>
-        <th className="text-left text-base font-thin">{game.name}</th>
-        <th className="text-left text-base font-thin">
-          {formatArray(game.winners)}
-        </th>
-        <th className="text-left text-base font-thin">
-          {formatArray(game.players)}
-        </th>
+        <td data-th="Date" className="text-left text-base font-thin lg:py-3">
+          {/* TODO: When screen is less than 480 px, put two spaces in the span elements &nbsp;&nbsp; */}
+          <span>{game.createdAt.slice(0, 10)}</span>
+        </td>
+        <td data-th="Name" className="text-left text-base font-thin">
+          <span>{game.name}</span>
+        </td>
+        <td data-th="Winner" className="text-left text-base font-thin">
+          <span>{formatArray(game.winners)}</span>
+        </td>
+        <td data-th="Players" className="text-left text-base font-thin">
+          <span>{formatArray(game.players)}</span>
+        </td>
       </tr>
     )
   }
@@ -92,7 +97,7 @@ export const History = () => {
     <DashboardItemContainer title="Game History">
       {!loading ? (
         <>
-          <div className="overscroll-auto overflow-auto h-80 flex flex-col gap-6">
+          <div className="overscroll-auto overflow-auto h-5/6 md:h-80 flex flex-col gap-6">
             {recordedGameItems.length !== 0 ? (
               <GameTable />
             ) : (

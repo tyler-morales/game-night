@@ -24,7 +24,7 @@ const Stats = () => {
 
   return (
     <Dashboard>
-      <h1>{user === null ? <div>Loading...</div> : <Grid />}</h1>
+      <div>{user === null ? <div>Loading...</div> : <Grid />}</div>
     </Dashboard>
   )
 }
