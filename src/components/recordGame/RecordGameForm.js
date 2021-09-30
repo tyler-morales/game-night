@@ -5,12 +5,7 @@ import { v4 as uuid } from 'uuid'
 import { useHistory } from 'react-router-dom'
 import { API } from 'aws-amplify'
 
-import {
-  createWin,
-  updateWin,
-  createRecordGame,
-  updateMember,
-} from '../../graphql/mutations'
+import { createWin, updateWin, createRecordGame } from '../../graphql/mutations'
 
 import { getMember } from '../../graphql/queries'
 
@@ -103,20 +98,19 @@ export const RecordGameForm = () => {
 
       let gameIds = memberWins.data.getMember.wins.items.map((id) => id.gameId)
 
-      // Find the Win ID
-      let winId = memberWins.data.getMember.wins.items.filter((game) =>
-        game.gameId.includes(gameId)
-      )
-      winId = winId[0].id
-
-      // Get current wins for the specified game
-      let totalWins = memberWins.data.getMember.wins.items.filter((game) =>
-        game.gameId.includes(gameId)
-      )
-      totalWins = totalWins[0].wins
       // check if the game that was won already exists for the winner
       if (gameIds.includes(gameId)) {
         // player already won the same game; no need to create a new record; update the record instead
+        // Find the Win ID
+        let winId = memberWins.data.getMember.wins.items.filter((game) =>
+          game.gameId.includes(gameId)
+        )
+        winId = winId[0].id
+        // Get current wins for the specified game
+        let totalWins = memberWins.data.getMember.wins.items.filter((game) =>
+          game.gameId.includes(gameId)
+        )
+        totalWins = totalWins[0].wins
         updateMemberWin(winId, winnerName, totalWins)
         console.log(`${winnerName} has won ${gamePlayedName} already`)
       } else {
