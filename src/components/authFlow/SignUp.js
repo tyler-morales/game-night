@@ -68,15 +68,15 @@ function SignUp({ updateFormState, signUp }) {
             Track and view every family game night.
           </h2>
           <ul>
-            <li className="text-white font-body mb-5">
+            <li id='emoji-1' className="text-white font-body mb-5">
               <span className="font-bold"> Document EVERY game</span>. Easily
               track each game your family plays.
             </li>
-            <li className="text-white font-body mb-5">
+            <li id='emoji-2' className="text-white font-body mb-5">
               <span className="font-bold"> Discover new insights</span>. Uncover
               who has the most wins overall wins.
             </li>
-            <li className="text-white font-body">
+            <li id='emoji-3' className="text-white font-body">
               <span className="font-bold"> Digitize your boardgame</span>{' '}
               catalogue. Catagorize & store your board games.
             </li>

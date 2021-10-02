@@ -53,19 +53,19 @@ body {
   font-family: 'Rubik', sans-serif;
 }
 
-li:nth-child(1):before {
-  content: '✍️';
+#emoji-1:before {
+  /* content: '✍️'; */
   margin-left: 0;
   margin-right: 15px;
 }
 
-li:nth-child(2):before {
+#emoji-2:before {
   content: '📊';
   margin-left: 0;
   margin-right: 15px;
 }
 
-li:nth-child(3):before {
+#emoji-3:before {
   content: '📚';
   margin-left: 0;
   margin-right: 15px;
