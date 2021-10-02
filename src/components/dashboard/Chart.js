@@ -36,7 +36,10 @@ export const Chart = (gameId) => {
       let filteredWinsByGame = filteredWins.data.listWins.items
 
       filteredWinsByGame = filteredWinsByGame.map((item) => {
-        const winnerObject = { name: item.member.name, wins: item.wins }
+        const winnerObject = {
+          name: item.member.name,
+          Wins: item.wins,
+        }
         return winnerObject
       })
 
@@ -49,8 +52,6 @@ export const Chart = (gameId) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
-        // width={500}
-        // height={300}
         data={data}
         margin={{
           top: 0,
@@ -63,8 +64,8 @@ export const Chart = (gameId) => {
         <XAxis dataKey="name" style={{ fill: '#fff', fontSize: 20 }} />
         <YAxis style={{ fill: '#fff', fontSize: 20 }} />
         <Tooltip />
-        <Legend style={{ fontSize: 10 }} />
-        <Bar dataKey="wins" fill="#5cd5dd" />
+        <Legend wrapperStyle={{ fontSize: '20px' }} />
+        <Bar dataKey="Wins" fill="#5cd5dd" />
       </BarChart>
     </ResponsiveContainer>
   )
