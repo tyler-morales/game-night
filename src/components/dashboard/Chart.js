@@ -17,17 +17,18 @@ import { listWins } from '../../graphql/queries'
 export const Chart = (gameId) => {
   const [data, setData] = useState([])
 
+  useEffect(() => {
+    fetchMemberWins()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameId])
+
   const fetchMemberWins = async () => {
     try {
-      // dataLoaded()
-
-      gameId = '00588874-e054-4154-afd8-736b3a5a3112'
-
       let filteredWins = await API.graphql({
         query: listWins,
         variables: {
           filter: {
-            gameId: { contains: gameId },
+            gameId: { contains: gameId.value },
           },
         },
       })
@@ -44,11 +45,6 @@ export const Chart = (gameId) => {
       console.error(err)
     }
   }
-
-  useEffect(() => {
-    fetchMemberWins()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <ResponsiveContainer width="100%" height="100%">
