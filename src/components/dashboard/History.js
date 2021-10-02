@@ -27,12 +27,12 @@ export const History = () => {
     try {
       dataLoaded()
 
-      let recordedGameata = await API.graphql({
+      let recordedGamedata = await API.graphql({
         query: recordGamesByDate,
         variables: { limit: 100, type: 'RecordGame', sortDirection: 'DESC' },
       })
 
-      let allRecordedGamess = recordedGameata.data.recordGamesByDate.items
+      let allRecordedGamess = recordedGamedata.data.recordGamesByDate.items
 
       /* update the members array in the local state */
       setFilteredRecordedGamess(allRecordedGamess)
