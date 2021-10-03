@@ -1,5 +1,5 @@
-import React from 'react'
-import HeatMap from '@uiw/react-heat-map';
+import HeatMap from '@uiw/react-heat-map'
+import Tooltip from '@uiw/react-tooltip'
 
 export const ChartHeatmap = () => {
   const value = [
@@ -12,19 +12,24 @@ export const ChartHeatmap = () => {
     { date: '2016/05/08', count: 32 },
   ]
   return (
-    <HeatMap
-      value={value}
-      width={600}
-      style={{ color: '#ad001d' }}
-      startDate={new Date('2016/01/01')}
-      panelColors={{
-        0: '#f4decd',
-        2: '#e4b293',
-        4: '#d48462',
-        10: '#c2533a',
-        20: '#ad001d',
-        30: '#000',
-      }}
-    />
+    <div>
+      <HeatMap
+        value={value}
+        style={{ width: '100%' }}
+        startDate={new Date('2016/01/01')}
+        rectRender={(props, data) => {
+          // if (!data.count) return <rect {...props} />;
+          return (
+            <Tooltip
+              key={props.key}
+              placement="top"
+              content={`count: ${data.count || 0}`}
+            >
+              <rect {...props} />
+            </Tooltip>
+          )
+        }}
+      />
+    </div>
   )
 }
