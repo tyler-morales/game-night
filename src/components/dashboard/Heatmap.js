@@ -3,28 +3,26 @@ import { useState, useEffect } from 'react'
 import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
-import useLoading from '../../hooks/useLoading'
+// import useLoading from '../../hooks/useLoading'
 import useGetRecords from '../../hooks/useGetRecords'
 import { ChartHeatmap } from '../charts/ChartHeatmap'
 
 export const Heatmap = () => {
-  const { loading, dataLoaded } = useLoading()
+  // const { loading, dataLoaded } = useLoading()
   const [dateRecords, setDateRecords] = useState()
-  const { data } = useGetRecords()
+  const { data, loading } = useGetRecords()
 
   useEffect(() => {
     fetchMemberWins()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [data])
 
   const fetchMemberWins = async () => {
     try {
-      dataLoaded()
-
       let records = await data
 
-      records = await records.map((item) =>
+      records = records.map((item) =>
         [item.createdAt.split('T')[0]].map((item) => item.replaceAll('-', '/'))
       )
 
