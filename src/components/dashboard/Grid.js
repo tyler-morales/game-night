@@ -1,5 +1,6 @@
 import React from 'react'
 import { GameDistribution } from './GameDistribution'
+import { Heatmap } from './Heatmap'
 import { History } from './History'
 import { Leaderboard } from './Leaderboard'
 
@@ -12,6 +13,9 @@ export const Grid = () => {
       </div>
       <div className="grid xl:grid-cols-3 gap-10">
         <GameDistribution />
+        <div className="xl:col-span-2">
+          <Heatmap />
+        </div>
       </div>
     </div>
   )
