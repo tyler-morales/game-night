@@ -1,30 +1,30 @@
 import HeatMap from '@uiw/react-heat-map'
 import Tooltip from '@uiw/react-tooltip'
 
-export const ChartHeatmap = () => {
-  const value = [
-    { date: '2021/01/01', count: 1 },
-    { date: '2021/01/02', count: 2 },
-    { date: '2021/01/03', count: 3 },
-    { date: '2021/01/04', count: 4 },
-    { date: '2021/01/05', count: 5 },
-    { date: '2021/01/11', count: 2 },
-    { date: '2021/04/12', count: 2 },
-    ...[...Array(56)].map((_, idx) => ({
-      date: `2021/08/${idx + 20}`,
-      count: (idx += 1),
-    })),
+export const ChartHeatmap = ({ data }) => {
+  // const value = [
+  //   { date: '2021/01/01', count: 1 },
+  //   { date: '2021/01/02', count: 2 },
+  //   { date: '2021/01/03', count: 3 },
+  //   { date: '2021/01/04', count: 4 },
+  //   { date: '2021/01/05', count: 5 },
+  //   { date: '2021/01/11', count: 2 },
+  //   { date: '2021/04/12', count: 2 },
+  //   ...[...Array(56)].map((_, idx) => ({
+  //     date: `2021/08/${idx + 20}`,
+  //     count: (idx += 1),
+  //   })),
 
-    { date: '2021/05/01', count: 5 },
-    { date: '2021/05/02', count: 5 },
-    { date: '2021/05/03', count: 1 },
-    { date: '2021/05/04', count: 6 },
-    { date: '2021/05/08', count: 1 },
-  ]
+  //   { date: '2021/05/01', count: 5 },
+  //   { date: '2021/05/02', count: 5 },
+  //   { date: '2021/05/03', count: 1 },
+  //   { date: '2021/05/04', count: 6 },
+  //   { date: '2021/05/08', count: 1 },
+  // ]
   return (
     <div>
       <HeatMap
-        value={value}
+        value={data}
         style={{ width: '100%', color: 'white' }}
         startDate={new Date('2021/01/01')}
         // endDate={new Date('2021/12/30')}

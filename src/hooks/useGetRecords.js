@@ -6,7 +6,7 @@ import { listRecordGames } from '../graphql/queries'
 
 const useLoadRecords = () => {
   const [loading, setLoading] = useState(false)
-  const [records, updateRecords] = useState()
+  const [data, setData] = useState()
 
   useEffect(() => {
     fetchData()
@@ -32,12 +32,12 @@ const useLoadRecords = () => {
   // filter data by owner
   const filterByOwner = async (allMembers) => {
     const { username } = await Auth.currentAuthenticatedUser()
-    const myMemberData = allMembers.filter((p) => p.owner === username)
+    const filteredData = allMembers.filter((p) => p.owner === username)
 
-    updateRecords(myMemberData)
+    setData(filteredData)
   }
 
-  return { records, loading }
+  return { data, loading }
 }
 
 export default useLoadRecords
