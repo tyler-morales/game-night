@@ -4,10 +4,14 @@ import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
 import useLoading from '../../hooks/useLoading'
+import useGetRecords from '../../hooks/useGetRecords'
 import { ChartHeatmap } from '../charts/ChartHeatmap'
 
 export const Heatmap = () => {
   const { loading, dataLoaded } = useLoading()
+  const { records } = useGetRecords()
+
+  console.log(records)
 
   useEffect(() => {
     fetchMemberWins()
