@@ -83,7 +83,7 @@ export const History = () => {
         <tbody>
           <tr className="w-full">
             <th className="text-left text-base pb-3">Date</th>
-            <th className="text-left text-base pb-3">Game Name</th>
+            <th className="text-left text-base pb-3">Name</th>
             <th className="text-left text-base pb-3">Winners</th>
             <th className="text-left text-base pb-3">Players</th>
           </tr>
@@ -97,7 +97,7 @@ export const History = () => {
     <DashboardItemContainer title="Game History">
       {!loading ? (
         <>
-          <div className="overscroll-auto overflow-auto h-5/6 md:h-80 flex flex-col gap-6">
+          <div className="overscroll-auto overflow-auto max-h-500 md:h-80 flex flex-col gap-6">
             {recordedGameItems.length !== 0 ? (
               <GameTable />
             ) : (
