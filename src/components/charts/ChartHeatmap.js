@@ -5,7 +5,7 @@ import Tooltip from '@uiw/react-tooltip'
 export const ChartHeatmap = ({ period, data }) => {
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
-  console.log(startDate, endDate, period)
+  const [selected, setSelected] = useState('')
 
   // Get date info
   const date = new Date()
@@ -41,6 +41,10 @@ export const ChartHeatmap = ({ period, data }) => {
         endDate={new Date(endDate)}
         legendCellSize={20}
         rectSize={10}
+        legendRender={(props) => <rect {...props} y={props.y + 10} rx="2" />}
+        rectProps={{
+          rx: 2,
+        }}
         panelColors={{
           0: '#d5f4f6',
           1: '#80dee5',
@@ -57,7 +61,12 @@ export const ChartHeatmap = ({ period, data }) => {
                 data.count > 1 ? 'games' : 'game'
               } Played on ${data.date} `}
             >
-              <rect {...props} />
+              <rect
+                {...props}
+                onClick={() => {
+                  setSelected(data.date === selected ? '' : data.date)
+                }}
+              />
             </Tooltip>
           )
         }}

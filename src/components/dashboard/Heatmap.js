@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
-// import useLoading from '../../hooks/useLoading'
 import useGetRecords from '../../hooks/useGetRecords'
 import { ChartHeatmap } from '../charts/ChartHeatmap'
 
