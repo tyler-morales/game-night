@@ -53,7 +53,9 @@ export const ChartHeatmap = ({ period, data }) => {
             <Tooltip
               key={props.key}
               placement="top"
-              content={`Games Played: ${data.count || 0} | ${data.date} `}
+              content={`${data.count || 0} ${
+                data.count > 1 ? 'games' : 'game'
+              } Played on ${data.date} `}
             >
               <rect {...props} />
             </Tooltip>
