@@ -1,11 +1,4 @@
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from 'recharts'
+import { PieChart, Pie, ResponsiveContainer, Tooltip } from 'recharts'
 
 export const ChartPie = ({ data }) => {
   const RADIAN = Math.PI / 180

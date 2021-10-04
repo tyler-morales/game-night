@@ -1,42 +1,55 @@
+import { useState, useEffect } from 'react'
 import HeatMap from '@uiw/react-heat-map'
 import Tooltip from '@uiw/react-tooltip'
 
 export const ChartHeatmap = ({ data }) => {
-  // const value = [
-  //   { date: '2021/01/01', count: 1 },
-  //   { date: '2021/01/02', count: 2 },
-  //   { date: '2021/01/03', count: 3 },
-  //   { date: '2021/01/04', count: 4 },
-  //   { date: '2021/01/05', count: 5 },
-  //   { date: '2021/01/11', count: 2 },
-  //   { date: '2021/04/12', count: 2 },
-  //   ...[...Array(56)].map((_, idx) => ({
-  //     date: `2021/08/${idx + 20}`,
-  //     count: (idx += 1),
-  //   })),
+  const [startDate, setStartDate] = useState()
+  const [endDate, setEndDate] = useState()
 
-  //   { date: '2021/05/01', count: 5 },
-  //   { date: '2021/05/02', count: 5 },
-  //   { date: '2021/05/03', count: 1 },
-  //   { date: '2021/05/04', count: 6 },
-  //   { date: '2021/05/08', count: 1 },
-  // ]
+  // Get date info
+  const date = new Date()
+  let [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()]
+
+  // Year to date of Current year
+  const setDates = (period = 'PREVIOUS_YEAR') => {
+    if (period === 'YEAR_TO_DATE') {
+      const newYear = `${year}/01/01`
+      const lastDay = `${year}/12/31`
+
+      setStartDate(newYear)
+      setEndDate(lastDay)
+    }
+
+    // Past year Year prior - Current date
+    if (period === 'PREVIOUS_YEAR') {
+      const today = `${year}/${month + 1}/${day}`
+      const oneYearAgo = `${year - 1}/${month + 1}/${day}`
+
+      setStartDate(oneYearAgo)
+      setEndDate(today)
+    }
+  }
+
+  useEffect(() => {
+    setDates()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div>
       <HeatMap
         value={data}
-        style={{ width: '100%', color: 'white' }}
-        startDate={new Date('2021/01/01')}
-        // endDate={new Date('2021/12/30')}
-        // legendCellSize={20}
-        // rectSize={18}
+        style={{ width: '100%', color: 'white', overflow: 'visible' }}
+        startDate={new Date(startDate)}
+        endDate={new Date(endDate)}
+        legendCellSize={20}
+        rectSize={10}
         panelColors={{
           0: '#d5f4f6',
-          2: '#80dee5',
-          3: '#2cc9d3',
+          1: '#80dee5',
+          2: '#2cc9d3',
+          3: '#49A6AC',
           4: '#1a787f',
-          5: '#49A6AC',
-          30: '#209097',
         }}
         rectRender={(props, data) => {
           return (

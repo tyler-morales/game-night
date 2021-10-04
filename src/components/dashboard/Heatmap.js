@@ -8,15 +8,14 @@ import useGetRecords from '../../hooks/useGetRecords'
 import { ChartHeatmap } from '../charts/ChartHeatmap'
 
 export const Heatmap = () => {
-  // const { loading, dataLoaded } = useLoading()
-  const [dateRecords, setDateRecords] = useState()
+  const [dateRecords, setDateRecords] = useState(0)
   const { data, loading } = useGetRecords()
 
   useEffect(() => {
     fetchMemberWins()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  }, [loading, data])
 
   const fetchMemberWins = async () => {
     try {
@@ -43,11 +42,11 @@ export const Heatmap = () => {
   }
 
   return (
-    <DashboardItemContainer title="Calendar">
-      {!loading ? (
+    <DashboardItemContainer title="Game Activity">
+      {dateRecords ? (
         <div>
           <div className="md:h-80 flex flex-col gap-6">
-            {true ? (
+            {dateRecords.length > 0 ? (
               <ChartHeatmap data={dateRecords} />
             ) : (
               <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
