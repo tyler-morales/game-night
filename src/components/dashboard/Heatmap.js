@@ -11,6 +11,9 @@ export const Heatmap = () => {
   const [dateRecords, setDateRecords] = useState(0)
   const { data, loading } = useGetRecords()
 
+  const [selectOption, setSelectOption] = useState('YEAR_TO_DATE')
+  const [optionName, setOptionName] = useState()
+
   useEffect(() => {
     fetchMemberWins()
 
@@ -41,13 +44,36 @@ export const Heatmap = () => {
     }
   }
 
+  const Options = () => {
+    const handleChange = (e) => {
+      setSelectOption(e.target.value)
+      setOptionName(e.target.value)
+    }
+
+    return (
+      <select
+        onChange={handleChange}
+        className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 bg-quad rounded-md text-base text-primary ml-8 px-2 py-1 w-52"
+        name="heatMapDateSelection"
+        id="heatmap-date-select"
+        value={optionName}
+      >
+        <option value="YEAR_TO_DATE">2021</option>
+        <option value="PREVIOUS_YEAR">Past Year</option>
+      </select>
+    )
+  }
+
   return (
-    <DashboardItemContainer title="Game Activity">
+    <DashboardItemContainer title="Game Activity" options={<Options />}>
       {dateRecords ? (
         <div>
           <div className="md:h-80 flex flex-col gap-6">
             {dateRecords.length > 0 ? (
-              <ChartHeatmap data={dateRecords} />
+              <>
+                <ChartHeatmap period={selectOption} data={dateRecords} />
+                <hr className="border-1 border-quad" />
+              </>
             ) : (
               <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
                 <h4 className="text-2xl border-b-2 border-quad pb-4">

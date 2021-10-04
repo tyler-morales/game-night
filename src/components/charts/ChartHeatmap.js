@@ -2,16 +2,17 @@ import { useState, useEffect } from 'react'
 import HeatMap from '@uiw/react-heat-map'
 import Tooltip from '@uiw/react-tooltip'
 
-export const ChartHeatmap = ({ data }) => {
+export const ChartHeatmap = ({ period, data }) => {
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
+  console.log(startDate, endDate, period)
 
   // Get date info
   const date = new Date()
   let [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()]
 
-  // Year to date of Current year
-  const setDates = (period = 'PREVIOUS_YEAR') => {
+  useEffect(() => {
+    // Year to date of Current year
     if (period === 'YEAR_TO_DATE') {
       const newYear = `${year}/01/01`
       const lastDay = `${year}/12/31`
@@ -28,12 +29,8 @@ export const ChartHeatmap = ({ data }) => {
       setStartDate(oneYearAgo)
       setEndDate(today)
     }
-  }
-
-  useEffect(() => {
-    setDates()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [period])
 
   return (
     <div>
