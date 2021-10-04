@@ -15,26 +15,20 @@ const useLoadRecords = () => {
 
   const fetchData = async () => {
     try {
+      const { username } = await Auth.currentAuthenticatedUser()
+
       let recordData = await API.graphql({
         query: listRecordGames,
-        variables: { limit: 100 },
+        variables: { filter: { owner: { eq: username } } },
       })
 
       let allRecords = recordData.data.listRecordGames.items
 
       setLoading(false)
-      filterByOwner(allRecords)
+      setData(allRecords)
     } catch (err) {
       console.error(err)
     }
-  }
-
-  // filter data by owner
-  const filterByOwner = async (allMembers) => {
-    const { username } = await Auth.currentAuthenticatedUser()
-    const filteredData = allMembers.filter((p) => p.owner === username)
-
-    setData(filteredData)
   }
 
   return { data, loading }
