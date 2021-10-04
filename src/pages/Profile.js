@@ -17,7 +17,7 @@ function Profile() {
       ) : (
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-10">
           {/* Account Info */}
-          <div>
+          <div className="lg:col-span-2 xl:col-span-1">
             <h2 className="text-white text-2xl text-left mb-5">Account Info</h2>
             <div className="flex flex-col gap-3 bg-primary p-5 text-left rounded-lg shadow-lg">
               {/* TODO: Add dyamic avatar */}
