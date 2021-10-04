@@ -5,6 +5,8 @@
   "dependencies": {
     "@aws-amplify/datastore": "^3.4.3",
     "@craco/craco": "^6.2.0",
+    "@uiw/react-heat-map": "^1.4.8",
+    "@uiw/react-tooltip": "^4.9.7",
     "aws-amplify": "^4.2.9",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",

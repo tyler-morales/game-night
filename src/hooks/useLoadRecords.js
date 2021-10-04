@@ -5,7 +5,7 @@ import { API } from 'aws-amplify'
 import { listRecordGames } from '../graphql/queries'
 
 const useLoadRecords = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [records, updateRecords] = useState()
 
   useEffect(() => {
