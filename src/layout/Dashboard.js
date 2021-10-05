@@ -15,6 +15,8 @@ import {
 import { FiLoader } from 'react-icons/fi'
 
 export const Dashboard = ({ children }) => {
+  const [logout, setLogout] = useState(false)
+
   const [hamburger, setHamburger] = useState(false)
   useEffect(() => {
     checkUser()
@@ -22,6 +24,7 @@ export const Dashboard = ({ children }) => {
       const { payload } = data
       if (payload.event === 'signOut') {
         setUser(null)
+        setLogout(false)
       }
     })
   }, [])
@@ -49,13 +52,11 @@ export const Dashboard = ({ children }) => {
   const updateSize = () => setSize(window.innerWidth)
   useEffect(() => (window.onresize = updateSize))
 
-  const [logout, setLogout] = useState(false)
-
   // sign out user
   function signOut() {
     try {
       Auth.signOut()
-      logout ? setLogout(false) : setLogout(true)
+      setLogout(true)
     } catch (err) {
       console.error(`Error logging out ${err}`)
     }
