@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { API, Auth } from 'aws-amplify'
 
-import { listRecordGames } from '../graphql/queries'
+import { recordGamesByDate } from '../graphql/queries'
 
 const useLoadRecords = () => {
   const [loading, setLoading] = useState(false)
@@ -18,11 +18,15 @@ const useLoadRecords = () => {
       const { username } = await Auth.currentAuthenticatedUser()
 
       let recordData = await API.graphql({
-        query: listRecordGames,
-        variables: { filter: { owner: { eq: username } } },
+        query: recordGamesByDate,
+        variables: {
+          type: 'RecordGame',
+          sortDirection: 'DESC',
+          filter: { owner: { eq: username } },
+        },
       })
 
-      let allRecords = recordData.data.listRecordGames.items
+      let allRecords = recordData.data.recordGamesByDate.items
 
       setLoading(false)
       setData(allRecords)
