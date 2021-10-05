@@ -54,10 +54,8 @@ export const Chart = (gameId) => {
       <BarChart
         data={data}
         margin={{
-          top: 0,
           right: 5,
           left: -25,
-          bottom: 0,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />

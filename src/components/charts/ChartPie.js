@@ -33,16 +33,14 @@ export const ChartPie = ({ data }) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>
-        {data !== undefined && (
-          <Pie
-            data={data}
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={150}
-            dataKey="value"
-            fill="#5cd5dd"
-          ></Pie>
-        )}
+        <Pie
+          data={data}
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius="100%"
+          dataKey="value"
+          fill="#5cd5dd"
+        ></Pie>
         <Tooltip wrapperStyle={{ fontSize: '20px' }} />
       </PieChart>
     </ResponsiveContainer>

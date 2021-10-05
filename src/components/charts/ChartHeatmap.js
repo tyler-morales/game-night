@@ -33,18 +33,21 @@ export const ChartHeatmap = ({ period, data }) => {
   }, [period])
 
   return (
-    <div>
+    // <div className="flex items-end flex-col overflow-hidden">
+    <div className="flex overflow-hidden items-end flex-col w-full">
       <HeatMap
         value={data}
-        style={{ width: '100%', color: 'white', overflow: 'visible' }}
+        style={{ color: 'white' }}
         startDate={new Date(startDate)}
         endDate={new Date(endDate)}
         legendCellSize={20}
         rectSize={10}
-        legendRender={(props) => <rect {...props} y={props.y + 10} rx="2" />}
+        width={675}
+        legendRender={(props) => <rect {...props} y={props.y + 5} rx="2" />}
         rectProps={{
           rx: 2,
         }}
+        // weekLables={[]}
         panelColors={{
           0: '#d5f4f6',
           1: '#80dee5',

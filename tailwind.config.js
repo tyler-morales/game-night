@@ -6,6 +6,13 @@ module.exports = {
       gridTemplateColumns: {
         dashboard: '1fr 7fr;',
       },
+      maxHeight: {
+        95: '95vh',
+        500: '500px',
+      },
+      maxWidth: {
+        675: '675px',
+      },
     },
     colors: {
       primary: 'var(--color-primary)',

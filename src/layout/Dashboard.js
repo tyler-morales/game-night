@@ -80,7 +80,7 @@ export const Dashboard = ({ children }) => {
           {/* Dashboard & settings buttons */}
           <div
             className={`flex-col md:gap-3 md:mt-10 md:h-full md:justify-between ${
-              toggleMenu || size > 768 ? 'flex' : 'hidden'
+              toggleMenu || size >= 768 ? 'flex' : 'hidden'
             }`}
           >
             <div className="w-full">
@@ -112,7 +112,9 @@ export const Dashboard = ({ children }) => {
             </button>
           </div>
         </nav>
-        <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl">
+        {/* <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95"> */}
+        {/* <section className="p-4 md:p-7 bg-darkGreen w-full rounded-xl"> */}
+        <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95 overflow-scroll overscroll-auto">
           {children}
         </section>
       </main>
