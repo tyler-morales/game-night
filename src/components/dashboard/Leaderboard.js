@@ -28,7 +28,7 @@ export const Leaderboard = () => {
     return (
       <select
         onChange={handleChange}
-        className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 bg-quad rounded-md text-base text-primary ml-8 px-2 py-1 w-52"
+        className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 bg-quad rounded-md text-base text-primary px-2 py-1 w-full md:w-52"
         name="gamePlayed"
         id="game-select"
         value={optionName}
@@ -60,7 +60,7 @@ export const Leaderboard = () => {
       <DashboardItemContainer title="Leaderboard" options={<Options />}>
         {!loading ? (
           <>
-            <div className="md:h-80 flex flex-col gap-6">
+            <div className="h-80 flex flex-col gap-6">
               {listMembers.length > 0 ? (
                 <Chart value={selectGameOption} />
               ) : (
