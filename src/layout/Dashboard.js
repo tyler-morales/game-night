@@ -55,7 +55,7 @@ export const Dashboard = ({ children }) => {
   function signOut() {
     try {
       Auth.signOut()
-      setLogout(true)
+      logout ? setLogout(false) : setLogout(true)
     } catch (err) {
       console.error(`Error logging out ${err}`)
     }
