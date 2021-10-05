@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { Formik, Field, Form } from 'formik'
 import { v4 as uuid } from 'uuid'
@@ -27,10 +27,29 @@ import { RecordGameErrors } from '../errors/RecordGameErrors'
 export const RecordGameForm = () => {
   let history = useHistory()
 
-  const [loading, updateLoading] = useState(true)
-  const { games } = useLoadGames(updateLoading)
-  const { members } = useLoadMembers(updateLoading)
+  const [games, setGames] = useState([])
+  const [members, setMembers] = useState([])
+  const { data, loading } = useLoadGames()
+  const { memberData, membersLoading } = useLoadMembers([])
   const { user } = useUser()
+
+  useEffect(() => {
+    fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, data, memberData])
+
+  const fetchData = async () => {
+    try {
+      let records = (await data) ?? []
+      let loadedMembers = (await memberData) ?? []
+      setGames(records)
+      setMembers(loadedMembers)
+
+      // console.log(members)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   const checkboxStatus = (index, type) => {
     let state
@@ -222,7 +241,7 @@ export const RecordGameForm = () => {
               aria-labelledby="checkbox-group"
               className="flex flex-wrap gap-4"
             >
-              {loading ? <LoadingRipple /> : playerCheckboxes}
+              {membersLoading ? <LoadingRipple /> : playerCheckboxes}
             </div>
             {renderErrors(errors, touched, 'players')}
           </div>
@@ -237,7 +256,7 @@ export const RecordGameForm = () => {
               aria-labelledby="checkbox-group"
               className="flex flex-wrap gap-4"
             >
-              {loading ? <LoadingRipple /> : winnerCheckboxes}
+              {membersLoading ? <LoadingRipple /> : winnerCheckboxes}
             </div>
             {renderErrors(errors, touched, 'winners')}
           </div>

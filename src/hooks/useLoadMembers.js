@@ -3,8 +3,9 @@ import { API, Auth } from 'aws-amplify'
 import { listMembers } from '../graphql/queries'
 
 // Centralizes modal control
-const useLoadMembers = (updateLoading) => {
-  const [members, updateMembers] = useState([])
+const useLoadMembers = () => {
+  const [membersLoading, setMembersLoading] = useState(true)
+  const [memberData, updateMembers] = useState([])
 
   useEffect(() => {
     fetchMembers()
@@ -13,28 +14,23 @@ const useLoadMembers = (updateLoading) => {
 
   const fetchMembers = async () => {
     try {
+      const { username } = await Auth.currentAuthenticatedUser()
+
       let memberData = await API.graphql({
         query: listMembers,
-        variables: { limit: 100 },
+        variables: { limit: 100, filter: { owner: { eq: username } } },
       })
 
-      updateLoading(false)
+      setMembersLoading(false)
 
       let allMembers = memberData.data.listMembers.items
-      setFilteredMembers(allMembers)
+      updateMembers(allMembers)
     } catch (err) {
       console.error(err)
     }
   }
 
-  const setFilteredMembers = async (allMembers) => {
-    const { username } = await Auth.currentAuthenticatedUser()
-    const myMemberData = allMembers.filter((p) => p.owner === username)
-
-    updateMembers(myMemberData)
-  }
-
-  return { members }
+  return { memberData, membersLoading }
 }
 
 export default useLoadMembers

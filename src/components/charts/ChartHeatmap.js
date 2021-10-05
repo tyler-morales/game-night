@@ -33,7 +33,6 @@ export const ChartHeatmap = ({ period, data }) => {
   }, [period])
 
   return (
-    // <div className="flex items-end flex-col overflow-hidden">
     <div className="flex overflow-hidden items-end flex-col w-full">
       <HeatMap
         value={data}
@@ -47,7 +46,6 @@ export const ChartHeatmap = ({ period, data }) => {
         rectProps={{
           rx: 2,
         }}
-        // weekLables={[]}
         panelColors={{
           0: '#d5f4f6',
           1: '#80dee5',

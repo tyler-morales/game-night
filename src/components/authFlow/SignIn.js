@@ -1,4 +1,7 @@
+import { useState } from 'react'
+
 export const SignIn = ({ signIn, updateFormState }) => {
+  const [signingIn, setSigningIn] = useState(false)
   return (
     <>
       <h1 className="font-bold text-white text-3xl md:text-left mb-4">
@@ -35,11 +38,14 @@ export const SignIn = ({ signIn, updateFormState }) => {
           />
         </div>
         <button
-          className="transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent"
-          onClick={signIn}
+          className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent ${
+            signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
+          }`}
+          disabled={signingIn ? true : false}
+          onClick={() => [setSigningIn(true), signIn()]}
           title="Sign In"
         >
-          Sign in
+          {signingIn ? 'Loading...' : 'Sign in'}
         </button>
       </div>
     </>

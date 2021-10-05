@@ -1,54 +1,28 @@
 import { useState, useEffect } from 'react'
 
-import { API, Auth } from 'aws-amplify'
-
-import { recordGamesByDate } from '../../graphql/queries'
-
-import useLoading from '../../hooks/useLoading'
+import useGetRecords from '../../hooks/useGetRecords'
 
 import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
 import './tablestyles.css'
 
-// import useUser from '../../hooks/useUser'
-
 export const History = () => {
-  // const { user } = useUser()
-  const { dataLoaded, loading } = useLoading()
-  const [recordedGames, updateRecordedGames] = useState([])
+  const [dateRecords, setDateRecords] = useState([])
+  const { data, loading } = useGetRecords()
 
   useEffect(() => {
-    fetchRecordedGamess()
+    fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [loading, data, dateRecords.length])
 
-  const fetchRecordedGamess = async () => {
+  const fetchData = async () => {
     try {
-      dataLoaded()
-
-      let recordedGamedata = await API.graphql({
-        query: recordGamesByDate,
-        variables: { limit: 100, type: 'RecordGame', sortDirection: 'DESC' },
-      })
-
-      let allRecordedGamess = recordedGamedata.data.recordGamesByDate.items
-
-      /* update the members array in the local state */
-      setFilteredRecordedGamess(allRecordedGamess)
+      let records = (await data) ?? []
+      setDateRecords(records)
     } catch (err) {
       console.error(err)
     }
-  }
-
-  const setFilteredRecordedGamess = async (allRecordedGamess) => {
-    const { username } = await Auth.currentAuthenticatedUser()
-
-    const myRecordedGamesData = allRecordedGamess.filter(
-      (p) => p.owner === username
-    )
-
-    updateRecordedGames(myRecordedGamesData)
   }
 
   const GameItem = ({ game }) => {
@@ -73,7 +47,7 @@ export const History = () => {
     )
   }
 
-  const recordedGameItems = recordedGames.map((game, index) => (
+  const recordedGameItems = dateRecords.map((game, index) => (
     <GameItem key={index} game={game} />
   ))
 
@@ -95,23 +69,21 @@ export const History = () => {
 
   return (
     <DashboardItemContainer title="Game History">
-      {!loading ? (
-        <>
-          <div className="overscroll-auto overflow-auto max-h-500 md:h-80 flex flex-col gap-6">
-            {recordedGameItems.length !== 0 ? (
-              <GameTable />
-            ) : (
-              <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
-                <h4 className="text-2xl border-b-2 border-quad pb-4">
-                  You haven't played any games
-                </h4>
-                <p className="text-sm">
-                  💡 Click the Record a Game button to record your first game!
-                </p>
-              </div>
-            )}
-          </div>
-        </>
+      {data ? (
+        <div className="overscroll-auto overflow-auto max-h-500 md:h-80 flex flex-col gap-6">
+          {data.length !== 0 ? (
+            <GameTable />
+          ) : (
+            <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
+              <h4 className="text-2xl border-b-2 border-quad pb-4">
+                You haven't played any games
+              </h4>
+              <p className="text-sm">
+                💡 Click the Record a Game button to record your first game!
+              </p>
+            </div>
+          )}
+        </div>
       ) : (
         <LoadingRipple />
       )}

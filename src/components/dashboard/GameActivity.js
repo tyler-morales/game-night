@@ -15,7 +15,6 @@ export const GameActivity = () => {
 
   useEffect(() => {
     fetchMemberWins()
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, data])
 
@@ -66,23 +65,21 @@ export const GameActivity = () => {
   return (
     <DashboardItemContainer title="Game Activity" options={<Options />}>
       {dateRecords ? (
-        <div>
-          <div className="xl:h-80 flex flex-col gap-6">
-            {dateRecords.length > 0 ? (
-              <div className="max-w-675">
-                <ChartHeatmap period={selectOption} data={dateRecords} />
-              </div>
-            ) : (
-              <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
-                <h4 className="text-2xl border-b-2 border-quad pb-4">
-                  You haven't played any games to update the Leaderboard
-                </h4>
-                <p className="text-sm">
-                  💡 Click the Record a Game button to record your first game!
-                </p>
-              </div>
-            )}
-          </div>
+        <div className="xl:h-80 flex flex-col gap-6">
+          {dateRecords.length > 0 ? (
+            <div className="max-w-675">
+              <ChartHeatmap period={selectOption} data={dateRecords} />
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
+              <h4 className="text-2xl border-b-2 border-quad pb-4">
+                You haven't played any games to update the Leaderboard
+              </h4>
+              <p className="text-sm">
+                💡 Click the Record a Game button to record your first game!
+              </p>
+            </div>
+          )}
         </div>
       ) : (
         <LoadingRipple />

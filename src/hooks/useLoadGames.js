@@ -4,7 +4,8 @@ import { listGames } from '../graphql/queries'
 
 // Centralizes modal control
 const useLoadGames = (updateLoading) => {
-  const [games, updateGames] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState([])
 
   useEffect(() => {
     fetchGames()
@@ -13,28 +14,22 @@ const useLoadGames = (updateLoading) => {
 
   const fetchGames = async () => {
     try {
+      const { username } = await Auth.currentAuthenticatedUser()
+
       let gameData = await API.graphql({
         query: listGames,
-        variables: { limit: 100 },
+        variables: { limit: 100, filter: { owner: { eq: username } } },
       })
 
-      updateLoading(false)
-
       let allGames = gameData.data.listGames.items
-      setFilteredGames(allGames)
+      setLoading(false)
+      setData(allGames)
     } catch (err) {
       console.error(err)
     }
   }
 
-  const setFilteredGames = async (allGames) => {
-    const { username } = await Auth.currentAuthenticatedUser()
-    const myGameData = allGames.filter((p) => p.owner === username)
-
-    updateGames(myGameData)
-  }
-
-  return { games }
+  return { data, loading }
 }
 
 export default useLoadGames

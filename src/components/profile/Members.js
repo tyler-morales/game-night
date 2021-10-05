@@ -47,7 +47,6 @@ export const Members = () => {
     const { username } = await Auth.currentAuthenticatedUser()
     const myMemberData = allMembers.filter((p) => p.owner === username)
 
-    // updateMyMembers(myMemberData)
     updateMembers(myMemberData)
   }
 
@@ -67,7 +66,6 @@ export const Members = () => {
   const handleIndividualOperation = async (index, state, operation) => {
     let newState = members.map(() => false)
     newState[index] = state
-    // console.log(operation)
 
     switch (operation) {
       case 'EDIT_NAME':
