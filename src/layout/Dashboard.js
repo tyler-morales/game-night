@@ -73,7 +73,7 @@ export const Dashboard = ({ children }) => {
             {/* Logo */}
             <img
               className="md:m-auto"
-              style={{ width: '80px' }}
+              style={{ width: '100px' }} //TODO: Change size to 80px on phones
               src={logo}
               alt="Game Night Logo"
             />
