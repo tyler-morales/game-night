@@ -112,8 +112,9 @@ export const Dashboard = ({ children }) => {
             </button>
           </div>
         </nav>
-        <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95">
-          {/* <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95 overflow-scroll overscroll-auto"> */}
+        {/* <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95"> */}
+        {/* <section className="p-4 md:p-7 bg-darkGreen w-full rounded-xl"> */}
+        <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95 overflow-scroll overscroll-auto">
           {children}
         </section>
       </main>

@@ -12,7 +12,7 @@ export const Grid = () => {
         <History />
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-10">
-        {/* <GameDistribution /> */}
+        <GameDistribution />
         <div className="col-span-1 xl:col-span-2">
           <GameActivity />
         </div>

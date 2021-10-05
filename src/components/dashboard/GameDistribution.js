@@ -29,7 +29,7 @@ export const GameDistribution = () => {
     <DashboardItemContainer title="Game Distribution">
       {!loading ? (
         <>
-          <div className="md:h-80 flex flex-col gap-6">
+          <div className="h-80 flex flex-col gap-6">
             {data !== undefined ? (
               <ChartPie data={data} />
             ) : (
