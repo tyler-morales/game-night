@@ -85,7 +85,5 @@ tr:nth-child(even) {
 }
 
 .card {
-  border: 2px dotted blue;
-  padding: 15px;
-  max-width: 750px !important;
+  max-width: 675px !important;
 }
