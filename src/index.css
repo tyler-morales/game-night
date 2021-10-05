@@ -75,3 +75,17 @@ body {
 tr:nth-child(even) {
   background-color: var(--color-dark-green);
 }
+
+.card-2 {
+  display: flex;
+  overflow: hidden !important;
+  align-items: flex-end !important;
+  flex-direction: column !important;
+  width: 100% !important;
+}
+
+.card {
+  border: 2px dotted blue;
+  padding: 15px;
+  max-width: 750px !important;
+}
