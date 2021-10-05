@@ -11,6 +11,8 @@ import {
   RiLogoutBoxRLine,
 } from 'react-icons/ri'
 
+import { FiLoader } from 'react-icons/fi'
+
 export const Dashboard = ({ children }) => {
   useEffect(() => {
     checkUser()
@@ -43,9 +45,16 @@ export const Dashboard = ({ children }) => {
   const updateSize = () => setSize(window.innerWidth)
   useEffect(() => (window.onresize = updateSize))
 
+  const [logout, setLogout] = useState(false)
+
   // sign out user
   function signOut() {
-    Auth.signOut().catch((err) => console.log('error signing out: ', err))
+    try {
+      Auth.signOut()
+      setLogout(true)
+    } catch (err) {
+      console.error(`Error logging out ${err}`)
+    }
   }
 
   if (user) {
@@ -107,13 +116,17 @@ export const Dashboard = ({ children }) => {
               onClick={signOut}
               className=" tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen"
             >
-              <RiLogoutBoxRLine />
-              <span className=" place-self-end">Logout</span>
+              {logout ? (
+                <FiLoader className="animate-spin" />
+              ) : (
+                <RiLogoutBoxRLine />
+              )}
+              <span className="place-self-end">
+                {logout ? 'Logging out' : 'Logout'}
+              </span>
             </button>
           </div>
         </nav>
-        {/* <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95"> */}
-        {/* <section className="p-4 md:p-7 bg-darkGreen w-full rounded-xl"> */}
         <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95 overflow-scroll overscroll-auto">
           {children}
         </section>
