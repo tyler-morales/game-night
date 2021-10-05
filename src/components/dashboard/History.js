@@ -11,10 +11,7 @@ import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
 import './tablestyles.css'
 
-// import useUser from '../../hooks/useUser'
-
 export const History = () => {
-  // const { user } = useUser()
   const { dataLoaded, loading } = useLoading()
   const [recordedGames, updateRecordedGames] = useState([])
 
