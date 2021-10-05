@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { AuthForm } from '../components/authFlow/AuthForm'
 
 import { HiMenuAlt4 } from 'react-icons/hi'
+import { RiCloseFill } from 'react-icons/ri'
 import {
   RiBarChart2Fill,
   RiSettings5Fill,
@@ -14,6 +15,7 @@ import {
 import { FiLoader } from 'react-icons/fi'
 
 export const Dashboard = ({ children }) => {
+  const [hamburger, setHamburger] = useState(false)
   useEffect(() => {
     checkUser()
     Hub.listen('auth', (data) => {
@@ -39,8 +41,10 @@ export const Dashboard = ({ children }) => {
   const [toggleMenu, setToggleMenu] = useState(false)
   const [size, setSize] = useState(window.innerWidth)
 
-  const handleToggle = () =>
+  const handleToggle = () => {
     toggleMenu ? setToggleMenu(false) : setToggleMenu(true)
+    hamburger ? setHamburger(false) : setHamburger(true)
+  }
 
   const updateSize = () => setSize(window.innerWidth)
   useEffect(() => (window.onresize = updateSize))
@@ -68,20 +72,20 @@ export const Dashboard = ({ children }) => {
             {/* Logo */}
             <img
               className="md:m-auto"
-              style={{ width: '100px' }}
+              style={{ width: '80px' }}
               src={logo}
               alt="Game Night Logo"
             />
             {/* Hamburger menu */}
             <div onClick={handleToggle} className="cursor-pointer md:hidden">
-              <HiMenuAlt4 />
+              {hamburger ? <RiCloseFill /> : <HiMenuAlt4 />}
             </div>
           </div>
 
           {/* Record a Game  */}
           <NavLink
             to="/record-game"
-            className="text-lg py-3 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-10"
+            className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-2 md:mt-10"
           >
             <span>Record a Game</span>
           </NavLink>
