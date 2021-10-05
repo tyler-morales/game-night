@@ -8,7 +8,6 @@ import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 import './tablestyles.css'
 
 export const History = () => {
-  // const [dateRecords, setDateRecords] = useState(0)
   const [dateRecords, setDateRecords] = useState([])
   const { data, loading } = useGetRecords()
 
@@ -21,7 +20,6 @@ export const History = () => {
     try {
       let records = (await data) ?? []
       setDateRecords(records)
-      console.log(dateRecords.length)
     } catch (err) {
       console.error(err)
     }
