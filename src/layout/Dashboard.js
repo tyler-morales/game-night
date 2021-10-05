@@ -33,7 +33,7 @@ export const Dashboard = ({ children }) => {
       const userInfo = { username: data.username, ...data.attributes }
       setUser(userInfo)
     } catch (err) {
-      console.log('error: ', err)
+      console.error('error: ', err)
     }
   }
 
