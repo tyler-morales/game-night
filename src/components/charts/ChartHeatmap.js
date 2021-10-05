@@ -34,7 +34,7 @@ export const ChartHeatmap = ({ period, data }) => {
 
   return (
     // <div className="flex items-end flex-col overflow-hidden">
-    <div className="card-2">
+    <div className="flex overflow-hidden items-end flex-col w-full">
       <HeatMap
         value={data}
         style={{ color: 'white' }}

@@ -67,9 +67,9 @@ export const GameActivity = () => {
     <DashboardItemContainer title="Game Activity" options={<Options />}>
       {dateRecords ? (
         <div>
-          <div className="md:h-80 flex flex-col gap-6">
+          <div className="xl:h-80 flex flex-col gap-6">
             {dateRecords.length > 0 ? (
-              <div className="card">
+              <div className="max-w-675">
                 <ChartHeatmap period={selectOption} data={dateRecords} />
               </div>
             ) : (

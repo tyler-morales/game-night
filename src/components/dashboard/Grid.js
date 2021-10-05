@@ -11,9 +11,9 @@ export const Grid = () => {
         {/* <Leaderboard /> */}
         <History />
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-10">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-10">
         {/* <GameDistribution /> */}
-        <div className="col-span-1 lg:col-span-2">
+        <div className="col-span-1 xl:col-span-2">
           <GameActivity />
         </div>
       </div>
