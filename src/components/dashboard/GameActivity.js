@@ -20,7 +20,7 @@ export const GameActivity = () => {
 
   const fetchMemberWins = async () => {
     try {
-      let records = (await data) ?? []
+      let records = await data
 
       records = records.map((item) =>
         [item.createdAt.split('T')[0]].map((item) => item.replaceAll('-', '/'))

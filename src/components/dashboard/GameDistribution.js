@@ -18,7 +18,7 @@ export const GameDistribution = () => {
 
   const fetchMemberWins = async () => {
     try {
-      let records = (await data) ?? []
+      let records = await data
 
       records = await records.map((record) => record.name)
 
