@@ -11,7 +11,10 @@ module.exports = {
         500: '500px',
       },
       maxWidth: {
+        400: '400px',
         675: '675px',
+        80: '80vw',
+        90: '90vw',
       },
       minHeight: {
         364: '364px',
@@ -25,6 +28,13 @@ module.exports = {
       darkGreen: 'var(--color-dark-green)',
       white: 'var(--color-white)',
       error: 'var(--color-error)',
+      grey: 'var(--color-grey)',
+      forestGreen: 'var(--color-forest-green)',
+    },
+    boxShadow: {
+      xs: 'var(--shadow-xs)',
+      light: 'var(--shadow-light)',
+      base: 'var(--shadow-base)',
     },
     fontFamily: {
       body: ['Poppins', 'sans-serif'],
