@@ -11,6 +11,7 @@ module.exports = {
         500: '500px',
       },
       maxWidth: {
+        400: '400px',
         675: '675px',
         80: '80vw',
         90: '90vw',
@@ -29,6 +30,7 @@ module.exports = {
       error: 'var(--color-error)',
     },
     boxShadow: {
+      xs: 'var(--shadow-xs)',
       light: 'var(--shadow-light)',
       base: 'var(--shadow-base)',
     },
