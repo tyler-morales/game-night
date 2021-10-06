@@ -83,8 +83,8 @@ export const RecordGameForm = () => {
       const recordGameInfo = {
         id: recordGameID,
         name: gamePlayed.split(',')[1],
-        players: players.map((player) => player.split(',')[1]),
-        winners: winners.map((winner) => winner.split(',')[1]),
+        players: players.map((player) => player.split(',')[1]), // split the array of players with ID's and names to just names
+        winners: winners.map((winner) => winner.split(',')[1]), // split the array of players with ID's and names to just ID's
         owner: user.username,
         type: 'RecordGame',
       }
@@ -115,7 +115,6 @@ export const RecordGameForm = () => {
 
     */
 
-      
     const { gamePlayed, winners } = values
     const gameId = gamePlayed.split(',')[0]
     const gamePlayedName = gamePlayed.split(',')[1]
