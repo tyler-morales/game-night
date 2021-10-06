@@ -7,6 +7,7 @@
     "@craco/craco": "^6.2.0",
     "@uiw/react-heat-map": "^1.4.8",
     "@uiw/react-tooltip": "^4.9.7",
+    "aos": "^3.0.0-beta.6",
     "aws-amplify": "^4.2.9",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",

@@ -24,7 +24,10 @@ export const Features = () => {
 
   const Feature = () => {
     return (
-      <ul className="mt-8 lg:mt-18 flex flex-col gap-8 md:flex-wrap md:flex-row md:gap-12 justify-center">
+      <ul
+        data-aos="fade-up"
+        className="mt-8 lg:mt-18 flex flex-col gap-8 md:flex-wrap md:flex-row md:gap-12 justify-center"
+      >
         {data.map((item, index) => (
           <li
             key={index}

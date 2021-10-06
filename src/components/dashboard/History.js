@@ -70,7 +70,10 @@ export const History = () => {
   return (
     <DashboardItemContainer title="Game History">
       {data ? (
-        <div className="overscroll-auto overflow-auto max-h-500 md:h-80 flex flex-col gap-6">
+        <div
+          data-aos="fade-in"
+          className="overscroll-auto overflow-auto max-h-500 md:h-80 flex flex-col gap-6"
+        >
           {data.length !== 0 ? (
             <GameTable />
           ) : (

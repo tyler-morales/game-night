@@ -1,4 +1,3 @@
-import React from 'react'
 import { GameDistribution } from './GameDistribution'
 import { GameActivity } from './GameActivity'
 import { History } from './History'
