@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 
-import Public from './Public'
+import Home from './Home'
 import About from './About'
 import Profile from './Profile'
 import Stats from './Stats'
@@ -31,12 +31,12 @@ export const Router = () => {
     <HashRouter>
       {/* {pageType === pageTypes.authFlow && <AuthNav current={current} />} */}
       <Switch>
-        <Route exact path="/" component={Public} />
+        <Route exact path="/" component={Home} />
         <Route exact path="/about" component={About} />
         <Route exact path="/dashboard" component={Stats} />
         <Route exact path="/record-game" component={RecordGame} />
         <Route exact path="/profile" component={Profile} />
-        <Route component={Public} />
+        <Route component={Home} />
       </Switch>
     </HashRouter>
   )

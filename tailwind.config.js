@@ -26,6 +26,10 @@ module.exports = {
       white: 'var(--color-white)',
       error: 'var(--color-error)',
     },
+    boxShadow: {
+      light: 'var(--shadow-light)',
+      base: 'var(--shadow-base)',
+    },
     fontFamily: {
       body: ['Poppins', 'sans-serif'],
     },
