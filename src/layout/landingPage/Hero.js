@@ -4,14 +4,24 @@ import HeroImage from '../../Hero-image.png'
 export const Hero = () => {
   return (
     <header>
-      {/* <h1 className="gradient text-white text-5xl md:text-8xl text-center font-bold"> */}
-      <h1 className="gradient m-auto text-5xl w-max md:text-8xl text-center font-bold pb-2">
+      <h1
+        data-aos="fade-in"
+        data-aos-delay="50"
+        className="gradient m-auto text-5xl w-max md:text-8xl text-center font-bold pb-2"
+      >
         Game Night
       </h1>
-      <h2 className="text-white text-center text-xl md:text-2xl mt-6 font-body font-light">
+      <h2
+        data-aos="fade-in"
+        data-aos-delay="150"
+        className="text-white text-center text-xl md:text-2xl mt-6 font-body font-light"
+      >
         Taking the hassle out of game night
       </h2>
+
       <img
+        data-aos="fade-up"
+        data-aos-delay="350"
         className="md:m-auto w-full h-auto border-2 border-white rounded-md mt-6 md:mt-14 shadow-light md:shadow-base"
         src={HeroImage}
         alt="Dashboard Preview"
