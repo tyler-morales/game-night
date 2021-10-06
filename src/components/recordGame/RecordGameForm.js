@@ -83,7 +83,7 @@ export const RecordGameForm = () => {
       const recordGameInfo = {
         id: recordGameID,
         name: gamePlayed.split(',')[1],
-        players: players,
+        players: players.map((player) => player.split(',')[1]),
         winners: winners.map((winner) => winner.split(',')[1]),
         owner: user.username,
         type: 'RecordGame',
@@ -101,6 +101,21 @@ export const RecordGameForm = () => {
   }
 
   const createMemberWin = async (values) => {
+    /*
+    An object with 3 keys:  String: gamePlayed
+                            Array: players: [String]
+                            Array: winners: [String]
+                            
+    values: 
+      {
+        gamePlayed: "4c090a5e-91ef-416b-83bc-ee02b6817b01,Clue"
+        players: Array(3) [ "80b81f08-f690-4b0a-b4fd-fe57ce70563e,Pedro", "457d598d-1fe7-486a-9f71-b20d8727eb93,Tyler", "dd833e0c-da73-42e9-8f93-6ca9cc73d90b,Travis" ]
+        winners: Array [ "dd833e0c-da73-42e9-8f93-6ca9cc73d90b,Travis ", "457d598d-1fe7-486a-9f71-b20d8727eb93,Tyler" ]
+      }
+
+    */
+
+      
     const { gamePlayed, winners } = values
     const gameId = gamePlayed.split(',')[0]
     const gamePlayedName = gamePlayed.split(',')[1]
@@ -209,9 +224,28 @@ export const RecordGameForm = () => {
       initialValues={RecordGameValues}
       validationSchema={RecordGameSchema}
       onSubmit={(values, { setSubmitting }) => {
-        setSubmitting(false)
+        // let { players, winners } = values
+
+        // players = players.map((player) => {
+        //   const playerObjects = {
+        //     id: player.split(',')[0],
+        //     name: player.split(',')[1],
+        //   }
+        //   return playerObjects
+        // })
+        // winners = winners.map((winner) => {
+        //   const winnerObjects = {
+        //     id: winner.split(',')[0],
+        //     name: winner.split(',')[1],
+        //   }
+        //   return winnerObjects
+        // })
+
+        // console.log(players, winners)
+
+        // setSubmitting(false)
+        // createMemberWin(values)
         addGameToDB(values)
-        createMemberWin(values)
       }}
     >
       {({ errors, touched }) => (
