@@ -28,6 +28,8 @@ module.exports = {
       darkGreen: 'var(--color-dark-green)',
       white: 'var(--color-white)',
       error: 'var(--color-error)',
+      grey: 'var(--color-grey)',
+      forestGreen: 'var(--color-forest-green)',
     },
     boxShadow: {
       xs: 'var(--shadow-xs)',

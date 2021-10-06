@@ -28,7 +28,7 @@ export const Features = () => {
         {data.map((item, index) => (
           <li
             key={index}
-            className="bg-darkGreen rounded-md p-6 shadow-xs border-2 border-white w-full lg:max-w-400 "
+            className="bg-forestGreen rounded-md p-6 shadow-xs border-2 border-grey w-full lg:max-w-400 "
           >
             <span className="text-white block text-2xl font-body mb-3">
               <span className="mr-2">{item.icon}</span>
