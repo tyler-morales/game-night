@@ -3,7 +3,7 @@ import HeroImage from '../../Hero-image.png'
 
 export const Hero = () => {
   return (
-    <div>
+    <header>
       <h1 className="text-white text-5xl md:text-8xl text-center font-bold">
         Game Night
       </h1>
@@ -24,6 +24,6 @@ export const Hero = () => {
       >
         <span>Create an Account</span>
       </NavLink>
-    </div>
+    </header>
   )
 }
