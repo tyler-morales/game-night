@@ -15,7 +15,7 @@ export const Hero = () => {
         src={HeroImage}
         alt="Dashboard Preview"
       />
-      <h3 className="text-white font-light font-body text-center text-base md:text-lg mt-14">
+      <h3 className="text-white font-light font-body text-center text-base md:text-lg mt-14 lg:mt-20">
         Ready to upgrade your game ledger?
       </h3>
       <NavLink
