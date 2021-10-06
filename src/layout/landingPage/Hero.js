@@ -4,7 +4,8 @@ import HeroImage from '../../Hero-image.png'
 export const Hero = () => {
   return (
     <header>
-      <h1 className="text-white text-5xl md:text-8xl text-center font-bold">
+      {/* <h1 className="gradient text-white text-5xl md:text-8xl text-center font-bold"> */}
+      <h1 className="gradient m-auto text-5xl w-max md:text-8xl text-center font-bold pb-2">
         Game Night
       </h1>
       <h2 className="text-white text-center text-xl md:text-2xl mt-6 font-body font-light">
