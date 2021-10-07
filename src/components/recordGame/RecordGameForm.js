@@ -163,7 +163,7 @@ export const RecordGameForm = () => {
             (game) => game.gameId.includes(gameId)
           )[0].loses
 
-          updateLoser(playId, totalLoses, name)
+          updatePlayer(playId, totalLoses, 'loses')
         } else {
           // winner has not won this game before; create a new Win
           await API.graphql({
@@ -183,6 +183,8 @@ export const RecordGameForm = () => {
           console.log('Created ' + gamePlayedName + ' for ' + name)
         }
       })
+
+      // TODO: Refactor to get rid of losers and winners forEach looping
 
       winners.forEach(async ({ id, name }) => {
         // get all gameId's from the winner
@@ -209,7 +211,7 @@ export const RecordGameForm = () => {
             (game) => game.gameId.includes(gameId)
           )[0].wins
 
-          updateWinner(playId, totalWins, name)
+          updatePlayer(playId, totalWins, 'wins')
         } else {
           // winner has not won this game before; create a new Win
           await API.graphql({
@@ -234,41 +236,21 @@ export const RecordGameForm = () => {
     }
   }
 
-  const updateLoser = async (id, loses, name) => {
-    loses += 1
-    try {
-      // Update the Win with the corresponding winner
-      await API.graphql({
-        query: updatePlay,
-        variables: {
-          input: {
-            id, // Win ID
-            loses: loses, // Increment wins by 1
-          },
-        },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
-      })
-      console.log('Updated ' + name + ' succesfully')
-    } catch (err) {
-      console.error(err)
-    }
-  }
+  // Update the Play record for the player (win or loss)
+  const updatePlayer = async (id, numOfWinsOrLoses, type) => {
+    const count = type === 'wins' ? 'wins' : 'loses'
 
-  const updateWinner = async (id, wins, name) => {
-    wins += 1
     try {
-      // Update the Win with the corresponding winner
       await API.graphql({
         query: updatePlay,
         variables: {
           input: {
-            id, // Win ID
-            wins: wins, // Increment wins by 1
+            id, // Play ID
+            [count]: (numOfWinsOrLoses += 1), // Increment wins or loses by 1
           },
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
-      console.log('Updated ' + name + ' succesfully')
     } catch (err) {
       console.error(err)
     }
