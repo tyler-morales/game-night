@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 
 import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
+import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
+import { ChartHeatmap } from '../charts/ChartHeatmap'
 
 import useGetRecords from '../../hooks/useGetRecords'
-import { ChartHeatmap } from '../charts/ChartHeatmap'
 
 export const GameActivity = () => {
   const [dateRecords, setDateRecords] = useState(0)
@@ -71,14 +72,7 @@ export const GameActivity = () => {
               <ChartHeatmap period={selectOption} data={dateRecords} />
             </div>
           ) : (
-            <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
-              <h4 className="text-2xl border-b-2 border-quad pb-4">
-                You haven't played any games to update the Leaderboard
-              </h4>
-              <p className="text-sm">
-                💡 Click the Record a Game button to record your first game!
-              </p>
-            </div>
+            <EmptyTileInfo icon="🔥" name="Game Activity" />
           )}
         </div>
       ) : (

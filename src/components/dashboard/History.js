@@ -4,6 +4,7 @@ import useGetRecords from '../../hooks/useGetRecords'
 
 import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
+import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
 
 import './tablestyles.css'
 
@@ -78,14 +79,7 @@ export const History = () => {
           {data.length !== 0 ? (
             <GameTable />
           ) : (
-            <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
-              <h4 className="text-2xl border-b-2 border-quad pb-4">
-                You haven't played any games
-              </h4>
-              <p className="text-sm">
-                💡 Click the Record a Game button to record your first game!
-              </p>
-            </div>
+            <EmptyTileInfo icon="📚" name="Game History" />
           )}
         </div>
       ) : (

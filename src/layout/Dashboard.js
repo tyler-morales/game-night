@@ -86,7 +86,7 @@ export const Dashboard = ({ children }) => {
           {/* Record a Game  */}
           <NavLink
             to="/record-game"
-            className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-2 md:mt-10"
+            className="transition-all text-lg py-3 md:py-2 px-5 bg-secondary text-primary rounded-md mt-2 md:mt-10 focus-secondary"
           >
             <span>Record a Game</span>
           </NavLink>
@@ -101,7 +101,7 @@ export const Dashboard = ({ children }) => {
               <NavLink
                 to="/dashboard"
                 activeClassName="bg-darkGreen"
-                className="md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen mb-0 md:mb-3 "
+                className="transition-all md:rounded-md ease-in-out  mb-0 md:mb-6 py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
               >
                 <RiBarChart2Fill />
                 <span>Dashboard</span>
@@ -109,7 +109,7 @@ export const Dashboard = ({ children }) => {
               <NavLink
                 to="/profile"
                 activeClassName="bg-darkGreen"
-                className="tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen"
+                className="tranition-all duration-150 md:rounded-md ease-in-out  py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
               >
                 <RiSettings5Fill />
                 <span>Settings</span>
@@ -119,7 +119,7 @@ export const Dashboard = ({ children }) => {
             {/* Logout button */}
             <button
               onClick={signOut}
-              className=" tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus:bg-darkGreen"
+              className=" tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
             >
               {logout ? (
                 <FiLoader className="animate-spin" />
@@ -132,7 +132,7 @@ export const Dashboard = ({ children }) => {
             </button>
           </div>
         </nav>
-        <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95 overflow-scroll overscroll-auto">
+        <section className="p-4 md:p-7 bg-darkGreen w-full h-full rounded-xl max-h-95 overflow-scroll overscroll-auto focus-darkgreen">
           {children}
         </section>
       </main>

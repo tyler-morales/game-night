@@ -289,7 +289,13 @@ export const RecordGameForm = () => {
               name="gamePlayed"
               id="game-select"
             >
-              <option value="">{loading ? 'Loading' : 'Select Game'}</option>
+              {loading ? (
+                <option>Loading</option>
+              ) : games.length === 0 ? (
+                <option>No games added</option>
+              ) : (
+                <option>Select a game</option>
+              )}
               {gamesOptions}
             </Field>
             {renderErrors(errors, touched, 'gamePlayed')}
@@ -303,16 +309,26 @@ export const RecordGameForm = () => {
               aria-labelledby="checkbox-group"
               className="flex flex-wrap gap-4"
             >
-              {membersLoading ? <LoadingRipple /> : playerCheckboxes}
+              {membersLoading ? (
+                <LoadingRipple />
+              ) : playerCheckboxes.length === 0 ? (
+                <span className="text-base text-center w-full text-secondary">
+                  ⚠️ No added players: Add some in your settings
+                </span>
+              ) : (
+                playerCheckboxes
+              )}
             </div>
             {renderErrors(errors, touched, 'players')}
           </div>
 
           {/* Winners */}
           <div className="flex flex-col gap-3">
-            <label className=" text-lg text-left" htmlFor="winners">
-              Who Won?
-            </label>
+            {membersLoading && (
+              <label className=" text-lg text-left" htmlFor="winners">
+                Who Won?
+              </label>
+            )}
             <div
               role="group"
               aria-labelledby="checkbox-group"
