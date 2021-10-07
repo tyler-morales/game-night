@@ -122,14 +122,14 @@ export const RecordGameForm = () => {
         return playerObjects
       })
 
-      // 3. Loop over the players array to get every losers ID and name
+      // 4. Loop over the players array to get every losers ID and name
       const losers = players.filter((player) => {
         return !winners
           .map((winner) => winner.split(',')[1])
           .includes(player.name)
       })
 
-      // 4. Loop over the winners array to get every winners ID and name
+      // 5. Loop over the winners array to get every winners ID and name
       winners = winners.map((winner) => {
         const winnerObjects = {
           id: winner.split(',')[0],
@@ -138,6 +138,7 @@ export const RecordGameForm = () => {
         return winnerObjects
       })
 
+      // TODO: Refactor to get rid of losers and winners forEach looping
       losers.forEach(async ({ id, name }) => {
         // get all gameId's from the winner
         const memberPlays = await API.graphql({
@@ -166,25 +167,18 @@ export const RecordGameForm = () => {
           updatePlayer(playId, totalLoses, 'loses')
         } else {
           // winner has not won this game before; create a new Win
-          await API.graphql({
-            query: createPlay,
-            variables: {
-              input: {
-                playMemberId: id, // Member ID
-                gameId,
-                name: gamePlayedName,
-                owner: user.username,
-                loses: 1, // Set initial loses to 1 (because they won!!!)
-                type: 'Play',
-              },
-            },
-            authMode: 'AMAZON_COGNITO_USER_POOLS',
-          })
+          createPlayRecord(
+            id,
+            gameId,
+            gamePlayedName,
+            user.username,
+            'Play',
+            'win'
+          )
+
           console.log('Created ' + gamePlayedName + ' for ' + name)
         }
       })
-
-      // TODO: Refactor to get rid of losers and winners forEach looping
 
       winners.forEach(async ({ id, name }) => {
         // get all gameId's from the winner
@@ -214,26 +208,47 @@ export const RecordGameForm = () => {
           updatePlayer(playId, totalWins, 'wins')
         } else {
           // winner has not won this game before; create a new Win
-          await API.graphql({
-            query: createPlay,
-            variables: {
-              input: {
-                playMemberId: id, // Member ID
-                gameId,
-                name: gamePlayedName,
-                owner: user.username,
-                wins: 1, // Set initial wins to 1 (because they won!!!)
-                type: 'Play',
-              },
-            },
-            authMode: 'AMAZON_COGNITO_USER_POOLS',
-          })
+          createPlayRecord(
+            id,
+            gameId,
+            gamePlayedName,
+            user.username,
+            'Play',
+            'loss'
+          )
           console.log('Created ' + gamePlayedName + ' for ' + name)
         }
       })
     } catch (err) {
       console.error(err)
     }
+  }
+
+  // Create a Play record
+  const createPlayRecord = async (
+    playerId,
+    gameId,
+    gameName,
+    username,
+    type,
+    playType
+  ) => {
+    const count = playType === 'win' ? 'wins' : 'loses'
+
+    await API.graphql({
+      query: createPlay,
+      variables: {
+        input: {
+          playMemberId: playerId, // Member ID
+          gameId,
+          name: gameName,
+          owner: username,
+          [count]: 1, // Set initial loses to 1 (because they won!!!)
+          type,
+        },
+      },
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+    })
   }
 
   // Update the Play record for the player (win or loss)
