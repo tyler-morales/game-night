@@ -7,7 +7,7 @@ export const SignIn = ({ signIn, updateFormState }) => {
       <h1 className="font-bold text-white text-3xl md:text-left mb-4">
         Sign in
       </h1>
-      <div className="mt-4 flex gap-2 flex-col">
+      <form className="mt-4 flex gap-2 flex-col">
         <div className="flex gap-3 flex-col">
           <label className="text-white text-xs" htmlFor="username">
             Family/ Friend Group Name
@@ -29,6 +29,7 @@ export const SignIn = ({ signIn, updateFormState }) => {
           </label>
           <input
             name="password"
+            type="text"
             onChange={(e) => {
               e.persist()
               updateFormState(e)
@@ -47,7 +48,7 @@ export const SignIn = ({ signIn, updateFormState }) => {
         >
           {signingIn ? 'Loading...' : 'Sign in'}
         </button>
-      </div>
+      </form>
     </>
   )
 }
