@@ -38,7 +38,8 @@ export const Chart = (gameId) => {
       filteredPlaysByGame = filteredPlaysByGame.map((item) => {
         const winnerObject = {
           name: item.member.name,
-          Plays: item.wins,
+          Wins: item.wins,
+          Loses: item.loses,
         }
         return winnerObject
       })
@@ -63,7 +64,8 @@ export const Chart = (gameId) => {
         <YAxis style={{ fill: '#fff', fontSize: 20 }} />
         <Tooltip />
         <Legend wrapperStyle={{ fontSize: '20px' }} />
-        <Bar dataKey="Plays" fill="#5cd5dd" />
+        <Bar dataKey="Wins" fill="#5cd5dd" />
+        <Bar dataKey="Loses" fill="#ff3456" />
       </BarChart>
     </ResponsiveContainer>
   )
