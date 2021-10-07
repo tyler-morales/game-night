@@ -27,6 +27,7 @@ export const History = () => {
 
   const GameItem = ({ game }) => {
     const formatArray = (arr) => String(arr).split(',').join(', ')
+    // console.log(game)
 
     return (
       <tr className="w-full">
@@ -37,7 +38,7 @@ export const History = () => {
         <td data-th="Name" className="text-left text-base font-thin">
           <span>{game.name}</span>
         </td>
-        <td data-th="Winner" className="text-left text-base font-thin">
+        <td data-th="Winner(s)" className="text-left text-base font-thin">
           <span>{formatArray(game.winners)}</span>
         </td>
         <td data-th="Players" className="text-left text-base font-thin">

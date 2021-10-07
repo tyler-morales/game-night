@@ -7,6 +7,8 @@ export const PlayerCheckbox = ({
   checkedStatus,
   checkboxStatus,
 }) => {
+  const { name, id } = player
+
   return (
     <div key={index} className="wrapper">
       <Field
@@ -14,7 +16,7 @@ export const PlayerCheckbox = ({
         onClick={() => checkboxStatus(index, 'PLAYERS')}
         id={player.name}
         name="players"
-        value={player.name}
+        value={`${id},${name}`}
       />
       <label
         htmlFor={player.name}

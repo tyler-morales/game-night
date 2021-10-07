@@ -14,12 +14,12 @@ type Member
   ) {
   id: ID!
   name: String!
-  wins: [Win] @connection(name: "MemberWins")
+  Plays: [Play] @connection(name: "MemberPlays")
   owner: String!
   type: String!
   createdAt: String!
 }
-type Win
+type Play
   @model
   @auth(
     rules: [
@@ -31,8 +31,9 @@ type Win
   id: ID!
   gameId: ID!
   name: String!
-  member: Member @connection(name: "MemberWins")
+  member: Member @connection(name: "MemberPlays")
   wins: Int
+  loses: Int
   owner: String!
   type: String!
   createdAt: String!

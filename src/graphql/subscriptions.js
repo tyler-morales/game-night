@@ -10,12 +10,13 @@ export const onCreateMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      wins {
+      Plays {
         items {
           id
           gameId
           name
           wins
+          loses
           owner
           type
           createdAt
@@ -35,12 +36,13 @@ export const onUpdateMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      wins {
+      Plays {
         items {
           id
           gameId
           name
           wins
+          loses
           owner
           type
           createdAt
@@ -60,12 +62,13 @@ export const onDeleteMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      wins {
+      Plays {
         items {
           id
           gameId
           name
           wins
+          loses
           owner
           type
           createdAt
@@ -76,13 +79,14 @@ export const onDeleteMember = /* GraphQL */ `
     }
   }
 `;
-export const onCreateWin = /* GraphQL */ `
-  subscription OnCreateWin {
-    onCreateWin {
+export const onCreatePlay = /* GraphQL */ `
+  subscription OnCreatePlay {
+    onCreatePlay {
       id
       gameId
       name
       wins
+      loses
       owner
       type
       createdAt
@@ -94,20 +98,21 @@ export const onCreateWin = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        wins {
+        Plays {
           nextToken
         }
       }
     }
   }
 `;
-export const onUpdateWin = /* GraphQL */ `
-  subscription OnUpdateWin {
-    onUpdateWin {
+export const onUpdatePlay = /* GraphQL */ `
+  subscription OnUpdatePlay {
+    onUpdatePlay {
       id
       gameId
       name
       wins
+      loses
       owner
       type
       createdAt
@@ -119,20 +124,21 @@ export const onUpdateWin = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        wins {
+        Plays {
           nextToken
         }
       }
     }
   }
 `;
-export const onDeleteWin = /* GraphQL */ `
-  subscription OnDeleteWin {
-    onDeleteWin {
+export const onDeletePlay = /* GraphQL */ `
+  subscription OnDeletePlay {
+    onDeletePlay {
       id
       gameId
       name
       wins
+      loses
       owner
       type
       createdAt
@@ -144,7 +150,7 @@ export const onDeleteWin = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        wins {
+        Plays {
           nextToken
         }
       }

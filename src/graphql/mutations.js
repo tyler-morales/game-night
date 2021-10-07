@@ -13,12 +13,13 @@ export const createMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      wins {
+      Plays {
         items {
           id
           gameId
           name
           wins
+          loses
           owner
           type
           createdAt
@@ -41,12 +42,13 @@ export const updateMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      wins {
+      Plays {
         items {
           id
           gameId
           name
           wins
+          loses
           owner
           type
           createdAt
@@ -69,12 +71,13 @@ export const deleteMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      wins {
+      Plays {
         items {
           id
           gameId
           name
           wins
+          loses
           owner
           type
           createdAt
@@ -85,16 +88,17 @@ export const deleteMember = /* GraphQL */ `
     }
   }
 `;
-export const createWin = /* GraphQL */ `
-  mutation CreateWin(
-    $input: CreateWinInput!
-    $condition: ModelWinConditionInput
+export const createPlay = /* GraphQL */ `
+  mutation CreatePlay(
+    $input: CreatePlayInput!
+    $condition: ModelPlayConditionInput
   ) {
-    createWin(input: $input, condition: $condition) {
+    createPlay(input: $input, condition: $condition) {
       id
       gameId
       name
       wins
+      loses
       owner
       type
       createdAt
@@ -106,23 +110,24 @@ export const createWin = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        wins {
+        Plays {
           nextToken
         }
       }
     }
   }
 `;
-export const updateWin = /* GraphQL */ `
-  mutation UpdateWin(
-    $input: UpdateWinInput!
-    $condition: ModelWinConditionInput
+export const updatePlay = /* GraphQL */ `
+  mutation UpdatePlay(
+    $input: UpdatePlayInput!
+    $condition: ModelPlayConditionInput
   ) {
-    updateWin(input: $input, condition: $condition) {
+    updatePlay(input: $input, condition: $condition) {
       id
       gameId
       name
       wins
+      loses
       owner
       type
       createdAt
@@ -134,23 +139,24 @@ export const updateWin = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        wins {
+        Plays {
           nextToken
         }
       }
     }
   }
 `;
-export const deleteWin = /* GraphQL */ `
-  mutation DeleteWin(
-    $input: DeleteWinInput!
-    $condition: ModelWinConditionInput
+export const deletePlay = /* GraphQL */ `
+  mutation DeletePlay(
+    $input: DeletePlayInput!
+    $condition: ModelPlayConditionInput
   ) {
-    deleteWin(input: $input, condition: $condition) {
+    deletePlay(input: $input, condition: $condition) {
       id
       gameId
       name
       wins
+      loses
       owner
       type
       createdAt
@@ -162,7 +168,7 @@ export const deleteWin = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        wins {
+        Plays {
           nextToken
         }
       }

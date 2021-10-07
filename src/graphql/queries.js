@@ -10,12 +10,13 @@ export const getMember = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      wins {
+      Plays {
         items {
           id
           gameId
           name
           wins
+          loses
           owner
           type
           createdAt
@@ -40,7 +41,7 @@ export const listMembers = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        wins {
+        Plays {
           nextToken
         }
       }
@@ -72,7 +73,7 @@ export const membersByDate = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        wins {
+        Plays {
           nextToken
         }
       }
@@ -80,13 +81,14 @@ export const membersByDate = /* GraphQL */ `
     }
   }
 `;
-export const getWin = /* GraphQL */ `
-  query GetWin($id: ID!) {
-    getWin(id: $id) {
+export const getPlay = /* GraphQL */ `
+  query GetPlay($id: ID!) {
+    getPlay(id: $id) {
       id
       gameId
       name
       wins
+      loses
       owner
       type
       createdAt
@@ -98,25 +100,26 @@ export const getWin = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        wins {
+        Plays {
           nextToken
         }
       }
     }
   }
 `;
-export const listWins = /* GraphQL */ `
-  query ListWins(
-    $filter: ModelWinFilterInput
+export const listPlays = /* GraphQL */ `
+  query ListPlays(
+    $filter: ModelPlayFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listWins(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPlays(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         gameId
         name
         wins
+        loses
         owner
         type
         createdAt

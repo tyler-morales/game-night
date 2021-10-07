@@ -20,7 +20,6 @@ const Stats = () => {
       const data = await Auth.currentUserPoolUser()
       const userInfo = { username: data.username }
       setUser(userInfo)
-      console.log(user.username)
     } catch (err) {
       console.error('error: ', err)
     }
