@@ -48,8 +48,6 @@ export const RecordGameForm = () => {
       let loadedMembers = (await memberData) ?? []
       setGames(records)
       setMembers(loadedMembers)
-
-      // console.log(members)
     } catch (err) {
       console.error(err)
     }
@@ -153,9 +151,7 @@ export const RecordGameForm = () => {
     playerType,
     outcome
   ) => {
-    console.log(playerType, outcome)
-    const count = outcome === 'wins' ? 'wins' : 'loses'
-    playerType.forEach(async ({ id, name }) => {
+    playerType.forEach(async ({ id }) => {
       // get all gameId's from the winner
       const memberPlays = await API.graphql({
         query: getMember,
@@ -178,9 +174,9 @@ export const RecordGameForm = () => {
         // Get current loses for the specified game
         const totalCount = memberPlays.data.getMember.Plays.items.filter(
           (game) => game.gameId.includes(gameId)
-        )[0][count]
+        )[0][outcome]
 
-        updatePlayer(playId, totalCount, count)
+        updatePlayer(playId, totalCount, outcome)
       } else {
         // winner has not won this game before; create a new Win
         createPlayRecord(
@@ -189,10 +185,8 @@ export const RecordGameForm = () => {
           gamePlayedName,
           user.username,
           'Play',
-          count
+          outcome
         )
-
-        console.log('Created ' + gamePlayedName + ' for ' + name)
       }
     })
   }
@@ -206,8 +200,6 @@ export const RecordGameForm = () => {
     type,
     playType
   ) => {
-    // const count = playType === 'win' ? 'wins' : 'loses'
-
     await API.graphql({
       query: createPlay,
       variables: {
@@ -226,15 +218,13 @@ export const RecordGameForm = () => {
 
   // Update the Play record for the player (win or loss)
   const updatePlayer = async (id, numOfWinsOrLoses, type) => {
-    const count = type === 'wins' ? 'wins' : 'loses'
-
     try {
       await API.graphql({
         query: updatePlay,
         variables: {
           input: {
             id, // Play ID
-            [count]: (numOfWinsOrLoses += 1), // Increment wins or loses by 1
+            [type]: (numOfWinsOrLoses += 1), // Increment wins or loses by 1
           },
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
