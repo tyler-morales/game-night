@@ -40,7 +40,7 @@ export const GameDistribution = () => {
     <DashboardItemContainer title="Game Distribution">
       {games ? (
         <>
-          <div data-aos="fade-in" className="h-80 flex flex-col gap-6">
+          <div className="h-80 flex flex-col gap-6">
             {games.length > 0 ? (
               <ChartPie data={games} />
             ) : (
