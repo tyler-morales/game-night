@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
+import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
 import { Chart } from './Chart'
 
 import useLoadGames from '../../hooks/useLoadGames'
@@ -44,6 +45,7 @@ export const Leaderboard = () => {
         id="game-select"
         value={optionName}
       >
+        {games.length === 0 && <option>No data</option>}
         {games.map((game, index) => {
           return (
             <option key={index} value={game.id}>
@@ -62,14 +64,7 @@ export const Leaderboard = () => {
           {data.length !== 0 ? (
             <Chart value={selectGameOption} />
           ) : (
-            <div className="flex flex-col gap-4 bg-primary rounded-lg p-8 ">
-              <h4 className="text-2xl border-b-2 border-quad pb-4">
-                You haven't played any games to update the Leaderboard
-              </h4>
-              <p className="text-sm">
-                💡 Click the Record a Game button to record your first game!
-              </p>
-            </div>
+            <EmptyTileInfo icon="📊" name="Leaderboard" />
           )}
         </div>
       ) : (
