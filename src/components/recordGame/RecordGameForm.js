@@ -5,7 +5,11 @@ import { v4 as uuid } from 'uuid'
 import { useHistory } from 'react-router-dom'
 import { API } from 'aws-amplify'
 
-import { createWin, updateWin, createRecordGame } from '../../graphql/mutations'
+import {
+  createPlay,
+  updatePlay,
+  createRecordGame,
+} from '../../graphql/mutations'
 
 import { getMember } from '../../graphql/queries'
 
@@ -100,7 +104,7 @@ export const RecordGameForm = () => {
     }
   }
 
-  const createMemberWin = async (values) => {
+  const createMemberPlay = async (values) => {
     /*
     An object with 3 keys:  String: gamePlayed
                             Array: players: [String]
@@ -114,65 +118,96 @@ export const RecordGameForm = () => {
       }
 
     */
-
-    const { gamePlayed, winners } = values
-    const gameId = gamePlayed.split(',')[0]
-    const gamePlayedName = gamePlayed.split(',')[1]
-
-    const winnerId = winners.map((winner) => winner.split(',')[0])
-    const winnerName = winners.map((winner) => winner.split(',')[1])
-
-    // get all gameId's from the winner
     try {
-      let memberWins = await API.graphql({
-        query: getMember,
-        variables: { id: winnerId[0] },
+      // 1. Destructure values from the Record a Game form
+      let { gamePlayed, winners, players } = values
+
+      // 2. set the game played ID and name
+      const gameId = gamePlayed.split(',')[0]
+      const gamePlayedName = gamePlayed.split(',')[1]
+
+      // 3. Loop over the players array to get every players ID and name
+      players = players.map((player) => {
+        const playerObjects = {
+          id: player.split(',')[0],
+          name: player.split(',')[1],
+        }
+        return playerObjects
       })
 
-      let gameIds = memberWins.data.getMember.wins.items.map((id) => id.gameId)
+      // 4. Loop over the winners array to get every winners ID and name
+      winners = winners.map((winner) => {
+        const winnerObjects = {
+          id: winner.split(',')[0],
+          name: winner.split(',')[1],
+        }
+        return winnerObjects
+      })
 
-      // check if the game that was won already exists for the winner
-      if (gameIds.includes(gameId)) {
-        // player already won the same game; no need to create a new record; update the record instead
-        // Find the Win ID
-        let winId = memberWins.data.getMember.wins.items.filter((game) =>
-          game.gameId.includes(gameId)
-        )
-        winId = winId[0].id
-        // Get current wins for the specified game
-        let totalWins = memberWins.data.getMember.wins.items.filter((game) =>
-          game.gameId.includes(gameId)
-        )
-        totalWins = totalWins[0].wins
-        updateMemberWin(winId, winnerName, totalWins)
-      } else {
-        // player has not won this game before; create a new Win
-        await API.graphql({
-          query: createWin,
-          variables: {
-            input: {
-              winMemberId: winnerId[0], // Member ID
-              gameId,
-              name: gamePlayedName,
-              owner: user.username,
-              wins: 1, // Set initial wins to 1 (because they won!!!)
-              type: 'Win',
-            },
-          },
-          authMode: 'AMAZON_COGNITO_USER_POOLS',
+      // const winnerId = winners.map((winner) => winner.split(',')[0])
+      // const winnerName = winners.map((winner) => winner.split(',')[1])
+
+      winners.forEach(async ({ id, name }) => {
+        // get all gameId's from the winner
+        let memberPlays = await API.graphql({
+          query: getMember,
+          variables: { id },
         })
-      }
+
+        // Get the ID of every game the user has played & push it into an array of ID's
+        let gameIds = memberPlays.data.getMember.Plays.items.map(
+          ({ gameId }) => gameId
+        )
+
+        // Check if the player has played the game
+        if (gameIds.includes(gameId)) {
+          // player already won the same game; no need to create a new record; update the record instead
+          // Find the Play ID
+          let playId = memberPlays.data.getMember.Plays.items.filter((game) =>
+            game.gameId.includes(gameId)
+          )
+
+          playId = playId[0].id
+
+          // Get current wins for the specified game
+          let totalWins = memberPlays.data.getMember.Plays.items.filter(
+            (game) => game.gameId.includes(gameId)
+          )[0].wins
+
+          // let totalLoses = memberPlays.data.getMember.Plays.items.filter(
+          //   (game) => game.gameId.includes(gameId)
+          // )[0].loses
+
+          updateWinner(playId, totalWins, name)
+        } else {
+          // winner has not won this game before; create a new Win
+          // await API.graphql({
+          //   query: createWin,
+          //   variables: {
+          //     input: {
+          //       winMemberId: winnerId[0], // Member ID
+          //       gameId,
+          //       name: gamePlayedName,
+          //       owner: user.username,
+          //       wins: 1, // Set initial wins to 1 (because they won!!!)
+          //       type: 'Win',
+          //     },
+          //   },
+          //   authMode: 'AMAZON_COGNITO_USER_POOLS',
+          // })
+        }
+      })
     } catch (err) {
       console.error(err)
     }
   }
 
-  const updateMemberWin = async (id, name, wins) => {
+  const updateWinner = async (id, wins, name) => {
     wins += 1
     try {
       // Update the Win with the corresponding winner
       await API.graphql({
-        query: updateWin,
+        query: updatePlay,
         variables: {
           input: {
             id, // Win ID
@@ -181,6 +216,7 @@ export const RecordGameForm = () => {
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
+      console.log('Updated ' + name + ' succesfully')
     } catch (err) {
       console.error(err)
     }
@@ -243,8 +279,8 @@ export const RecordGameForm = () => {
         // console.log(players, winners)
 
         // setSubmitting(false)
-        // createMemberWin(values)
-        addGameToDB(values)
+        createMemberPlay(values)
+        // addGameToDB(values)
       }}
     >
       {({ errors, touched }) => (

@@ -12,20 +12,20 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-import { listWins } from '../../graphql/queries'
+import { listPlays } from '../../graphql/queries'
 
 export const Chart = (gameId) => {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    fetchMemberWins()
+    fetchMemberPlays()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
 
-  const fetchMemberWins = async () => {
+  const fetchMemberPlays = async () => {
     try {
-      let filteredWins = await API.graphql({
-        query: listWins,
+      let filteredPlays = await API.graphql({
+        query: listPlays,
         variables: {
           filter: {
             gameId: { contains: gameId.value },
@@ -33,17 +33,17 @@ export const Chart = (gameId) => {
         },
       })
 
-      let filteredWinsByGame = filteredWins.data.listWins.items
+      let filteredPlaysByGame = filteredPlays.data.listPlays.items
 
-      filteredWinsByGame = filteredWinsByGame.map((item) => {
+      filteredPlaysByGame = filteredPlaysByGame.map((item) => {
         const winnerObject = {
           name: item.member.name,
-          Wins: item.wins,
+          Plays: item.wins,
         }
         return winnerObject
       })
 
-      setData(filteredWinsByGame)
+      setData(filteredPlaysByGame)
     } catch (err) {
       console.error(err)
     }
@@ -63,7 +63,7 @@ export const Chart = (gameId) => {
         <YAxis style={{ fill: '#fff', fontSize: 20 }} />
         <Tooltip />
         <Legend wrapperStyle={{ fontSize: '20px' }} />
-        <Bar dataKey="Wins" fill="#5cd5dd" />
+        <Bar dataKey="Plays" fill="#5cd5dd" />
       </BarChart>
     </ResponsiveContainer>
   )
