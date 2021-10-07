@@ -174,27 +174,24 @@ export const RecordGameForm = () => {
             (game) => game.gameId.includes(gameId)
           )[0].wins
 
-          // let totalLoses = memberPlays.data.getMember.Plays.items.filter(
-          //   (game) => game.gameId.includes(gameId)
-          // )[0].loses
-
           updateWinner(playId, totalWins, name)
         } else {
           // winner has not won this game before; create a new Win
-          // await API.graphql({
-          //   query: createWin,
-          //   variables: {
-          //     input: {
-          //       winMemberId: winnerId[0], // Member ID
-          //       gameId,
-          //       name: gamePlayedName,
-          //       owner: user.username,
-          //       wins: 1, // Set initial wins to 1 (because they won!!!)
-          //       type: 'Win',
-          //     },
-          //   },
-          //   authMode: 'AMAZON_COGNITO_USER_POOLS',
-          // })
+          await API.graphql({
+            query: createPlay,
+            variables: {
+              input: {
+                playMemberId: id, // Member ID
+                gameId,
+                name: gamePlayedName,
+                owner: user.username,
+                wins: 1, // Set initial wins to 1 (because they won!!!)
+                type: 'Play',
+              },
+            },
+            authMode: 'AMAZON_COGNITO_USER_POOLS',
+          })
+          console.log('Created ' + gamePlayedName + ' for ' + name)
         }
       })
     } catch (err) {
