@@ -138,90 +138,63 @@ export const RecordGameForm = () => {
         return winnerObjects
       })
 
-      // TODO: Refactor to get rid of losers and winners forEach looping
-      losers.forEach(async ({ id, name }) => {
-        // get all gameId's from the winner
-        const memberPlays = await API.graphql({
-          query: getMember,
-          variables: { id },
-        })
-
-        // Get the ID of every game the user has played & push it into an array of ID's
-        const gameIds = memberPlays.data.getMember.Plays.items.map(
-          ({ gameId }) => gameId
-        )
-
-        // Check if the player has played the game
-        if (gameIds.includes(gameId)) {
-          // player already won the same game; no need to create a new record; update the record instead
-          // Find the Play ID
-          const playId = memberPlays.data.getMember.Plays.items.filter((game) =>
-            game.gameId.includes(gameId)
-          )[0].id
-
-          // Get current loses for the specified game
-          const totalLoses = memberPlays.data.getMember.Plays.items.filter(
-            (game) => game.gameId.includes(gameId)
-          )[0].loses
-
-          updatePlayer(playId, totalLoses, 'loses')
-        } else {
-          // winner has not won this game before; create a new Win
-          createPlayRecord(
-            id,
-            gameId,
-            gamePlayedName,
-            user.username,
-            'Play',
-            'win'
-          )
-
-          console.log('Created ' + gamePlayedName + ' for ' + name)
-        }
-      })
-
-      winners.forEach(async ({ id, name }) => {
-        // get all gameId's from the winner
-        const memberPlays = await API.graphql({
-          query: getMember,
-          variables: { id },
-        })
-
-        // Get the ID of every game the user has played & push it into an array of ID's
-        const gameIds = memberPlays.data.getMember.Plays.items.map(
-          ({ gameId }) => gameId
-        )
-
-        // Check if the player has played the game
-        if (gameIds.includes(gameId)) {
-          // player already won the same game; no need to create a new record; update the record instead
-          // Find the Play ID
-          const playId = memberPlays.data.getMember.Plays.items.filter((game) =>
-            game.gameId.includes(gameId)
-          )[0].id
-
-          // Get current wins for the specified game
-          const totalWins = memberPlays.data.getMember.Plays.items.filter(
-            (game) => game.gameId.includes(gameId)
-          )[0].wins
-
-          updatePlayer(playId, totalWins, 'wins')
-        } else {
-          // winner has not won this game before; create a new Win
-          createPlayRecord(
-            id,
-            gameId,
-            gamePlayedName,
-            user.username,
-            'Play',
-            'loss'
-          )
-          console.log('Created ' + gamePlayedName + ' for ' + name)
-        }
-      })
+      // 6. Loop over every winner and loser and update their plays
+      loopOverLosersAndWinners(gameId, gamePlayedName, winners, 'wins')
+      loopOverLosersAndWinners(gameId, gamePlayedName, losers, 'loses')
     } catch (err) {
       console.error(err)
     }
+  }
+
+  // Loop over winners and loosers
+  const loopOverLosersAndWinners = (
+    gameId,
+    gamePlayedName,
+    playerType,
+    outcome
+  ) => {
+    console.log(playerType, outcome)
+    const count = outcome === 'wins' ? 'wins' : 'loses'
+    playerType.forEach(async ({ id, name }) => {
+      // get all gameId's from the winner
+      const memberPlays = await API.graphql({
+        query: getMember,
+        variables: { id },
+      })
+
+      // Get the ID of every game the user has played & push it into an array of ID's
+      const gameIds = memberPlays.data.getMember.Plays.items.map(
+        ({ gameId }) => gameId
+      )
+
+      // Check if the player has played the game
+      if (gameIds.includes(gameId)) {
+        // player already won the same game; no need to create a new record; update the record instead
+        // Find the Play ID
+        const playId = memberPlays.data.getMember.Plays.items.filter((game) =>
+          game.gameId.includes(gameId)
+        )[0].id
+
+        // Get current loses for the specified game
+        const totalCount = memberPlays.data.getMember.Plays.items.filter(
+          (game) => game.gameId.includes(gameId)
+        )[0][count]
+
+        updatePlayer(playId, totalCount, count)
+      } else {
+        // winner has not won this game before; create a new Win
+        createPlayRecord(
+          id,
+          gameId,
+          gamePlayedName,
+          user.username,
+          'Play',
+          count
+        )
+
+        console.log('Created ' + gamePlayedName + ' for ' + name)
+      }
+    })
   }
 
   // Create a Play record
@@ -233,7 +206,7 @@ export const RecordGameForm = () => {
     type,
     playType
   ) => {
-    const count = playType === 'win' ? 'wins' : 'loses'
+    // const count = playType === 'win' ? 'wins' : 'loses'
 
     await API.graphql({
       query: createPlay,
@@ -243,7 +216,7 @@ export const RecordGameForm = () => {
           gameId,
           name: gameName,
           owner: username,
-          [count]: 1, // Set initial loses to 1 (because they won!!!)
+          [playType]: 1, // Set initial count to 1
           type,
         },
       },
@@ -299,9 +272,9 @@ export const RecordGameForm = () => {
     />
   ))
 
-  const renderErrors = (errors, touched, type) => {
-    return <RecordGameErrors errors={errors} touched={touched} type={type} />
-  }
+  const renderErrors = (errors, touched, type) => (
+    <RecordGameErrors errors={errors} touched={touched} type={type} />
+  )
 
   return (
     <Formik
