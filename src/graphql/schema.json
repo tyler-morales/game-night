@@ -142,7 +142,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "getWin",
+          "name" : "getPlay",
           "description" : null,
           "args" : [ {
             "name" : "id",
@@ -160,20 +160,20 @@
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Win",
+            "name" : "Play",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "listWins",
+          "name" : "listPlays",
           "description" : null,
           "args" : [ {
             "name" : "filter",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelWinFilterInput",
+              "name" : "ModelPlayFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
@@ -198,7 +198,7 @@
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "ModelWinConnection",
+            "name" : "ModelPlayConnection",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -557,14 +557,14 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "wins",
+          "name" : "Plays",
           "description" : null,
           "args" : [ {
             "name" : "filter",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelWinFilterInput",
+              "name" : "ModelPlayFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
@@ -598,7 +598,7 @@
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "ModelWinConnection",
+            "name" : "ModelPlayConnection",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -637,7 +637,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
-        "name" : "ModelWinConnection",
+        "name" : "ModelPlayConnection",
         "description" : null,
         "fields" : [ {
           "name" : "items",
@@ -648,7 +648,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "OBJECT",
-              "name" : "Win",
+              "name" : "Play",
               "ofType" : null
             }
           },
@@ -672,7 +672,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
-        "name" : "Win",
+        "name" : "Play",
         "description" : null,
         "fields" : [ {
           "name" : "id",
@@ -721,6 +721,17 @@
           "deprecationReason" : null
         }, {
           "name" : "wins",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "loses",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -817,7 +828,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelWinFilterInput",
+        "name" : "ModelPlayFilterInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -849,6 +860,15 @@
           "defaultValue" : null
         }, {
           "name" : "wins",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIntInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "loses",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -891,7 +911,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelWinFilterInput",
+              "name" : "ModelPlayFilterInput",
               "ofType" : null
             }
           },
@@ -904,7 +924,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelWinFilterInput",
+              "name" : "ModelPlayFilterInput",
               "ofType" : null
             }
           },
@@ -914,7 +934,7 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelWinFilterInput",
+            "name" : "ModelPlayFilterInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2245,7 +2265,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "createWin",
+          "name" : "createPlay",
           "description" : null,
           "args" : [ {
             "name" : "input",
@@ -2255,7 +2275,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "INPUT_OBJECT",
-                "name" : "CreateWinInput",
+                "name" : "CreatePlayInput",
                 "ofType" : null
               }
             },
@@ -2265,20 +2285,20 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelWinConditionInput",
+              "name" : "ModelPlayConditionInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Win",
+            "name" : "Play",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "updateWin",
+          "name" : "updatePlay",
           "description" : null,
           "args" : [ {
             "name" : "input",
@@ -2288,7 +2308,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "INPUT_OBJECT",
-                "name" : "UpdateWinInput",
+                "name" : "UpdatePlayInput",
                 "ofType" : null
               }
             },
@@ -2298,20 +2318,20 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelWinConditionInput",
+              "name" : "ModelPlayConditionInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Win",
+            "name" : "Play",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "deleteWin",
+          "name" : "deletePlay",
           "description" : null,
           "args" : [ {
             "name" : "input",
@@ -2321,7 +2341,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "INPUT_OBJECT",
-                "name" : "DeleteWinInput",
+                "name" : "DeletePlayInput",
                 "ofType" : null
               }
             },
@@ -2331,14 +2351,14 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelWinConditionInput",
+              "name" : "ModelPlayConditionInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Win",
+            "name" : "Play",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -2765,7 +2785,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "CreateWinInput",
+        "name" : "CreatePlayInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -2813,6 +2833,15 @@
           },
           "defaultValue" : null
         }, {
+          "name" : "loses",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "owner",
           "description" : null,
           "type" : {
@@ -2848,7 +2877,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "winMemberId",
+          "name" : "playMemberId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2862,7 +2891,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelWinConditionInput",
+        "name" : "ModelPlayConditionInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -2885,6 +2914,15 @@
           "defaultValue" : null
         }, {
           "name" : "wins",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIntInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "loses",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2918,7 +2956,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelWinConditionInput",
+              "name" : "ModelPlayConditionInput",
               "ofType" : null
             }
           },
@@ -2931,7 +2969,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelWinConditionInput",
+              "name" : "ModelPlayConditionInput",
               "ofType" : null
             }
           },
@@ -2941,7 +2979,7 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelWinConditionInput",
+            "name" : "ModelPlayConditionInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2951,7 +2989,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "UpdateWinInput",
+        "name" : "UpdatePlayInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -2995,6 +3033,15 @@
           },
           "defaultValue" : null
         }, {
+          "name" : "loses",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "owner",
           "description" : null,
           "type" : {
@@ -3022,7 +3069,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "winMemberId",
+          "name" : "playMemberId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3036,7 +3083,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "DeleteWinInput",
+        "name" : "DeletePlayInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -3614,34 +3661,34 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onCreateWin",
+          "name" : "onCreatePlay",
           "description" : null,
           "args" : [ ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Win",
+            "name" : "Play",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onUpdateWin",
+          "name" : "onUpdatePlay",
           "description" : null,
           "args" : [ ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Win",
+            "name" : "Play",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onDeleteWin",
+          "name" : "onDeletePlay",
           "description" : null,
           "args" : [ ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Win",
+            "name" : "Play",
             "ofType" : null
           },
           "isDeprecated" : false,
