@@ -2,15 +2,7 @@ import { Formik, Field, Form } from 'formik'
 
 import { SignUpValues, SignUpSchema } from '../../formik/SignUpValidation'
 // import { SignUpErrors } from '../errors/SignUpErrors'
-function validateUsername(value) {
-  let error
-  let length = value.length
-  if (length < 8) {
-    error = `You need ${8 - length} more characters`
-  }
 
-  return error
-}
 function SignUp({ updateFormState, signUp }) {
   return (
     <div className="flex flex-col gap-10 md:flex-row-reverse">
@@ -18,7 +10,9 @@ function SignUp({ updateFormState, signUp }) {
         initialValues={SignUpValues}
         validationSchema={SignUpSchema}
         onSubmit={(values) => {
-          // console.log(values)
+          console.log(values)
+          updateFormState(values)
+          signUp()
         }}
       >
         {({ errors, touched }) => (
@@ -37,7 +31,6 @@ function SignUp({ updateFormState, signUp }) {
                 //   e.persist()
                 //   updateFormState(e)
                 // }}
-                validate={validateUsername}
                 className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
                 placeholder="ahslandboys2000"
                 autoFocus={true}
@@ -83,7 +76,7 @@ function SignUp({ updateFormState, signUp }) {
               ) : null}
             </div>
             <button
-              onClick={signUp}
+              type="submit"
               className="transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent"
             >
               Create Account
