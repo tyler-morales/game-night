@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+<a href="https://www.playgamenight.io/#/"><img src="src/logo.svg" height="150" align="right"></a>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# GameNight
 
-## Available Scripts
+GameNight is a web app that records & analyzes group game nights without the hassle of tracking everything by hand with pencil and paper. 
 
-In the project directory, you can run:
+<br/>
+<img src="src/Hero-image.png" width="100%" >
+<br/>
 
-### `yarn start`
+## Background
+Having watched my family record countless domino games by hand with post-it notes and scratch pads, and seeing their struggle in organizing and tracking their games, I decided to upgrade their form of record-keeping to an online platform.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In addition to tracking games by hand, the issue of recording who won became an issue. While physical pieces of paper have finite space to write, an online application does not have to conform to those limitations and can record much more data as well as display connections between their data as charts and graphs in a visual format. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+This began the month-long push of creating GameNight.
 
-### `yarn test`
+## Goals
+The two main goals of this project were to learn about serverless architecture and create a useful product that can be used in the real world. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Specifically, I wanted to do a deep dive into AWS products such as Amplify, Cognito, and Dynamo DB as well as learn more about GraphQL.
 
-### `yarn build`
+## How GameNight Works
+A group, defined as a family unit or collection of friends, can create a single account to track their entire group. Within this account, anyone can add members, games, and/ or record a game. This single account login allows any member at any time the freedom to edit the account. The idea behind this is that, while there may be multiple players who play a game, there only needs to be one player to record the game. This eliminates the need for every player to update the account and saves time.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Once members and games are added, a game can be recorded, and then the dashboard page will populate with data.
+## Features
+- 🏗 **Create** and edit members and games to your account
+- ✍️ **Record** every game you play
+- 📊 **Analyze** data from recorded games in visual graphs and charts
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The analysis is the most interesting feature due to the endless possibilities of data visualization. Currently, GameNight offers four views of analysis:
+- **Game History**: A table view listing each recorded game
+- **Leaderboard**: A bar chart listing the number of wins and losses each player has per game
+- **Game Distribution**: A pie chart depicting the fractions of games played
+- **Game Activity**: A heatmap showcasing how often games are played by anyone in the group
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Tech Stack
+| Front End    | Backend                           | Packages       |
+|--------------|-----------------------------------|----------------|
+| React        | AWS Amplify (Hosting & CI/CD)     | Recharts       |
+| Tailwind css | AWS Cognito (User Authentication) | Framer Motion  |
+|              | AWS Dynamo DB (Database)          | Formik (Forms) |
+|              | GraphQL (API)                     |                |
 
-### `yarn eject`
+## Future Features
+1. **Win to lose ratio** (A moving average of a player's ability per game)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+An additional tile view in the Dashboard
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Currently, GameNight takes in three types of data:
+- Games
+- Members
+- Recorded games (winners, losers, date, game name)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+and outputs the same data, but only visualized, not truly analyzed. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+ Inputs of Winners, Losers, and a Recorded game creates a leaderboard, but it does not show any higher order analysis. For example, using calculus as a metaphor, when students take the derivative of a Position vs. Time graph, they get Speed. In this same manner, by taking the "derivative" of Players ("Winners" and "Losers") and a Recorded Game, a moving average can be calculated.
 
-## Learn More
+A moving average is simply the win to lose ratio a player has over time. This will normalize the player's wins and losses making it possible for members to view a fuller picture of who is getting better or not. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This can be implemented in the form of a line graph to depict the rises and falls of each player. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Overall, this will give members a clearer picture of each member's ability in a given game. 
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+2. **Update Notifications**
+When updates are made, the user should be notified of any changes when they sign into their account. 
