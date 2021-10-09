@@ -92,7 +92,6 @@ const StepOne = (props) => {
                   type="text"
                   className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
                   placeholder="ahslandboys2000"
-                  autoFocus={true}
                 />
                 {serverError && (
                   <span className="text-error">{serverError}</span>
@@ -228,6 +227,7 @@ const StepTwo = (props) => {
                 type="text"
                 className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
                 placeholder="123456"
+                autoFocus={true}
               />
               {serverError && <span className="text-error">{serverError}</span>}
               {errors.confirmationCode && touched.confirmationCode ? (
