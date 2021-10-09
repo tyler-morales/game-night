@@ -70,7 +70,7 @@ body {
 }
 
 #emoji-1:before {
-  /* content: '✍️'; */
+  content: '✍️';
   margin-left: 0;
   margin-right: 15px;
 }

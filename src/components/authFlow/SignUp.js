@@ -1,19 +1,19 @@
 import { Formik, Field, Form } from 'formik'
 
-import { SignUpValues, SignUpSchema } from '../../formik/SignUpValidation'
+// import { SignUpValues, SignUpSchema } from '../../formik/SignUpValidation'
 // import { SignUpErrors } from '../errors/SignUpErrors'
 
 function SignUp({ updateFormState, signUp }) {
   return (
     <div className="flex flex-col gap-10 md:flex-row-reverse">
       <Formik
-        initialValues={SignUpValues}
-        validationSchema={SignUpSchema}
-        onSubmit={(values) => {
-          console.log(values)
-          updateFormState(values)
-          signUp()
-        }}
+        // initialValues={SignUpValues}
+        // validationSchema={SignUpSchema}
+        // onSubmit={(values) => {
+        //   console.log(values)
+        //   updateFormState(values)
+        //   signUp()
+        // }}
       >
         {({ errors, touched }) => (
           <Form className="md:w-full flex gap-2 flex-col">

@@ -5,10 +5,11 @@ const SignUpValues = {
   username: '',
   email: '',
   password: '',
+  confirmationCode: '',
 }
 
 // Yup Schema
-const SignUpSchema = Yup.object().shape({
+const SignUpStepOneSchema = Yup.object().shape({
   username: Yup.string()
     .matches(/^[A-Za-z0-9_-]*$/, 'Only letters and numbers allowed')
     .min(8, `🚨 Too short: Must be at least 8 characters`)
@@ -22,4 +23,10 @@ const SignUpSchema = Yup.object().shape({
     .matches('(?=.*?[A-Za-z]).+', '🚨 Must contain at least one letter'),
 })
 
-export { SignUpValues, SignUpSchema }
+const SignUpStepTwoSchema = Yup.object().shape({
+  confirmationCode: Yup.string()
+    .length(6, `🚨 Must be exactly 6 numbers`)
+    .required('🚨 Required'),
+})
+
+export { SignUpValues, SignUpStepOneSchema, SignUpStepTwoSchema }
