@@ -50,9 +50,11 @@ function SignUp() {
 }
 
 const StepOne = (props) => {
+  const [signingIn, setSigningIn] = useState(false)
   const [serverError, setServerError] = useState(null)
 
   const handleSubmit = async ({ username, password, email }) => {
+    setSigningIn(true)
     try {
       await Auth.signUp({
         username,
@@ -62,88 +64,98 @@ const StepOne = (props) => {
       props.next({ username, password, email })
     } catch (err) {
       setServerError(err.message)
+      setSigningIn(false)
+
       console.error('error confirming account..', err)
     }
   }
 
   return (
     <div className="flex flex-col gap-10 md:flex-row-reverse">
-      <Formik
-        validationSchema={SignUpStepOneSchema}
-        initialValues={props.data}
-        onSubmit={handleSubmit}
-      >
-        {({ errors, touched }) => (
-          <Form className="md:w-full flex gap-4 flex-col">
-            <h1 className="font-bold text-white text-3xl md:text-left">
-              Create an Account
-            </h1>
-            <div className="flex gap-3 flex-col">
-              <label className="text-white text-xs" htmlFor="username">
-                Family/ Friend Group Name
-              </label>
-              <Field
-                name="username"
-                type="text"
-                className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
-                placeholder="ahslandboys2000"
-                autoFocus={true}
-              />
-              {serverError && <span className="text-error">{serverError}</span>}
-              {errors.username && touched.username ? (
-                <span className="text-sm text-error">{errors.username}</span>
-              ) : null}
-            </div>
+      <section className="md:w-full flex gap-4 flex-col">
+        <Formik
+          validationSchema={SignUpStepOneSchema}
+          initialValues={props.data}
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched }) => (
+            <Form className="flex gap-4 flex-col">
+              <h1 className="font-bold text-white text-3xl md:text-left">
+                Create an Account
+              </h1>
+              <div className="flex gap-3 flex-col">
+                <label className="text-white text-xs" htmlFor="username">
+                  Family/ Friend Group Name
+                </label>
+                <Field
+                  name="username"
+                  type="text"
+                  className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                  placeholder="ahslandboys2000"
+                  autoFocus={true}
+                />
+                {serverError && (
+                  <span className="text-error">{serverError}</span>
+                )}
+                {errors.username && touched.username ? (
+                  <span className="text-sm text-error">{errors.username}</span>
+                ) : null}
+              </div>
 
-            <div className="flex gap-3 flex-col">
-              <label className="text-white text-xs" htmlFor="email">
-                Email Addresss
-              </label>
-              <Field
-                type="email"
-                name="email"
-                className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
-                placeholder="anjay@gmail.com"
-              />
-              {errors.email && touched.email ? (
-                <span className="text-sm text-error">{errors.email}</span>
-              ) : null}
-            </div>
+              <div className="flex gap-3 flex-col">
+                <label className="text-white text-xs" htmlFor="email">
+                  Email Addresss
+                </label>
+                <Field
+                  type="email"
+                  name="email"
+                  className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                  placeholder="anjay@gmail.com"
+                />
+                {errors.email && touched.email ? (
+                  <span className="text-sm text-error">{errors.email}</span>
+                ) : null}
+              </div>
 
-            <div className="flex gap-3 flex-col">
-              <label className="text-white text-xs" htmlFor="password">
-                Password
-              </label>
-              <Field
-                type="text"
-                name="password"
-                className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
-                placeholder="qwerty123"
-              />
-              {errors.password && touched.password ? (
-                <span className="text-sm text-error">{errors.password}</span>
-              ) : null}
-            </div>
+              <div className="flex gap-3 flex-col">
+                <label className="text-white text-xs" htmlFor="password">
+                  Password
+                </label>
+                <Field
+                  type="text"
+                  name="password"
+                  className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                  placeholder="qwerty123"
+                />
+                {errors.password && touched.password ? (
+                  <span className="text-sm text-error">{errors.password}</span>
+                ) : null}
+              </div>
 
-            <button
-              type="submit"
-              className="transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent"
-            >
-              Next
-            </button>
+              <button
+                type="submit"
+                disabled={signingIn ? true : false}
+                className={`transition-all transform hover:translate-y-1 w-full rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent ${
+                  signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
+                }`}
+              >
+                {signingIn ? 'Loading...' : 'Next'}
+              </button>
+            </Form>
+          )}
+        </Formik>
 
-            {/* Already have an account */}
-            <div className="mt-6">
-              <p className="font-body text-white">
-                <span className="mr-2">Already have an account?</span>
-                <NavLink to="/sign-in">
-                  <span className="text-quad cursor-pointer">Sign In</span>
-                </NavLink>
-              </p>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        {/* Already have an account */}
+        <div className="mt-6">
+          <p className="font-body text-white">
+            <span className="mr-2">Already have an account?</span>
+            <NavLink to="/sign-in">
+              <span className="text-quad cursor-pointer">Sign In</span>
+            </NavLink>
+          </p>
+        </div>
+      </section>
+
       {/* Marketing Section */}
       <section className="md:w-full ">
         <h2 className="text-white text-2xl mb-7">
@@ -176,11 +188,17 @@ const StepOne = (props) => {
 }
 
 const StepTwo = (props) => {
+  const [signingIn, setSigningIn] = useState(false)
+  const [serverError, setServerError] = useState(null)
+
   const handleSubmit = async ({ username, confirmationCode }) => {
+    setSigningIn(true)
     try {
       await Auth.confirmSignUp(username, confirmationCode)
       props.next(username, true)
     } catch (err) {
+      setSigningIn(false)
+      setServerError(err.message)
       console.error('error confirming account..', err)
     }
   }
@@ -211,6 +229,7 @@ const StepTwo = (props) => {
                 className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
                 placeholder="123456"
               />
+              {serverError && <span className="text-error">{serverError}</span>}
               {errors.confirmationCode && touched.confirmationCode ? (
                 <span className="text-sm text-error">
                   {errors.confirmationCode}
@@ -219,9 +238,12 @@ const StepTwo = (props) => {
             </div>
             <button
               type="submit"
-              className="transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent"
+              disabled={signingIn ? true : false}
+              className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent ${
+                signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
+              }`}
             >
-              Submit
+              {signingIn ? 'Loading...' : 'Submit'}
             </button>
           </Form>
         )}
