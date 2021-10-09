@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Auth } from 'aws-amplify'
+import { useHistory } from 'react-router-dom'
+
 import { NavLink } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
 
@@ -12,26 +14,20 @@ import {
 } from '../formik/SignUpValidation'
 
 function SignUp() {
+  let history = useHistory()
+
   const [data, setData] = useState(SignUpValues)
   const [currentStep, setCurrentStep] = useState(0)
 
-  async function confirmSignUp({ username, confirmationCode }, updateFormType) {
-    try {
-      await Auth.confirmSignUp(username, confirmationCode)
-      updateFormType('signIn')
-    } catch (err) {
-      console.log('error confirming account..', err)
-    }
+  const makeRequest = (formData) => {
+    history.push('/sign-in')
   }
-  // const makeRequest = (formData) => {
-  //   console.log('Form Submitted', formData)
-  // }
 
   const handleNextStep = (newData, final = false) => {
     setData((prev) => ({ ...prev, ...newData }))
 
     if (final) {
-      // makeRequest(newData)
+      makeRequest(newData)
       return
     }
 
@@ -56,10 +52,6 @@ function SignUp() {
 const StepOne = (props) => {
   const [serverError, setServerError] = useState(null)
 
-  // const ServerError = (serverError) => {
-  //   return <span className="text-white">{serverError}</span>
-  // }
-
   const handleSubmit = async ({ username, password, email }) => {
     try {
       await Auth.signUp({
@@ -68,11 +60,9 @@ const StepOne = (props) => {
         attributes: { email },
       })
       props.next({ username, password, email })
-      console.log('Account created, needs verification')
     } catch (err) {
       setServerError(err.message)
-      console.log(typeof serverError)
-      console.log('error confirming account..', err)
+      console.error('error confirming account..', err)
     }
   }
 
@@ -186,8 +176,13 @@ const StepOne = (props) => {
 }
 
 const StepTwo = (props) => {
-  const handleSubmit = (values) => {
-    props.next(values, true)
+  const handleSubmit = async ({ username, confirmationCode }) => {
+    try {
+      await Auth.confirmSignUp(username, confirmationCode)
+      props.next(username, true)
+    } catch (err) {
+      console.error('error confirming account..', err)
+    }
   }
 
   return (
@@ -206,7 +201,6 @@ const StepTwo = (props) => {
               You were just emailed a validation code. Please enter it below to
               confrim you account
             </p>
-            {/* <div className="mt-4 flex gap-4 flex-col"> */}
             <div className="mt-4 flex gap-4 flex-col">
               <label className="text-white text-xs" htmlFor="authCode">
                 Authentication Code
@@ -223,7 +217,6 @@ const StepTwo = (props) => {
                 </span>
               ) : null}
             </div>
-            {/* </div> */}
             <button
               type="submit"
               className="transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent"
