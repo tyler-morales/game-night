@@ -69,24 +69,6 @@ body {
   font-family: 'Rubik', sans-serif;
 }
 
-#emoji-1:before {
-  content: '✍️';
-  margin-left: 0;
-  margin-right: 15px;
-}
-
-#emoji-2:before {
-  content: '📊';
-  margin-left: 0;
-  margin-right: 15px;
-}
-
-#emoji-3:before {
-  content: '📚';
-  margin-left: 0;
-  margin-right: 15px;
-}
-
 /* Tables */
 tr:nth-child(even) {
   background-color: var(--color-dark-green);

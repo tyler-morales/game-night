@@ -129,18 +129,25 @@ const StepOne = (props) => {
         <h2 className="text-white text-2xl mb-7">
           Track and view every family game night.
         </h2>
-        <ul>
-          <li id="emoji-1" className="text-white font-body mb-5">
-            <span className="font-bold"> Document EVERY game</span>. Easily
-            track each game your family plays.
+        <ul className="grid gap-5">
+          <li className="grid gap-2 grid-cols-list">
+            <span>✍️</span>
+            <span className="text-white font-body font-bold">
+              Document EVERY game. Easily track each game your family plays.
+            </span>
           </li>
-          <li id="emoji-2" className="text-white font-body mb-5">
-            <span className="font-bold"> Discover new insights</span>. Uncover
-            who has the most wins overall wins.
+          <li className="grid gap-2 grid-cols-list">
+            <span>📊</span>
+            <span className="text-white font-body font-bold">
+              Discover new insights. Uncover who has the most wins overall wins.
+            </span>
           </li>
-          <li id="emoji-3" className="text-white font-body">
-            <span className="font-bold"> Digitize your boardgame</span>
-            catalogue. Catagorize & store your board games.
+          <li className="grid gap-2 grid-cols-list">
+            <span>📚</span>
+            <span className="text-white font-body font-bold">
+              Digitize your boardgame catalogue. Catagorize & store your board
+              games.
+            </span>
           </li>
         </ul>
       </section>

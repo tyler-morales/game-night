@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         dashboard: '1fr 7fr;',
+        list: 'min-content 1fr;',
       },
       maxHeight: {
         95: '95vh',
