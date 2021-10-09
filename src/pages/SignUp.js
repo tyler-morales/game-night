@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Auth } from 'aws-amplify'
+import { NavLink } from 'react-router-dom'
+import { Formik, Form, Field } from 'formik'
 
 import { AuthNav } from '../components/nav/AuthNav'
 
@@ -11,18 +13,25 @@ import {
 
 function SignUp() {
   const [data, setData] = useState(SignUpValues)
-
   const [currentStep, setCurrentStep] = useState(0)
 
-  const makeRequest = (formData) => {
-    console.log('Form Submitted', formData)
+  async function confirmSignUp({ username, confirmationCode }, updateFormType) {
+    try {
+      await Auth.confirmSignUp(username, confirmationCode)
+      updateFormType('signIn')
+    } catch (err) {
+      console.log('error confirming account..', err)
+    }
   }
+  // const makeRequest = (formData) => {
+  //   console.log('Form Submitted', formData)
+  // }
 
   const handleNextStep = (newData, final = false) => {
     setData((prev) => ({ ...prev, ...newData }))
 
     if (final) {
-      makeRequest(newData)
+      // makeRequest(newData)
       return
     }
 
@@ -45,8 +54,26 @@ function SignUp() {
 }
 
 const StepOne = (props) => {
-  const handleSubmit = (values) => {
-    props.next(values)
+  const [serverError, setServerError] = useState(null)
+
+  // const ServerError = (serverError) => {
+  //   return <span className="text-white">{serverError}</span>
+  // }
+
+  const handleSubmit = async ({ username, password, email }) => {
+    try {
+      await Auth.signUp({
+        username,
+        password,
+        attributes: { email },
+      })
+      props.next({ username, password, email })
+      console.log('Account created, needs verification')
+    } catch (err) {
+      setServerError(err.message)
+      console.log(typeof serverError)
+      console.log('error confirming account..', err)
+    }
   }
 
   return (
@@ -72,6 +99,7 @@ const StepOne = (props) => {
                 placeholder="ahslandboys2000"
                 autoFocus={true}
               />
+              {serverError && <span className="text-error">{serverError}</span>}
               {errors.username && touched.username ? (
                 <span className="text-sm text-error">{errors.username}</span>
               ) : null}
@@ -118,7 +146,9 @@ const StepOne = (props) => {
             <div className="mt-6">
               <p className="font-body text-white">
                 <span className="mr-2">Already have an account?</span>
-                <span className="text-quad cursor-pointer">Sign In</span>
+                <NavLink to="/sign-in">
+                  <span className="text-quad cursor-pointer">Sign In</span>
+                </NavLink>
               </p>
             </div>
           </Form>
