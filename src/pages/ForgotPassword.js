@@ -7,6 +7,8 @@ import { Formik, Form, Field } from 'formik'
 
 import { AuthNav } from '../components/nav/AuthNav'
 
+import { ResetPasswordErrors } from '../components/errors/ResetPasswordErrors'
+
 import {
   ForgotPasswordValues,
   ForgotPasswordStepOneSchema,
@@ -51,7 +53,7 @@ function ForgotPassword() {
 
 const StepOne = (props) => {
   const [signingIn, setSigningIn] = useState(false)
-  const [serverError, setServerError] = useState(null)
+  const [serverError, setServerError] = useState()
 
   const handleSubmit = async ({ username, password, email }) => {
     setSigningIn(true)
@@ -59,7 +61,15 @@ const StepOne = (props) => {
       await Auth.forgotPassword(username)
       props.next({ username, password, email })
     } catch (err) {
-      setServerError(err.message)
+      switch (err.code) {
+        case 'UserNotFoundException':
+          setServerError('Account name is not recognized')
+          break
+
+        default:
+          setServerError('Server Error. Please try again later')
+          break
+      }
       setSigningIn(false)
 
       console.error('error confirming account..', err)
@@ -88,8 +98,9 @@ const StepOne = (props) => {
                   type="text"
                   className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                   placeholder="username"
-                  autofocus={true}
+                  autoFocus={true}
                 />
+
                 {serverError && (
                   <span className="text-error">{serverError}</span>
                 )}
@@ -151,20 +162,21 @@ const StepTwo = (props) => {
         {({ errors, touched }) => (
           <Form className="md:w-full flex gap-2 flex-col">
             <h1 className="font-bold text-center text-white text-3xl">
-              Enter your Validation Code
+              Reset your Password
             </h1>
             <p className="text-white text-sm text-center mt-4 mb-8 font-body">
               You were just emailed a validation code. Please enter it below to
               confrim you account
             </p>
+            {/* Confirmation Code */}
             <div className="mt-4 flex gap-4 flex-col">
-              <label className="text-white text-xs" htmlFor="authCode">
-                Authentication Code
+              <label className="text-white text-xs" htmlFor="confirmationCode">
+                Confirmation Code
               </label>
               <Field
                 name="confirmationCode"
                 type="text"
-                className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                 placeholder="123456"
                 autoFocus={true}
               />
@@ -173,6 +185,22 @@ const StepTwo = (props) => {
                 <span className="text-sm text-error">
                   {errors.confirmationCode}
                 </span>
+              ) : null}
+            </div>
+            {/* New password */}
+            <div className="mt-4 flex gap-4 flex-col">
+              <label className="text-white text-xs" htmlFor="newPassword">
+                New Password
+              </label>
+              <Field
+                name="newPassword"
+                type="text"
+                className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
+                placeholder="qwerty123"
+              />
+              {serverError && <span className="text-error">{serverError}</span>}
+              {errors.newPassword && touched.newPassword ? (
+                <span className="text-sm text-error">{errors.newPassword}</span>
               ) : null}
             </div>
             <button

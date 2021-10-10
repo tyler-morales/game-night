@@ -18,7 +18,7 @@ const ForgotPasswordStepOneSchema = Yup.object().shape({
 
 const ForgotPasswordStepTwoSchema = Yup.object().shape({
   confirmationCode: Yup.string()
-    .length(8, 'Code is only 6 numbers')
+    .length(6, 'Code is only 6 numbers')
     .required('🚨 Required'),
   newPassword: Yup.string()
     .min(8, `🚨 Too short: Must be at least 8 characters`)
