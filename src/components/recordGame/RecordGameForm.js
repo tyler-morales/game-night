@@ -285,7 +285,7 @@ export const RecordGameForm = () => {
             </label>
             <Field
               component="select"
-              className="ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2 bg-quad rounded-md text-base text-primary py-2 px-4"
+              className="focus-quad-ring bg-quad rounded-md text-base text-primary py-2 px-4"
               name="gamePlayed"
               id="game-select"
             >
@@ -342,7 +342,7 @@ export const RecordGameForm = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2 text-lg rounded-md py-2 px-4 text-primary bg-tertiary mt-5"
+            className="w-full text-lg rounded-md py-2 px-4 text-primary bg-tertiary mt-5 focus-tertiary-ring"
           >
             Record Game
           </button>

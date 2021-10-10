@@ -226,7 +226,7 @@ const StepTwo = (props) => {
               <Field
                 name="confirmationCode"
                 type="text"
-                className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2"
+                className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                 placeholder="123456"
               />
               {serverError && <span className="text-error">{serverError}</span>}
@@ -239,7 +239,7 @@ const StepTwo = (props) => {
             <button
               type="submit"
               disabled={signingIn ? true : false}
-              className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:ring-tertiary focus:border-transparent ${
+              className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus-tertiary-ring ${
                 signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
               }`}
             >

@@ -31,7 +31,10 @@ body {
     @apply focus:bg-secondary ring-offset-primary ring-offset-2 focus:ring-secondary focus:outline-none focus:ring-2;
   }
   .focus-tertiary-ring {
-    @apply ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2;
+    @apply transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2;
+  }
+  .focus-quad-ring {
+    @apply transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2;
   }
 }
 
