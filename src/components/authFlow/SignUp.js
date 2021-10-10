@@ -7,13 +7,13 @@ function SignUp({ updateFormState, signUp }) {
   return (
     <div className="flex flex-col gap-10 md:flex-row-reverse">
       <Formik
-        // initialValues={SignUpValues}
-        // validationSchema={SignUpSchema}
-        // onSubmit={(values) => {
-        //   console.log(values)
-        //   updateFormState(values)
-        //   signUp()
-        // }}
+      // initialValues={SignUpValues}
+      // validationSchema={SignUpSchema}
+      // onSubmit={(values) => {
+      //   console.log(values)
+      //   updateFormState(values)
+      //   signUp()
+      // }}
       >
         {({ errors, touched }) => (
           <Form className="md:w-full flex gap-2 flex-col">
@@ -33,7 +33,6 @@ function SignUp({ updateFormState, signUp }) {
                 // }}
                 className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
                 placeholder="ahslandboys2000"
-                autoFocus={true}
               />
               {errors.username && touched.username ? (
                 <span className="text-sm text-error">{errors.username}</span>

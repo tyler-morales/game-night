@@ -64,7 +64,7 @@ export const CreateGame = ({ updateGames, games }) => {
 
   return (
     <>
-      <AnimatePresence initial={false} exitBeforeEnter={true}>
+      <AnimatePresence initial={false} exitBeforeEnter>
         {modalOpen && (
           <Modal
             modalOpen={modalOpen}
@@ -72,7 +72,7 @@ export const CreateGame = ({ updateGames, games }) => {
             addGame={addGame}
             onChangeText={onChangeText}
             formState={formState}
-            type='ADD_GAME'
+            type="ADD_GAME"
           />
         )}
       </AnimatePresence>

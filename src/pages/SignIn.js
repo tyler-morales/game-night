@@ -53,7 +53,6 @@ function SignIn(setUser) {
                   name="username"
                   placeholder="username"
                   className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
-                  autoFocus={true}
                 />
                 {serverError && (
                   <span className="text-error">{serverError}</span>

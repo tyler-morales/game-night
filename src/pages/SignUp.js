@@ -7,6 +7,8 @@ import { Formik, Form, Field } from 'formik'
 
 import { AuthNav } from '../components/nav/AuthNav'
 
+import { serverErrorOptions } from '../components/errors/serverErrorOptions'
+
 import {
   SignUpValues,
   SignUpStepOneSchema,
@@ -48,7 +50,6 @@ function SignUp() {
     </>
   )
 }
-
 const StepOne = (props) => {
   const [signingIn, setSigningIn] = useState(false)
   const [serverError, setServerError] = useState(null)
@@ -63,7 +64,7 @@ const StepOne = (props) => {
       })
       props.next({ username, password, email })
     } catch (err) {
-      setServerError(err.message)
+      serverErrorOptions(err.code, setServerError)
       setSigningIn(false)
 
       console.error('error confirming account..', err)
@@ -90,7 +91,7 @@ const StepOne = (props) => {
                 <Field
                   name="username"
                   type="text"
-                  className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                  className="focus-tertiary-ring transition-all rounded-md py-3 pl-3 border-2 "
                   placeholder="ahslandboys2000"
                 />
                 {serverError && (
@@ -108,7 +109,7 @@ const StepOne = (props) => {
                 <Field
                   type="email"
                   name="email"
-                  className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                  className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                   placeholder="anjay@gmail.com"
                 />
                 {errors.email && touched.email ? (
@@ -123,7 +124,7 @@ const StepOne = (props) => {
                 <Field
                   type="text"
                   name="password"
-                  className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                  className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                   placeholder="qwerty123"
                 />
                 {errors.password && touched.password ? (
@@ -134,7 +135,7 @@ const StepOne = (props) => {
               <button
                 type="submit"
                 disabled={signingIn ? true : false}
-                className={`transition-all transform hover:translate-y-1 w-full rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent ${
+                className={`transition-all transform hover:translate-y-1 w-full rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus-tertiary-ring ${
                   signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
                 }`}
               >
@@ -225,9 +226,8 @@ const StepTwo = (props) => {
               <Field
                 name="confirmationCode"
                 type="text"
-                className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2"
                 placeholder="123456"
-                autoFocus={true}
               />
               {serverError && <span className="text-error">{serverError}</span>}
               {errors.confirmationCode && touched.confirmationCode ? (
@@ -239,7 +239,7 @@ const StepTwo = (props) => {
             <button
               type="submit"
               disabled={signingIn ? true : false}
-              className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent ${
+              className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:ring-tertiary focus:border-transparent ${
                 signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
               }`}
             >

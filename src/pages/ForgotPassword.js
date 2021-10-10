@@ -7,7 +7,7 @@ import { Formik, Form, Field } from 'formik'
 
 import { AuthNav } from '../components/nav/AuthNav'
 
-import { ResetPasswordErrors } from '../components/errors/ResetPasswordErrors'
+import { serverErrorOptions } from '../components/errors/serverErrorOptions'
 
 import {
   ForgotPasswordValues,
@@ -61,15 +61,7 @@ const StepOne = (props) => {
       await Auth.forgotPassword(username)
       props.next({ username, password, email })
     } catch (err) {
-      switch (err.code) {
-        case 'UserNotFoundException':
-          setServerError('Account name is not recognized')
-          break
-
-        default:
-          setServerError('Server Error. Please try again later')
-          break
-      }
+      serverErrorOptions(err.code, setServerError)
       setSigningIn(false)
 
       console.error('error confirming account..', err)
@@ -98,7 +90,6 @@ const StepOne = (props) => {
                   type="text"
                   className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                   placeholder="username"
-                  autoFocus={true}
                 />
 
                 {serverError && (
@@ -178,7 +169,6 @@ const StepTwo = (props) => {
                 type="text"
                 className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                 placeholder="123456"
-                autoFocus={true}
               />
               {serverError && <span className="text-error">{serverError}</span>}
               {errors.confirmationCode && touched.confirmationCode ? (
