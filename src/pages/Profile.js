@@ -42,4 +42,4 @@ function Profile() {
   )
 }
 
-export default protectedRoute(Profile)
+export default protectedRoute(Profile, '/sign-in')

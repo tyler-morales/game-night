@@ -1,25 +1,33 @@
 import { useState } from 'react'
-import { Auth } from 'aws-amplify'
+import { useHistory } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
 
 import { AuthNav } from '../components/nav/AuthNav'
 
+import { useUser } from '../contexts/UserContext'
+
 import { SignInValues, SignInSchema } from '../formik/SignInValidation'
 
-function SignIn(values) {
+function SignIn(setUser) {
+  let history = useHistory()
+  // get access to the login function
+  const { login, user } = useUser()
+
   const [signingIn, setSigningIn] = useState(false)
-  // const [user, setUser] = useState(null)
+  const [serverError, setServerError] = useState(null)
 
-  async function signIn({ username, password }, setUser) {
+  const signIn = async ({ username, password }) => {
     try {
-      const user = await Auth.signIn(username, password)
-      // const userInfo = { username: user.username, ...user.attributes }
-
-      // setUser(userInfo)
+      setSigningIn(true)
+      await login(username, password)
+      console.log(user)
+      history.push('/dashboard')
     } catch (err) {
+      setServerError(err.message)
       console.log('error signing in..', err)
     }
+    setSigningIn(false)
   }
 
   return (
@@ -46,6 +54,9 @@ function SignIn(values) {
                   placeholder="username"
                   className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
                 />
+                {serverError && (
+                  <span className="text-error">{serverError}</span>
+                )}
                 {errors.username && touched.username ? (
                   <span className="text-sm text-error">{errors.username}</span>
                 ) : null}
@@ -70,7 +81,6 @@ function SignIn(values) {
                   signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
                 }`}
                 disabled={signingIn ? true : false}
-                onSubmit={() => [setSigningIn(true)]}
                 title="Sign In"
               >
                 {signingIn ? 'Loading...' : 'Sign in'}

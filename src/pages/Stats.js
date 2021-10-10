@@ -40,4 +40,4 @@ const Stats = () => {
   )
 }
 
-export default protectedRoute(Stats)
+export default protectedRoute(Stats, '/sign-in')
