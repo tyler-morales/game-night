@@ -52,7 +52,8 @@ function SignIn(setUser) {
                   type="text"
                   name="username"
                   placeholder="username"
-                  className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                  className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
+                  autoFocus={true}
                 />
                 {serverError && (
                   <span className="text-error">{serverError}</span>
@@ -69,7 +70,7 @@ function SignIn(setUser) {
                   name="password"
                   type="text"
                   placeholder="password"
-                  className="focus:ring-tertiary transition-all rounded-md py-3 pl-3 border-2 focus:outline-none focus:ring-2"
+                  className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                 />
                 {errors.password && touched.password ? (
                   <span className="text-sm text-error">{errors.password}</span>
@@ -77,7 +78,7 @@ function SignIn(setUser) {
               </div>
               <button
                 type="submit"
-                className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-tertiary focus:border-transparent ${
+                className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus-tertiary-ring ${
                   signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
                 }`}
                 disabled={signingIn ? true : false}
