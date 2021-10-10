@@ -1,7 +1,6 @@
 import Auth from '@aws-amplify/auth'
 import { Hub } from '@aws-amplify/core'
 import { useHistory } from 'react-router-dom'
-// import { CognitoUser } from 'amazon-cognito-identity-js'
 import { useEffect, useState } from 'react'
 
 const getCurrentUser = async () => {
@@ -30,7 +29,7 @@ const useAuth = () => {
 
   const signOut = () => {
     Auth.signOut()
-    history.push('/login')
+    history.push('/home')
   }
 
   return { currentUser, signIn, signOut }

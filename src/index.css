@@ -30,6 +30,12 @@ body {
   .focus-secondary {
     @apply focus:bg-secondary ring-offset-primary ring-offset-2 focus:ring-secondary focus:outline-none focus:ring-2;
   }
+  .focus-tertiary-ring {
+    @apply transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2;
+  }
+  .focus-quad-ring {
+    @apply transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2;
+  }
 }
 
 html,
@@ -67,24 +73,6 @@ select {
 
 body {
   font-family: 'Rubik', sans-serif;
-}
-
-#emoji-1:before {
-  /* content: '✍️'; */
-  margin-left: 0;
-  margin-right: 15px;
-}
-
-#emoji-2:before {
-  content: '📊';
-  margin-left: 0;
-  margin-right: 15px;
-}
-
-#emoji-3:before {
-  content: '📚';
-  margin-left: 0;
-  margin-right: 15px;
 }
 
 /* Tables */

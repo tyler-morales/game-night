@@ -64,7 +64,7 @@ export const CreateMember = ({ updateMembers, members }) => {
 
   return (
     <>
-      <AnimatePresence initial={false} exitBeforeEnter={true}>
+      <AnimatePresence initial={false} exitBeforeEnter>
         {modalOpen && (
           <Modal
             modalOpen={modalOpen}

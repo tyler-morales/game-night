@@ -8,13 +8,13 @@ export const Nav = () => {
       <img className="w-24 md:w-36" src={logo} alt="Game Night Logo" />
       <div className="flex gap-6 ">
         <NavLink
-          to="/dashboard"
+          to="/sign-in"
           className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary"
         >
           <span>Sign in</span>
         </NavLink>
         <NavLink
-          to="/dashboard"
+          to="/sign-up"
           className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary"
         >
           <span>Sign up</span>
