@@ -1,44 +1,36 @@
 import { useState, useEffect } from 'react'
 import logo from '../logo.svg'
-import { Auth, Hub } from 'aws-amplify'
+import { Hub } from 'aws-amplify'
 import { NavLink } from 'react-router-dom'
-import { AuthForm } from '../components/authFlow/AuthForm'
+import SignIn from '../pages/SignIn'
+
+import { useUser } from '../contexts/UserContext'
 
 import { HiMenuAlt4 } from 'react-icons/hi'
-import { RiCloseFill } from 'react-icons/ri'
+import { FiLoader } from 'react-icons/fi'
 import {
   RiBarChart2Fill,
   RiSettings5Fill,
   RiLogoutBoxRLine,
+  RiCloseFill,
 } from 'react-icons/ri'
 
-import { FiLoader } from 'react-icons/fi'
-
 export const Dashboard = ({ children }) => {
-  const [logout, setLogout] = useState(false)
+  const { user, logout } = useUser()
+
+  const [spinner, setSpinner] = useState(false)
 
   const [hamburger, setHamburger] = useState(false)
+
+  // Set spinner to false when user logs out
   useEffect(() => {
-    checkUser()
     Hub.listen('auth', (data) => {
       const { payload } = data
       if (payload.event === 'signOut') {
-        setUser(null)
-        setLogout(false)
+        setSpinner(false)
       }
     })
   }, [])
-
-  const [user, setUser] = useState(null)
-  async function checkUser() {
-    try {
-      const data = await Auth.currentUserPoolUser()
-      const userInfo = { username: data.username, ...data.attributes }
-      setUser(userInfo)
-    } catch (err) {
-      console.error('error: ', err)
-    }
-  }
 
   // change nav based on responsive seize
   const [toggleMenu, setToggleMenu] = useState(false)
@@ -52,13 +44,12 @@ export const Dashboard = ({ children }) => {
   const updateSize = () => setSize(window.innerWidth)
   useEffect(() => (window.onresize = updateSize))
 
-  // sign out user
-  function signOut() {
+  const handleLogOut = () => {
     try {
-      Auth.signOut()
-      setLogout(true)
-    } catch (err) {
-      console.error(`Error logging out ${err}`)
+      setSpinner(true)
+      logout(setSpinner)
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -118,17 +109,20 @@ export const Dashboard = ({ children }) => {
 
             {/* Logout button */}
             <button
-              onClick={signOut}
+              onClick={handleLogOut}
               className=" tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
             >
-              {logout ? (
-                <FiLoader className="animate-spin" />
+              {spinner ? (
+                <span className="flex items-center gap-2 w-full">
+                  <FiLoader className="animate-spin" />
+                  <span className="place-self-end">Logging out</span>
+                </span>
               ) : (
-                <RiLogoutBoxRLine />
+                <span className="flex items-center gap-2 w-full">
+                  <RiLogoutBoxRLine />
+                  <span className="place-self-end">Log out</span>
+                </span>
               )}
-              <span className="place-self-end">
-                {logout ? 'Logging out' : 'Logout'}
-              </span>
             </button>
           </div>
         </nav>
@@ -138,5 +132,5 @@ export const Dashboard = ({ children }) => {
       </main>
     )
   }
-  return <AuthForm setUser={setUser} />
+  return <SignIn />
 }
