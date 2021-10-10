@@ -8,15 +8,15 @@ import { Formik, Form, Field } from 'formik'
 import { AuthNav } from '../components/nav/AuthNav'
 
 import {
-  SignUpValues,
-  SignUpStepOneSchema,
-  SignUpStepTwoSchema,
-} from '../formik/SignUpValidation'
+  ForgotPasswordValues,
+  ForgotPasswordStepOneSchema,
+  ForgotPasswordStepTwoSchema,
+} from '../formik/ForgotPasswordValidation'
 
-function SignUp() {
+function ForgotPassword() {
   let history = useHistory()
 
-  const [data, setData] = useState(SignUpValues)
+  const [data, setData] = useState(ForgotPasswordValues)
   const [currentStep, setCurrentStep] = useState(0)
 
   const makeRequest = (formData) => {
@@ -56,11 +56,7 @@ const StepOne = (props) => {
   const handleSubmit = async ({ username, password, email }) => {
     setSigningIn(true)
     try {
-      await Auth.signUp({
-        username,
-        password,
-        attributes: { email },
-      })
+      await Auth.forgotPassword(username)
       props.next({ username, password, email })
     } catch (err) {
       setServerError(err.message)
@@ -74,7 +70,7 @@ const StepOne = (props) => {
     <div className="flex flex-col w-11/12 m-auto justify-center mt-9 md:mt-14 py-6 md:max-w-md">
       <section className="md:w-full flex gap-4 flex-col">
         <Formik
-          validationSchema={SignUpStepOneSchema}
+          validationSchema={ForgotPasswordStepOneSchema}
           initialValues={props.data}
           onSubmit={handleSubmit}
         >
@@ -94,12 +90,12 @@ const StepOne = (props) => {
                   placeholder="username"
                   autofocus={true}
                 />
-                {/* {serverError && (
+                {serverError && (
                   <span className="text-error">{serverError}</span>
                 )}
                 {errors.username && touched.username ? (
                   <span className="text-sm text-error">{errors.username}</span>
-                ) : null} */}
+                ) : null}
               </div>
 
               <button
@@ -136,7 +132,7 @@ const StepTwo = (props) => {
   const handleSubmit = async ({ username, confirmationCode }) => {
     setSigningIn(true)
     try {
-      await Auth.confirmSignUp(username, confirmationCode)
+      await Auth.confirmForgotPassword(username, confirmationCode)
       props.next(username, true)
     } catch (err) {
       setSigningIn(false)
@@ -148,7 +144,7 @@ const StepTwo = (props) => {
   return (
     <section className="w-11/12 m-auto max-w-md">
       <Formik
-        validationSchema={SignUpStepTwoSchema}
+        validationSchema={ForgotPasswordStepTwoSchema}
         initialValues={props.data}
         onSubmit={handleSubmit}
       >
@@ -195,4 +191,4 @@ const StepTwo = (props) => {
   )
 }
 
-export default SignUp
+export default ForgotPassword
