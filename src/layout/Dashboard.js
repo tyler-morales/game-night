@@ -47,7 +47,7 @@ export const Dashboard = ({ children }) => {
   const handleLogOut = () => {
     try {
       setSpinner(true)
-      logout(setSpinner)
+      logout()
     } catch (error) {
       console.error(error)
     }
