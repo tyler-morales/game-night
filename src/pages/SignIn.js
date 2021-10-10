@@ -98,9 +98,11 @@ function SignIn(setUser) {
           </p>
           <p className="font-body text-white">
             Forget your password?
-            <span className="text-quad cursor-pointer ml-2">
-              Reset Password
-            </span>
+            <NavLink to="/forgot-password">
+              <span className="text-quad cursor-pointer ml-2">
+                Reset Password
+              </span>
+            </NavLink>
           </p>
         </div>
       </div>
