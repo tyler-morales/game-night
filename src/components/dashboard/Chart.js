@@ -60,9 +60,17 @@ export const Chart = (gameId) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
+        <Tooltip
+          cursor={{ fill: '#d5f4f6' }}
+          wrapperStyle={{
+            fontSize: '20px',
+            color: 'black',
+            textAlign: 'left',
+            lineHeight: '25px',
+          }}
+        />
         <XAxis dataKey="name" style={{ fill: '#fff', fontSize: 20 }} />
         <YAxis style={{ fill: '#fff', fontSize: 20 }} />
-        <Tooltip />
         <Legend wrapperStyle={{ fontSize: '20px' }} />
         <Bar dataKey="Wins" fill="#5cd5dd" />
         <Bar dataKey="Loses" fill="#ff3456" />
