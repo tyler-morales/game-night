@@ -50,6 +50,29 @@ export const Chart = (gameId) => {
     }
   }
 
+  const CustomTooltipContent = (props) => {
+    // payload[0] doesn't exist when tooltip isn't visible
+    if (props.payload[0] != null) {
+      console.log(props.payload[0].payload)
+      // mutating props directly is against react's conventions
+      // so we create a new payload with the name and value fields set to what we want
+      const name = props.payload[0].payload.name
+      const Wins = props.payload[0].payload.Wins | 0
+      const Loses = props.payload[0].payload.Loses | 0
+      // we render the default, but with our overridden payload
+      return (
+        <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
+          <span className="font-bold">{name}</span>
+          <span className="text-left block text-tertiary">Wins: {Wins}</span>
+          <span className="text-left block text-error">Loses: {Loses}</span>
+        </div>
+      )
+    }
+
+    // we just render the default
+    return <div>Loading...</div>
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
@@ -61,13 +84,8 @@ export const Chart = (gameId) => {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip
-          cursor={{ fill: '#d5f4f6' }}
-          wrapperStyle={{
-            fontSize: '20px',
-            color: 'black',
-            textAlign: 'left',
-            lineHeight: '25px',
-          }}
+          content={<CustomTooltipContent />}
+          cursor={{ fill: '#fafafa' }}
         />
         <XAxis dataKey="name" style={{ fill: '#fff', fontSize: 20 }} />
         <YAxis style={{ fill: '#fff', fontSize: 20 }} />

@@ -1,4 +1,5 @@
 import { PieChart, Pie, ResponsiveContainer, Tooltip } from 'recharts'
+import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent'
 
 export const ChartPie = ({ data }) => {
   const RADIAN = Math.PI / 180
@@ -30,6 +31,26 @@ export const ChartPie = ({ data }) => {
     )
   }
 
+  const CustomTooltipContent = (props) => {
+    // payload[0] doesn't exist when tooltip isn't visible
+    if (props.payload[0] != null) {
+      // mutating props directly is against react's conventions
+      // so we create a new payload with the name and value fields set to what we want
+      const name = props.payload[0].payload.name
+      const value = props.payload[0].payload.value
+      // we render the default, but with our overridden payload
+      return (
+        <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
+          <span className="font-bold">{name}</span>
+          <span className="block">Games: {value}</span>
+        </div>
+      )
+    }
+
+    // we just render the default
+    return <div>Loading...</div>
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>
@@ -41,7 +62,11 @@ export const ChartPie = ({ data }) => {
           dataKey="value"
           fill="#5cd5dd"
         ></Pie>
-        <Tooltip wrapperStyle={{ fontSize: '20px' }} />
+        <Tooltip
+          content={<CustomTooltipContent />}
+          // cursor={{ fill: 'orange', color: 'red' }}
+          // wrapperStyle={{ fontSize: '20px' }}
+        />
       </PieChart>
     </ResponsiveContainer>
   )
