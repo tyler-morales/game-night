@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Auth } from 'aws-amplify'
 import { useHistory } from 'react-router-dom'
 
 import { NavLink } from 'react-router-dom'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field, useFormikContext } from 'formik'
 
 import { AuthNav } from '../components/nav/AuthNav'
 
@@ -190,6 +190,17 @@ const StepOne = (props) => {
 const StepTwo = (props) => {
   const [signingIn, setSigningIn] = useState(false)
   const [serverError, setServerError] = useState(null)
+  const AutoSubmitToken = () => {
+    // Grab values and submitForm from context
+    const { values, submitForm } = useFormikContext()
+    useEffect(() => {
+      // Submit the form imperatively as an effect as soon as form values. confirmationCode is 6 digits long
+      if (values.confirmationCode.length === 6) {
+        submitForm()
+      }
+    }, [values, submitForm])
+    return null
+  }
 
   const handleSubmit = async ({ username, confirmationCode }) => {
     setSigningIn(true)
@@ -229,6 +240,7 @@ const StepTwo = (props) => {
                 className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                 placeholder="123456"
               />
+              <AutoSubmitToken />
               {serverError && <span className="text-error">{serverError}</span>}
               {errors.confirmationCode && touched.confirmationCode ? (
                 <span className="text-sm text-error">
@@ -243,7 +255,7 @@ const StepTwo = (props) => {
                 signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
               }`}
             >
-              {signingIn ? 'Loading...' : 'Submit'}
+              {signingIn ? 'Confirming...' : 'Submit'}
             </button>
           </Form>
         )}

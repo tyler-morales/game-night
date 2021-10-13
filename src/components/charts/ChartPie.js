@@ -1,5 +1,4 @@
 import { PieChart, Pie, ResponsiveContainer, Tooltip } from 'recharts'
-import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent'
 
 export const ChartPie = ({ data }) => {
   const RADIAN = Math.PI / 180
