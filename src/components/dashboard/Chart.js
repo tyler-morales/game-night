@@ -50,6 +50,25 @@ export const Chart = (gameId) => {
     }
   }
 
+  const CustomTooltipContent = (props) => {
+    // payload[0] doesn't exist when tooltip isn't visible
+    if (props.payload[0] != null) {
+      const name = props.payload[0].payload.name
+      const Wins = props.payload[0].payload.Wins | 0
+      const Loses = props.payload[0].payload.Loses | 0
+      return (
+        <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
+          <span className="font-bold">{name}</span>
+          <span className="text-left block text-tertiary">Wins: {Wins}</span>
+          <span className="text-left block text-error">Loses: {Loses}</span>
+        </div>
+      )
+    }
+
+    // render loading
+    return <div>Loading...</div>
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
@@ -60,9 +79,12 @@ export const Chart = (gameId) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
+        <Tooltip
+          content={<CustomTooltipContent />}
+          cursor={{ fill: '#fafafa' }}
+        />
         <XAxis dataKey="name" style={{ fill: '#fff', fontSize: 20 }} />
         <YAxis style={{ fill: '#fff', fontSize: 20 }} />
-        <Tooltip />
         <Legend wrapperStyle={{ fontSize: '20px' }} />
         <Bar dataKey="Wins" fill="#5cd5dd" />
         <Bar dataKey="Loses" fill="#ff3456" />
