@@ -34,11 +34,8 @@ export const ChartPie = ({ data }) => {
   const CustomTooltipContent = (props) => {
     // payload[0] doesn't exist when tooltip isn't visible
     if (props.payload[0] != null) {
-      // mutating props directly is against react's conventions
-      // so we create a new payload with the name and value fields set to what we want
       const name = props.payload[0].payload.name
       const value = props.payload[0].payload.value
-      // we render the default, but with our overridden payload
       return (
         <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
           <span className="font-bold">{name}</span>
@@ -47,7 +44,7 @@ export const ChartPie = ({ data }) => {
       )
     }
 
-    // we just render the default
+    // render loading
     return <div>Loading...</div>
   }
 
