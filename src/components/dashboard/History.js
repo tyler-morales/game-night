@@ -34,16 +34,20 @@ export const History = () => {
       <tr className="w-full">
         <td data-th="Date" className="text-left text-base font-thin lg:py-3">
           {/* TODO: When screen is less than 480 px, put two spaces in the span elements &nbsp;&nbsp; */}
-          <span>{game.createdAt.slice(0, 10)}</span>
+          {window.innerWidth < 400}
+          <span>&nbsp;&nbsp;{game.createdAt.slice(0, 10)}</span>
         </td>
         <td data-th="Name" className="text-left text-base font-thin">
-          <span>{game.name}</span>
+          {window.innerWidth < 400}
+          <span>&nbsp;&nbsp;{game.name}</span>
         </td>
         <td data-th="Winner(s)" className="text-left text-base font-thin">
-          <span>{formatArray(game.winners)}</span>
+          {window.innerWidth < 400}
+          <span>&nbsp;&nbsp;{formatArray(game.winners)}</span>
         </td>
         <td data-th="Players" className="text-left text-base font-thin">
-          <span>{formatArray(game.players)}</span>
+          {window.innerWidth < 400}
+          <span>&nbsp;&nbsp;{formatArray(game.players)}</span>
         </td>
       </tr>
     )
