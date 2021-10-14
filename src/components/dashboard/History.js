@@ -28,12 +28,10 @@ export const History = () => {
 
   const GameItem = ({ game }) => {
     const formatArray = (arr) => String(arr).split(',').join(', ')
-    // console.log(game)
 
     return (
       <tr className="w-full">
         <td data-th="Date" className="text-left text-base font-thin lg:py-3">
-          {/* TODO: When screen is less than 480 px, put two spaces in the span elements &nbsp;&nbsp; */}
           {window.innerWidth < 400}
           <span>&nbsp;&nbsp;{game.createdAt.slice(0, 10)}</span>
         </td>
