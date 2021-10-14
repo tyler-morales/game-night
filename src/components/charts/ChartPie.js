@@ -30,11 +30,13 @@ export const ChartPie = ({ data }) => {
     )
   }
 
-  const CustomTooltipContent = (props) => {
+  const CustomTooltipContent = ({ payload }) => {
+    let newPayload = payload
+
     // payload[0] doesn't exist when tooltip isn't visible
-    if (props.payload[0] != null) {
-      const name = props.payload[0].payload.name
-      const value = props.payload[0].payload.value
+    if (newPayload[0] != null) {
+      const name = payload[0].payload.name
+      const value = payload[0].payload.value
       return (
         <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
           <span className="font-bold">{name}</span>
