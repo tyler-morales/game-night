@@ -128,14 +128,17 @@ const StepOne = (props) => {
 }
 
 const StepTwo = (props) => {
+  let history = useHistory()
+
   const [signingIn, setSigningIn] = useState(false)
   const [serverError, setServerError] = useState(null)
 
-  const handleSubmit = async ({ username, confirmationCode }) => {
+  const handleSubmit = async ({ username, confirmationCode, newPassword }) => {
     setSigningIn(true)
+    console.log(username, confirmationCode, newPassword)
     try {
-      await Auth.confirmForgotPassword(username, confirmationCode)
-      props.next(username, true)
+      await Auth.forgotPasswordSubmit(username, confirmationCode, newPassword)
+      history.push('/sign-in')
     } catch (err) {
       setSigningIn(false)
       setServerError(err.message)
