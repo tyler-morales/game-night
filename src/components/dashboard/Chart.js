@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
 import useLoadPlays from '../../hooks/useLoadPlays'
+import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
 
 import {
   BarChart,
@@ -12,48 +12,8 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-// import { listPlays } from '../../graphql/queries'
-
 export const Chart = (gameId) => {
-  // const [data, setData] = useState([])
   const { data, loading } = useLoadPlays(gameId)
-
-  // useEffect(() => {
-  //   fetchMemberPlays()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [gameId])
-
-  // const fetchMemberPlays = async () => {
-  //   try {
-  //     const { username } = await Auth.currentAuthenticatedUser()
-
-  //     let filteredPlays = await API.graphql({
-  //       query: listPlays,
-  //       variables: {
-  //         filter: {
-  //           gameId: { contains: gameId.value },
-  //           owner: { eq: username },
-  //         },
-  //       },
-  //     })
-
-  //     let filteredPlaysByGame = filteredPlays.data.listPlays.items
-
-  //     filteredPlaysByGame = filteredPlaysByGame.map((item) => {
-  //       const winnerObject = {
-  //         name: item.member.name,
-  //         Wins: item.wins,
-  //         Loses: item.loses,
-  //       }
-  //       return winnerObject
-  //     })
-
-  //     setData(filteredPlaysByGame)
-  //   } catch (err) {
-  //     console.error(err)
-  //   }
-  // }
-
   const CustomTooltipContent = ({ payload }) => {
     let newPayload = payload
     // payload[0] doesn't exist when tooltip isn't visible
@@ -81,8 +41,8 @@ export const Chart = (gameId) => {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      {loading ? (
-        <span>Loading</span>
+      {data.length === 0 ? (
+        <EmptyTileInfo icon="📊" name="Leaderboard" />
       ) : (
         <BarChart
           data={data}

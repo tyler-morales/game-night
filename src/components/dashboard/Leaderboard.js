@@ -10,7 +10,6 @@ import useLoadGames from '../../hooks/useLoadGames'
 export const Leaderboard = () => {
   const [games, setGames] = useState([])
   const { data, loading } = useLoadGames()
-  console.log(data)
 
   const [selectGameOption, setSelectGameOption] = useState('')
   const [optionName, setOptionName] = useState('')
