@@ -10,10 +10,12 @@ const useLoadPlays = (gameId) => {
   useEffect(() => {
     fetchPlays()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [gameId])
 
   const fetchPlays = async () => {
     try {
+      setLoading(false)
+
       const { username } = await Auth.currentAuthenticatedUser()
 
       let filteredPlays = await API.graphql({
@@ -36,7 +38,6 @@ const useLoadPlays = (gameId) => {
         }
         return winnerObject
       })
-      setLoading(false)
       setData(filteredPlaysByGame)
     } catch (err) {
       console.error(err)
