@@ -13,31 +13,7 @@ import {
 } from 'recharts'
 
 export const Chart = (gameId) => {
-  const { data, loading } = useLoadPlays(gameId)
-  const CustomTooltipContent = ({ payload }) => {
-    let newPayload = payload
-    // payload[0] doesn't exist when tooltip isn't visible
-    try {
-      if (newPayload) {
-        const name = payload[0].payload.name
-        const Wins = payload[0].payload.Wins | 0
-        const Loses = payload[0].payload.Loses | 0
-        return (
-          <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
-            <span className="font-bold">{name}</span>
-            <span className="text-left block text-tertiary">Wins: {Wins}</span>
-            <span className="text-left block text-error">Loses: {Loses}</span>
-          </div>
-        )
-      }
-
-      // render loading
-    } catch (err) {
-      console.error(err)
-    }
-
-    return <div>Loading...</div>
-  }
+  const { data } = useLoadPlays(gameId)
 
   return (
     <ResponsiveContainer width="100%" height="100%">
