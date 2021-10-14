@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import { Formik, Field, Form } from 'formik'
 import { v4 as uuid } from 'uuid'
@@ -16,6 +16,7 @@ import { getMember } from '../../graphql/queries'
 import { GameOption } from '../recordGame/GameOption'
 import { PlayerCheckbox } from '../recordGame/PlayerCheckbox'
 import { WinnerCheckbox } from '../recordGame/WinnerCheckbox'
+import { SelectAll } from '../recordGame/SelectAll'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
 import useLoadGames from '../../hooks/useLoadGames'
@@ -30,17 +31,27 @@ import { RecordGameErrors } from '../errors/RecordGameErrors'
 
 export const RecordGameForm = () => {
   let history = useHistory()
-
   const [games, setGames] = useState([])
   const [members, setMembers] = useState([])
+  const [checked, setChecked] = useState(false)
   const { data, loading } = useLoadGames()
   const { memberData, membersLoading } = useLoadMembers([])
   const { user } = useUser()
+  const formikRef = useRef();
 
   useEffect(() => {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, data, memberData])
+
+
+  useEffect(() => {
+    setCheckedStatus(members.map(() => checked));
+
+    if (formikRef.current) {
+        formikRef.current.setFieldValue("players", checked ? members.map((member, index) =>  `${member.id},${member.name}`) : []);
+    }
+  }, [checked, members]);
 
   const fetchData = async () => {
     try {
@@ -240,7 +251,7 @@ export const RecordGameForm = () => {
   ))
 
   // Render All Players
-  const playerCheckboxes = members.map((player, index) => (
+  const playerCheckboxes = members.map((player, index) =>
     <PlayerCheckbox
       key={index}
       player={player}
@@ -248,7 +259,7 @@ export const RecordGameForm = () => {
       checkedStatus={checkedStatus}
       checkboxStatus={checkboxStatus}
     />
-  ))
+  );
 
   // Render All Possible winners
   const winnerCheckboxes = members.map((player, index) => (
@@ -275,6 +286,7 @@ export const RecordGameForm = () => {
         createMemberPlay(values)
         addGameToDB(values)
       }}
+      innerRef={formikRef}
     >
       {({ errors, touched }) => (
         <Form className="flex flex-col gap-4">
@@ -302,22 +314,23 @@ export const RecordGameForm = () => {
           </div>
 
           {/* Game Players */}
-          <div className="flex flex-col gap-3">
-            <label className=" text-lg text-left">Who Played?</label>
-            <div
-              role="group"
-              aria-labelledby="checkbox-group"
-              className="flex flex-wrap gap-4"
-            >
-              {membersLoading ? (
-                <LoadingRipple />
-              ) : playerCheckboxes.length === 0 ? (
-                <span className="text-base text-center w-full text-secondary">
-                  ⚠️ No added players: Add some in your settings
-                </span>
-              ) : (
-                playerCheckboxes
-              )}
+            <div className="flex flex-row gap-3 justify-between">
+                <label className=" text-lg text-left">Who Played?</label>
+                <div>
+                    <SelectAll {...{checked, setChecked}} />
+                </div>
+            </div>
+            <div className="flex flex-col gap-3">
+            <div role="group" aria-labelledby="checkbox-group" className="flex flex-wrap gap-4">
+                {membersLoading ? (
+                    <LoadingRipple />
+                ) : playerCheckboxes.length === 0 ? (
+                    <span className="text-base text-center w-full text-secondary">
+                    ⚠️ No added players: Add some in your settings
+                    </span>
+                ) : (
+                    playerCheckboxes
+                )}
             </div>
             {renderErrors(errors, touched, 'players')}
           </div>
@@ -325,10 +338,14 @@ export const RecordGameForm = () => {
           {/* Winners */}
           <div className="flex flex-col gap-3">
             {membersLoading && (
-              <label className=" text-lg text-left" htmlFor="winners">
-                Who Won?
-              </label>
+                <>
+                    <label className=" text-lg text-left" htmlFor="winners">
+                        Who Won?
+                    </label>
+
+              </>
             )}
+
             <div
               role="group"
               aria-labelledby="checkbox-group"
