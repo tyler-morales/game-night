@@ -3,35 +3,44 @@ import { useHistory } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 
-import { AuthNav } from "../components/nav/AuthNav";
+import { AiOutlineEyeInvisible } from 'react-icons/ai'
+import { AiOutlineEye } from 'react-icons/ai'
+
+import { AuthNav } from '../components/nav/AuthNav'
+
 
 import { useUser } from "../contexts/UserContext";
 
 import { SignInValues, SignInSchema } from "../formik/SignInValidation";
 
 function SignIn(setUser) {
-  let history = useHistory();
-  // get access to the login function
-  const { login, user } = useUser();
+  let history = useHistory()
+  const { login } = useUser()
 
-  const [signingIn, setSigningIn] = useState(false);
-  const [serverError, setServerError] = useState(null);
+  const [signingIn, setSigningIn] = useState(false)
+  const [serverError, setServerError] = useState(null)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+
+  // const passwordInput = useRef({ type: 'password' })
+  // console.log(passwordInput.current.type)
 
   const toggle = () => {
-    const isPasswordVisible = document.getElementById("password");
-    if (isPasswordVisible.type === "password") {
-      isPasswordVisible.type = "text";
+    const passwordInput = document.getElementById('password')
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text'
+      setIsPasswordVisible(true)
     } else {
-      isPasswordVisible.type = "password";
+      passwordInput.type = 'password'
+      setIsPasswordVisible(false)
     }
-  };
+  }
 
   const signIn = async ({ username, password }) => {
     try {
-      setSigningIn(true);
-      await login(username, password);
-      console.log(user);
-      history.push("/dashboard");
+      setSigningIn(true)
+      await login(username, password)
+      history.push('/dashboard')
+
     } catch (err) {
       setServerError(err.message);
       console.log("error signing in..", err);
@@ -74,17 +83,31 @@ function SignIn(setUser) {
                 <label className="text-white text-xs" htmlFor="password">
                   Password
                 </label>
-                <Field
-                  name="password"
-                  type="password"
-                  placeholder="password"
-                  id="password"
-                  className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
-                />
-                <label>
-                  <Field type="checkbox" name="toggle" onClick={toggle} />
-                  <span className="font-body text-white"> Show Password</span>
-                </label>
+                <div className="relative w-full flex items-center">
+                  <Field
+                    name="password"
+                    type="password"
+                    placeholder="password"
+                    id="password"
+                    className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring w-full"
+                  />
+                  {isPasswordVisible ? (
+                    <button
+                      onClick={toggle}
+                      className="absolute right-3 cursor-pointer p-1 transition-all"
+                    >
+                      <AiOutlineEye size="1.5em" color="grey" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={toggle}
+                      className="absolute right-3 cursor-pointer p-1 transition-all"
+                    >
+                      <AiOutlineEyeInvisible size="1.5em" color="grey" />
+                    </button>
+                  )}
+                </div>
+
                 {errors.password && touched.password ? (
                   <span className="text-sm text-error">{errors.password}</span>
                 ) : null}

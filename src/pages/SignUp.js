@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
-import { Auth } from 'aws-amplify'
-import { useHistory } from 'react-router-dom'
+import { useState } from "react";
+import { Auth } from "aws-amplify";
+import { useHistory } from "react-router-dom";
 
-import { NavLink } from 'react-router-dom'
-import { Formik, Form, Field, useFormikContext } from 'formik'
+import { NavLink } from "react-router-dom";
+import { Formik, Form, Field } from "formik";
+
 
 import { AuthNav } from "../components/nav/AuthNav";
 
