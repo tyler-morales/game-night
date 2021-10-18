@@ -1,46 +1,45 @@
-import { useState } from "react";
-import { Auth } from "aws-amplify";
-import { useHistory } from "react-router-dom";
+import { useState, useEffect } from 'react'
+import { Auth } from 'aws-amplify'
+import { useHistory } from 'react-router-dom'
 
-import { NavLink } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
+import { NavLink } from 'react-router-dom'
+import { Formik, Form, Field, useFormikContext } from 'formik'
 
+import { AuthNav } from '../components/nav/AuthNav'
 
-import { AuthNav } from "../components/nav/AuthNav";
-
-import { serverErrorOptions } from "../components/errors/serverErrorOptions";
+import { serverErrorOptions } from '../components/errors/serverErrorOptions'
 
 import {
   SignUpValues,
   SignUpStepOneSchema,
   SignUpStepTwoSchema,
-} from "../formik/SignUpValidation";
+} from '../formik/SignUpValidation'
 
 function SignUp() {
-  let history = useHistory();
+  let history = useHistory()
 
-  const [data, setData] = useState(SignUpValues);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [data, setData] = useState(SignUpValues)
+  const [currentStep, setCurrentStep] = useState(0)
 
   const makeRequest = (formData) => {
-    history.push("/sign-in");
-  };
+    history.push('/sign-in')
+  }
 
   const handleNextStep = (newData, final = false) => {
-    setData((prev) => ({ ...prev, ...newData }));
+    setData((prev) => ({ ...prev, ...newData }))
 
     if (final) {
-      makeRequest(newData);
-      return;
+      makeRequest(newData)
+      return
     }
 
-    setCurrentStep((prev) => prev + 1);
-  };
+    setCurrentStep((prev) => prev + 1)
+  }
 
   const steps = [
     <StepOne next={handleNextStep} data={data} />,
     <StepTwo next={handleNextStep} data={data} />,
-  ];
+  ]
 
   return (
     <>
@@ -49,38 +48,38 @@ function SignUp() {
         {steps[currentStep]}
       </div>
     </>
-  );
+  )
 }
 
 const toggle = () => {
-  const isPasswordVisible = document.getElementById("password");
-  if (isPasswordVisible.type === "password") {
-    isPasswordVisible.type = "text";
+  const isPasswordVisible = document.getElementById('password')
+  if (isPasswordVisible.type === 'password') {
+    isPasswordVisible.type = 'text'
   } else {
-    isPasswordVisible.type = "password";
+    isPasswordVisible.type = 'password'
   }
 }
 
 const StepOne = (props) => {
-  const [signingIn, setSigningIn] = useState(false);
-  const [serverError, setServerError] = useState(null);
+  const [signingIn, setSigningIn] = useState(false)
+  const [serverError, setServerError] = useState(null)
 
   const handleSubmit = async ({ username, password, email }) => {
-    setSigningIn(true);
+    setSigningIn(true)
     try {
       await Auth.signUp({
         username,
         password,
         attributes: { email },
-      });
-      props.next({ username, password, email });
+      })
+      props.next({ username, password, email })
     } catch (err) {
-      serverErrorOptions(err.code, setServerError);
-      setSigningIn(false);
+      serverErrorOptions(err.code, setServerError)
+      setSigningIn(false)
 
-      console.error("error confirming account..", err);
+      console.error('error confirming account..', err)
     }
-  };
+  }
 
   return (
     <div className="flex flex-col gap-10 md:flex-row-reverse">
@@ -152,10 +151,10 @@ const StepOne = (props) => {
                 type="submit"
                 disabled={signingIn ? true : false}
                 className={`transition-all transform hover:translate-y-1 w-full rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus-tertiary-ring ${
-                  signingIn ? "opacity-50 cursor-wait" : "opacity-100"
+                  signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
                 }`}
               >
-                {signingIn ? "Loading..." : "Next"}
+                {signingIn ? 'Loading...' : 'Next'}
               </button>
             </Form>
           )}
@@ -200,8 +199,8 @@ const StepOne = (props) => {
         </ul>
       </section>
     </div>
-  );
-};
+  )
+}
 
 const StepTwo = (props) => {
   const [signingIn, setSigningIn] = useState(false)
@@ -219,16 +218,16 @@ const StepTwo = (props) => {
   }
 
   const handleSubmit = async ({ username, confirmationCode }) => {
-    setSigningIn(true);
+    setSigningIn(true)
     try {
-      await Auth.confirmSignUp(username, confirmationCode);
-      props.next(username, true);
+      await Auth.confirmSignUp(username, confirmationCode)
+      props.next(username, true)
     } catch (err) {
-      setSigningIn(false);
-      setServerError(err.message);
-      console.error("error confirming account..", err);
+      setSigningIn(false)
+      setServerError(err.message)
+      console.error('error confirming account..', err)
     }
-  };
+  }
 
   return (
     <section className="w-11/12 m-auto max-w-md">
@@ -268,7 +267,7 @@ const StepTwo = (props) => {
               type="submit"
               disabled={signingIn ? true : false}
               className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus-tertiary-ring ${
-                signingIn ? "opacity-50 cursor-wait" : "opacity-100"
+                signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
               }`}
             >
               {signingIn ? 'Confirming...' : 'Submit'}
@@ -277,7 +276,7 @@ const StepTwo = (props) => {
         )}
       </Formik>
     </section>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp
