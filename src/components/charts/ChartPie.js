@@ -30,6 +30,25 @@ export const ChartPie = ({ data }) => {
     )
   }
 
+  const CustomTooltipContent = ({ payload }) => {
+    let newPayload = payload
+
+    // payload[0] doesn't exist when tooltip isn't visible
+    if (newPayload[0] != null) {
+      const name = payload[0].payload.name
+      const value = payload[0].payload.value
+      return (
+        <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
+          <span className="font-bold">{name}</span>
+          <span className="block">Games: {value}</span>
+        </div>
+      )
+    }
+
+    // render loading
+    return <div>Loading...</div>
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>
@@ -41,7 +60,11 @@ export const ChartPie = ({ data }) => {
           dataKey="value"
           fill="#5cd5dd"
         ></Pie>
-        <Tooltip wrapperStyle={{ fontSize: '20px' }} />
+        <Tooltip
+          content={<CustomTooltipContent />}
+          // cursor={{ fill: 'orange', color: 'red' }}
+          // wrapperStyle={{ fontSize: '20px' }}
+        />
       </PieChart>
     </ResponsiveContainer>
   )
