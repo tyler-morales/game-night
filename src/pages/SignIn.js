@@ -93,6 +93,7 @@ function SignIn(setUser) {
                   />
                   {isPasswordVisible ? (
                     <button
+                      type="button"
                       onClick={toggle}
                       className="absolute right-3 cursor-pointer p-1 transition-all"
                     >
@@ -100,6 +101,7 @@ function SignIn(setUser) {
                     </button>
                   ) : (
                     <button
+                      type="button"
                       onClick={toggle}
                       className="absolute right-3 cursor-pointer p-1 transition-all"
                     >
