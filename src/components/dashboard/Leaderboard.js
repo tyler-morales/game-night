@@ -11,8 +11,8 @@ export const Leaderboard = () => {
   const [games, setGames] = useState([])
   const { data, loading } = useLoadGames()
 
-  const [selectGameOption, setSelectGameOption] = useState(null)
-  const [optionName, setOptionName] = useState()
+  const [selectGameOption, setSelectGameOption] = useState('')
+  const [optionName, setOptionName] = useState('')
 
   useEffect(() => {
     fetchMemberWins()

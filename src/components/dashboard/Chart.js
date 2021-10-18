@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { API } from 'aws-amplify'
+import useLoadPlays from '../../hooks/useLoadPlays'
+import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
 
 import {
   BarChart,
@@ -12,61 +12,49 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-import { listPlays } from '../../graphql/queries'
-
 export const Chart = (gameId) => {
-  const [data, setData] = useState([])
-
-  useEffect(() => {
-    fetchMemberPlays()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameId])
-
-  const fetchMemberPlays = async () => {
-    try {
-      let filteredPlays = await API.graphql({
-        query: listPlays,
-        variables: {
-          filter: {
-            gameId: { contains: gameId.value },
-          },
-        },
-      })
-
-      let filteredPlaysByGame = filteredPlays.data.listPlays.items
-
-      filteredPlaysByGame = filteredPlaysByGame.map((item) => {
-        const winnerObject = {
-          name: item.member.name,
-          Wins: item.wins,
-          Loses: item.loses,
-        }
-        return winnerObject
-      })
-
-      setData(filteredPlaysByGame)
-    } catch (err) {
-      console.error(err)
-    }
-  }
+  const { data } = useLoadPlays(gameId)
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <BarChart
-        data={data}
-        margin={{
-          right: 5,
-          left: -25,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" style={{ fill: '#fff', fontSize: 20 }} />
-        <YAxis style={{ fill: '#fff', fontSize: 20 }} />
-        <Tooltip />
-        <Legend wrapperStyle={{ fontSize: '20px' }} />
-        <Bar dataKey="Wins" fill="#5cd5dd" />
-        <Bar dataKey="Loses" fill="#ff3456" />
-      </BarChart>
+      {data.length === 0 ? (
+        <EmptyTileInfo icon="📊" name="Leaderboard" />
+      ) : (
+        <BarChart
+          data={data}
+          margin={{
+            right: 5,
+            left: -25,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip
+            cursor={{ fill: '#fafafa' }}
+            content={({ payload }) => (
+              <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
+                <span className="font-bold">
+                  {payload && payload[0] != null && payload[0].payload.name}
+                </span>
+                <span className="text-left block text-tertiary">
+                  Wins:{' '}
+                  {payload && payload[0] != null && payload[0].payload.Wins | 0}
+                </span>
+                <span className="text-left block text-error">
+                  Loses:{' '}
+                  {payload &&
+                    payload[0] != null &&
+                    payload[0].payload.Loses | 0}
+                </span>
+              </div>
+            )}
+          />
+          <XAxis dataKey="name" style={{ fill: '#fff', fontSize: 20 }} />
+          <YAxis style={{ fill: '#fff', fontSize: 20 }} />
+          <Legend wrapperStyle={{ fontSize: '20px' }} />
+          <Bar dataKey="Wins" fill="#5cd5dd" />
+          <Bar dataKey="Loses" fill="#ff3456" />
+        </BarChart>
+      )}
     </ResponsiveContainer>
   )
 }

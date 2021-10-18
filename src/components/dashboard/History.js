@@ -27,27 +27,25 @@ export const History = () => {
   };
 
   const GameItem = ({ game }) => {
-    const formatArray = (arr) => String(arr).split(",").join(", ");
-    // console.log(game)
+    const formatArray = (arr) => String(arr).split(',').join(', ')
 
     return (
       <tr className="w-full">
         <td data-th="Date" className="text-left text-base font-thin lg:py-3">
-          {/* TODO: When screen is less than 480 px, put two spaces in the span elements &nbsp;&nbsp; */}
-          {window.innerWidth < 400 && <span>&nbsp; &nbsp;</span>}
-          <span>{game.createdAt.slice(0, 10)}</span>
+          {window.innerWidth < 400}
+          <span>&nbsp;&nbsp;{game.createdAt.slice(0, 10)}</span>
         </td>
         <td data-th="Name" className="text-left text-base font-thin">
-          {window.innerWidth < 400 && <span>&nbsp; &nbsp;</span>}
-          <span>{game.name}</span>
+          {window.innerWidth < 400}
+          <span>&nbsp;&nbsp;{game.name}</span>
         </td>
         <td data-th="Winner(s)" className="text-left text-base font-thin">
-          {window.innerWidth < 400 && <span>&nbsp; &nbsp;</span>}
-          <span>{formatArray(game.winners)}</span>
+          {window.innerWidth < 400}
+          <span>&nbsp;&nbsp;{formatArray(game.winners)}</span>
         </td>
         <td data-th="Players" className="text-left text-base font-thin">
-          {window.innerWidth < 400 && <span>&nbsp; &nbsp;</span>}
-          <span>{formatArray(game.players)}</span>
+          {window.innerWidth < 400}
+          <span>&nbsp;&nbsp;{formatArray(game.players)}</span>
         </td>
       </tr>
     );
@@ -76,10 +74,7 @@ export const History = () => {
   return (
     <DashboardItemContainer title="Game History">
       {data ? (
-        <div
-          data-aos="fade-in"
-          className="overscroll-auto overflow-auto max-h-500 md:h-80 flex flex-col gap-6"
-        >
+        <div className="overscroll-auto overflow-auto max-h-500 md:h-80 flex flex-col gap-6">
           {data.length !== 0 ? (
             <GameTable />
           ) : (
