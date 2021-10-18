@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { NavLink } from 'react-router-dom'
-import { Formik, Form, Field } from 'formik'
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { Formik, Form, Field } from "formik";
 
-import { AuthNav } from '../components/nav/AuthNav'
+import { AuthNav } from "../components/nav/AuthNav";
 
-import { useUser } from '../contexts/UserContext'
+import { useUser } from "../contexts/UserContext";
 
-import { SignInValues, SignInSchema } from '../formik/SignInValidation'
+import { SignInValues, SignInSchema } from "../formik/SignInValidation";
 
 function SignIn(setUser) {
-  let history = useHistory()
+  let history = useHistory();
   // get access to the login function
-  const { login, user } = useUser()
+  const { login, user } = useUser();
 
-  const [signingIn, setSigningIn] = useState(false)
-  const [serverError, setServerError] = useState(null)
+  const [signingIn, setSigningIn] = useState(false);
+  const [serverError, setServerError] = useState(null);
+
+  const toggle = () => {
+    const isPasswordVisible = document.getElementById("password");
+    if (isPasswordVisible.type === "password") {
+      isPasswordVisible.type = "text";
+    } else {
+      isPasswordVisible.type = "password";
+    }
+  };
 
   const signIn = async ({ username, password }) => {
     try {
-      setSigningIn(true)
-      await login(username, password)
-      console.log(user)
-      history.push('/dashboard')
+      setSigningIn(true);
+      await login(username, password);
+      console.log(user);
+      history.push("/dashboard");
     } catch (err) {
-      setServerError(err.message)
-      console.log('error signing in..', err)
+      setServerError(err.message);
+      console.log("error signing in..", err);
     }
-    setSigningIn(false)
-  }
+    setSigningIn(false);
+  };
 
   return (
     <>
@@ -67,10 +76,15 @@ function SignIn(setUser) {
                 </label>
                 <Field
                   name="password"
-                  type="text"
+                  type="password"
                   placeholder="password"
+                  id="password"
                   className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                 />
+                <label>
+                  <Field type="checkbox" name="toggle" onClick={toggle} />
+                  <span className="font-body text-white"> Show Password</span>
+                </label>
                 {errors.password && touched.password ? (
                   <span className="text-sm text-error">{errors.password}</span>
                 ) : null}
@@ -78,12 +92,12 @@ function SignIn(setUser) {
               <button
                 type="submit"
                 className={`transition-all transform hover:translate-y-1 rounded-md bg-tertiary py-3 mt-6 cursor-pointer border-2 border-transparent focus-tertiary-ring ${
-                  signingIn ? 'opacity-50 cursor-wait' : 'opacity-100'
+                  signingIn ? "opacity-50 cursor-wait" : "opacity-100"
                 }`}
                 disabled={signingIn ? true : false}
                 title="Sign In"
               >
-                {signingIn ? 'Loading...' : 'Sign in'}
+                {signingIn ? "Loading..." : "Sign in"}
               </button>
             </Form>
           )}
@@ -107,7 +121,7 @@ function SignIn(setUser) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default SignIn
+export default SignIn;
