@@ -4,8 +4,11 @@ import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
 import { ChartHeatmap } from '../charts/ChartHeatmap'
+import { ToolTipContent } from '../global/ToolTip'
 
 import useGetRecords from '../../hooks/useGetRecords'
+
+import { AiOutlineInfoCircle } from 'react-icons/ai'
 
 export const GameActivity = () => {
   const [dateRecords, setDateRecords] = useState(0)
@@ -63,8 +66,21 @@ export const GameActivity = () => {
     )
   }
 
+  const info = {
+    icon: <AiOutlineInfoCircle />,
+    title: 'What is Game Activity?',
+    description: `
+    Game Activity is the amount of games you played during a specfic day over the past year.
+    This is also know as a heatmap. 
+    `,
+  }
+
   return (
-    <DashboardItemContainer title="Game Activity" options={<Options />}>
+    <DashboardItemContainer
+      title="Game Activity"
+      options={<Options />}
+      info={<ToolTipContent info={info} />}
+    >
       {dateRecords ? (
         <div className="xl:h-80 flex flex-col gap-6">
           {dateRecords.length > 0 ? (
