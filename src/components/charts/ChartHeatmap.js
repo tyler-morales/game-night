@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react'
 import HeatMap from '@uiw/react-heat-map'
-// import Tooltip from '@uiw/react-tooltip'
+import useLoadSpecficRecords from '../../hooks/useLoadSpecficRecords'
 
 export const ChartHeatmap = ({ period, data }) => {
-  const [startDate, setStartDate] = useState()
-  const [endDate, setEndDate] = useState()
-  const [selected, setSelected] = useState('')
-
-  console.log(selected)
-
-  const [inHover, setHover] = useState(false)
-
   // Get date info
   const date = new Date()
   let [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()]
+
+  const [startDate, setStartDate] = useState()
+  const [endDate, setEndDate] = useState()
+  const [selected, setSelected] = useState(`${year}/${month + 1}/${day}`)
+  const { games } = useLoadSpecficRecords(selected)
+
+  // console.log(selected)
 
   useEffect(() => {
     // Year to date of Current year
@@ -42,10 +41,19 @@ export const ChartHeatmap = ({ period, data }) => {
 
     return (
       <div className="text-left text-base">
-        <span>On {date ? date : today}</span>
-        <span className="font-bold">
-          &nbsp; you played {count ? count : '0'} games.
+        <span>
+          On <span className="font-bold">{date ? date : today}</span>
         </span>
+        <span>
+          &nbsp; you played{' '}
+          <span className="font-bold">{count ? count : '0'} </span>
+          {count === 1 ? 'game' : 'games'}
+        </span>
+        <ul>
+          {games.map((item, index) => {
+            return <li key={index}>{item}</li>
+          })}
+        </ul>
       </div>
     )
   }
@@ -88,30 +96,8 @@ export const ChartHeatmap = ({ period, data }) => {
                 onClick={() => {
                   setSelected(data.date === selected ? '' : { date, count })
                 }}
-                onMouseMove={() => (inHover ? setHover(true) : setHover(false))}
               />
-              {inHover && <Tooltip />}
             </>
-            // <Tooltip key={props.key} data={`count: ${data.count || 0}`}>
-            //   <rect {...props} />
-            // </Tooltip>
-
-            // <Tooltip
-            //   key={props.key}
-            //   placement="top"
-            //   content={`${data.count || 0} ${
-            //     data.count > 1 ? 'games' : 'game'
-            //   } Played on ${data.date} `}
-            // >
-            // <rect
-            //   {...props}
-            //   onClick={() => {
-            //     setSelected(
-            //       data.date === selected ? '' : `${data.date} ${data.count}`
-            //     )
-            //   }}
-            // />
-            // </Tooltip>
           )
         }}
       />
