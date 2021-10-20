@@ -5,6 +5,7 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
   ResponsiveContainer,
+  Tooltip,
 } from 'recharts'
 
 export const ChartRadar = () => {
@@ -16,7 +17,7 @@ export const ChartRadar = () => {
     },
     {
       gameName: 'Life',
-      wins: 1,
+      wins: 3,
       loses: 10,
     },
     {
@@ -51,7 +52,23 @@ export const ChartRadar = () => {
         <PolarGrid />
         <PolarAngleAxis dataKey="gameName" tick={customTick} />
         <PolarRadiusAxis style={{ fill: '#fff', fontSize: 14 }} />
-
+        <Tooltip
+          content={({ payload }) => (
+            <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
+              <span className="font-bold">
+                {payload && payload[0] != null && payload[0].payload.gameName}
+              </span>
+              <span className="text-left block text-tertiary">
+                Wins:{' '}
+                {payload && payload[0] != null && payload[0].payload.wins | 0}
+              </span>
+              <span className="text-left block text-error">
+                Loses:{' '}
+                {payload && payload[0] != null && payload[0].payload.loses | 0}
+              </span>
+            </div>
+          )}
+        />
         <Radar
           name="name"
           dataKey="wins"
