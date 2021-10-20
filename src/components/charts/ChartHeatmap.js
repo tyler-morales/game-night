@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import HeatMap from '@uiw/react-heat-map'
 import useLoadSpecficRecords from '../../hooks/useLoadSpecficRecords'
+import { ChartRadar } from './ChartRadar'
 
 export const ChartHeatmap = ({ period, data }) => {
   // Get date info
@@ -155,6 +156,7 @@ export const ChartHeatmap = ({ period, data }) => {
 
         <div className="pt-4 sm:pt-0 sm:pl-4">
           <h3 className="text-sm uppercase font-bold text-left">Wins</h3>
+          <ChartRadar />
         </div>
       </div>
     </div>
