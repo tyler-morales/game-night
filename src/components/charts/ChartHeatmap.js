@@ -49,9 +49,39 @@ export const ChartHeatmap = ({ period, data }) => {
           <span className="font-bold">{count ? count : '0'} </span>
           {count === 1 ? 'game' : 'games'}
         </span>
-        <ul>
+        <ul className="mt-2">
           {games.map((item, index) => {
-            return <li key={index}>{item}</li>
+            return (
+              <li className="mb-2" key={index}>
+                <h4 className="font-bold text-quad">{item.gameName}</h4>
+                <ul>
+                  <span>Players: </span>
+                  {item.players.map((player, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="font-bold inline text-sm text-white mr-2"
+                      >
+                        {player}
+                      </li>
+                    )
+                  })}
+                </ul>
+                <ul>
+                  <span>Winner(s): </span>
+                  {item.winners.map((winner, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="font-bold inline text-sm text-white mr-2"
+                      >
+                        {winner}
+                      </li>
+                    )
+                  })}
+                </ul>
+              </li>
+            )
           })}
         </ul>
       </div>
@@ -101,9 +131,16 @@ export const ChartHeatmap = ({ period, data }) => {
           )
         }}
       />
-      <hr className="border-1 border-white w-full mb-4" />
+      <hr className="border-1 border-white w-full" />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 self-start w-full h-full">
+      {/* TODO: Add members and filter below data by member */}
+      {/* <div className="self-start mt-4 mb-6 flex gap-3">
+        <span className="text-sm border-2 border-quad rounded-lg py-2 px-3">
+          MoralesFam
+        </span>
+      </div> */}
+
+      <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 self-start w-full min-h-170">
         <div className="border-b sm:border-b-0 sm:border-r border-white pb-4 sm:pb-0 sm:pr-4">
           <h3 className="text-sm uppercase font-bold text-left mb-4 ">
             Game Activity Stats

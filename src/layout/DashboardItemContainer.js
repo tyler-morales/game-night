@@ -7,7 +7,7 @@ export const DashboardItemContainer = ({ children, title, options, info }) => {
         </h2>
         {options && options}
       </div>
-      <div className="min-h-364 bg-primary rounded-lg p-5 border-2 border-quad shadow-lg">
+      <div className="min-h-364 bg-primary rounded-lg p-5 border-2 border-quad shadow-lg overflow-scroll">
         {children}
       </div>
     </div>

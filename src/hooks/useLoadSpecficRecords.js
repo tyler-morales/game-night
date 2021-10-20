@@ -31,7 +31,11 @@ const useLoadSpecficRecords = ({ date }) => {
 
       const allGames = records.data.listRecordGames.items
       const filteredGames = allGames.map((record) => {
-        return record.name
+        return {
+          gameName: record.name,
+          players: record.players,
+          winners: record.winners,
+        }
       })
 
       setLoading(false)
