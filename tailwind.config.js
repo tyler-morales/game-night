@@ -19,6 +19,7 @@ module.exports = {
       },
       minHeight: {
         364: '364px',
+        170: '170px',
       },
     },
     colors: {
