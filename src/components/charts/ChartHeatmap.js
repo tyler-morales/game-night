@@ -54,8 +54,10 @@ export const ChartHeatmap = ({ period, data }) => {
             return (
               <li className="mb-2" key={index}>
                 <h4 className="font-bold text-quad">{item.gameName}</h4>
-                <ul>
-                  <span>Players: </span>
+                <ul className="mb-2">
+                  <span>
+                    <span className="mr-2">👥</span> Players:{' '}
+                  </span>
                   {item.players.map((player, index) => {
                     return (
                       <li
@@ -68,7 +70,9 @@ export const ChartHeatmap = ({ period, data }) => {
                   })}
                 </ul>
                 <ul>
-                  <span>Winner(s): </span>
+                  <span>
+                    <span className="mr-2">🏆</span> Winner(s):{' '}
+                  </span>
                   {item.winners.map((winner, index) => {
                     return (
                       <li
@@ -131,6 +135,7 @@ export const ChartHeatmap = ({ period, data }) => {
           )
         }}
       />
+
       <hr className="border-1 border-white w-full" />
 
       {/* TODO: Add members and filter below data by member */}

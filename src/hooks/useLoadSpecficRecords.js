@@ -30,11 +30,11 @@ const useLoadSpecficRecords = ({ date }) => {
       })
 
       const allGames = records.data.listRecordGames.items
-      const filteredGames = allGames.map((record) => {
+      const filteredGames = allGames.map(({ name, players, winners }) => {
         return {
-          gameName: record.name,
-          players: record.players,
-          winners: record.winners,
+          gameName: name,
+          players: players,
+          winners: winners,
         }
       })
 
