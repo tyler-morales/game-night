@@ -156,7 +156,7 @@ export const ChartHeatmap = ({ period, data }) => {
 
         <div className="pt-4 sm:pt-0 sm:pl-4">
           <h3 className="text-sm uppercase font-bold text-left mb-4">
-            Wins & loses per player (all time)
+            Most active days of the week
           </h3>
           <ChartRadar />
         </div>

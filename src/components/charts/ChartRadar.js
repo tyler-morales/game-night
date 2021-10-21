@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import {
   Radar,
   RadarChart,
@@ -8,24 +9,83 @@ import {
   Tooltip,
 } from 'recharts'
 
+import useLoadRecords from '../../hooks/useGetRecords'
+
 export const ChartRadar = () => {
-  const data = [
-    {
-      gameName: 'Monopoly',
-      wins: 9,
-      loses: 3,
-    },
-    {
-      gameName: 'Life',
-      wins: 3,
-      loses: 10,
-    },
-    {
-      gameName: 'Chess',
-      wins: 4,
-      loses: 2,
-    },
-  ]
+  const { data } = useLoadRecords()
+  const [days, setDays] = useState('')
+
+  useEffect(() => {
+    fetchRecords()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
+
+  const fetchRecords = async () => {
+    try {
+      let array = (await data) ?? []
+
+      array = array.map(({ createdAt }) => {
+        const dayName = new Date(createdAt).toLocaleDateString('en-US', {
+          weekday: 'long',
+        })
+
+        return dayName
+      })
+
+      const arrayOfOccurrenceObjects = Object.values(
+        array.reduce((acc, el) => {
+          if (!acc[el]) acc[el] = { day: el, plays: 0 }
+          acc[el].plays++
+          return acc
+        }, {})
+      )
+
+      console.log(arrayOfOccurrenceObjects)
+      setDays(arrayOfOccurrenceObjects)
+
+      // console.log(sanitizedData)
+
+      // setDays(days)
+      // console.log(days)
+
+      // set the initial select option to the first game in the users's games
+      // if (!loading) setSelectGameOption(await games[0].id)
+      // if (!loading) setOptionName(await games[0].name)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  // const data = [
+  //   {
+  //     day: 'Monday',
+  //     plays: 2,
+  //   },
+  //   {
+  //     day: 'Tuesday',
+  //     plays: 3,
+  //   },
+  //   {
+  //     day: 'Wednsday',
+  //     plays: 4,
+  //   },
+  //   {
+  //     day: 'Thursday',
+  //     plays: 10,
+  //   },
+  //   {
+  //     day: 'Friday',
+  //     plays: 24,
+  //   },
+  //   {
+  //     day: 'Saturday',
+  //     plays: 10,
+  //   },
+  //   {
+  //     day: 'Sunday',
+  //     plays: 15,
+  //   },
+  // ]
 
   function customTick({ payload, x, y, textAnchor, stroke, radius }) {
     return (
@@ -48,30 +108,26 @@ export const ChartRadar = () => {
 
   return (
     <ResponsiveContainer width="100%" height={200}>
-      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={days}>
         <PolarGrid />
-        <PolarAngleAxis dataKey="gameName" tick={customTick} />
+        <PolarAngleAxis dataKey="day" tick={customTick} />
         <PolarRadiusAxis style={{ fill: '#fff', fontSize: 14 }} />
         <Tooltip
           content={({ payload }) => (
             <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
               <span className="font-bold">
-                {payload && payload[0] != null && payload[0].payload.gameName}
+                {payload && payload[0] != null && payload[0].payload.day}
               </span>
               <span className="text-left block text-tertiary">
-                Wins:{' '}
-                {payload && payload[0] != null && payload[0].payload.wins | 0}
-              </span>
-              <span className="text-left block text-error">
-                Loses:{' '}
-                {payload && payload[0] != null && payload[0].payload.loses | 0}
+                Plays:{' '}
+                {payload && payload[0] != null && payload[0].payload.plays | 0}
               </span>
             </div>
           )}
         />
         <Radar
           name="name"
-          dataKey="wins"
+          dataKey="plays"
           stroke="white"
           fill="green"
           fillOpacity={0.6}
