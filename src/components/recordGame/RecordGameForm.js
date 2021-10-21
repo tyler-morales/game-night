@@ -29,6 +29,10 @@ import {
 } from '../../formik/RecordGameValidation'
 import { RecordGameErrors } from '../errors/RecordGameErrors'
 
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
+import '../../styles/dayPicker.css'
+
 export const RecordGameForm = () => {
   let history = useHistory()
   const [games, setGames] = useState([])
@@ -37,7 +41,26 @@ export const RecordGameForm = () => {
   const { data, loading } = useLoadGames()
   const { memberData, membersLoading } = useLoadMembers([])
   const { user } = useUser()
+  const [date, setDate] = useState(new Date())
   const formikRef = useRef();
+
+  const modifiers = {
+    today: new Date(),
+    selectedDay: date,
+  };
+
+  const modifiersStyles = {
+    today: {
+      color: "#5cd5dd",
+      backgroundColor: "",
+    },
+    selectedDay: {
+      color: "#000022",
+      backgroundColor: "#5cd5dd",
+    },
+  };
+
+  
 
   useEffect(() => {
     fetchData()
@@ -100,6 +123,7 @@ export const RecordGameForm = () => {
         winners: winners.map((winner) => winner.split(',')[1]), // split the array of players with ID's and names to just ID's
         owner: user.username,
         type: 'RecordGame',
+        createdAt: date.toISOString(),
       }
 
       API.graphql({
@@ -354,6 +378,15 @@ export const RecordGameForm = () => {
               {membersLoading ? <LoadingRipple /> : winnerCheckboxes}
             </div>
             {renderErrors(errors, touched, 'winners')}
+          </div>
+
+          {/* Date Picker */}
+          <div className="flex flex-col gap-3">
+            <DayPicker
+              modifiers={modifiers}
+              modifiersStyles={modifiersStyles}
+              onDayClick={(day) => {setDate(day)}}
+            />
           </div>
 
           {/* Submit */}

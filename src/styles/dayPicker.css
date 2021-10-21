@@ -1,0 +1,19 @@
+.DayPicker-Months {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+.DayPicker-Month {
+    margin: 0;
+    padding: 0;
+}
+
+.DayPicker-Day {
+    padding: 0.3em;
+    width: 4rem;
+}
+
+.DayPicker-Day:hover {
+    color: #000022;
+}
