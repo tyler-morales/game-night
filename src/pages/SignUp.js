@@ -50,6 +50,16 @@ function SignUp() {
     </>
   )
 }
+
+const toggle = () => {
+  const isPasswordVisible = document.getElementById('password')
+  if (isPasswordVisible.type === 'password') {
+    isPasswordVisible.type = 'text'
+  } else {
+    isPasswordVisible.type = 'password'
+  }
+}
+
 const StepOne = (props) => {
   const [signingIn, setSigningIn] = useState(false)
   const [serverError, setServerError] = useState(null)
@@ -122,11 +132,16 @@ const StepOne = (props) => {
                   Password
                 </label>
                 <Field
-                  type="text"
                   name="password"
+                  type="password"
                   className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
                   placeholder="qwerty123"
+                  id="password"
                 />
+                <label>
+                  <Field type="checkbox" name="toggle" onClick={toggle} />
+                  <span className="font-body text-white"> Show Password</span>
+                </label>
                 {errors.password && touched.password ? (
                   <span className="text-sm text-error">{errors.password}</span>
                 ) : null}

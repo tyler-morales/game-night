@@ -41,8 +41,12 @@ export const RecordGameForm = () => {
   const { data, loading } = useLoadGames()
   const { memberData, membersLoading } = useLoadMembers([])
   const { user } = useUser()
+<<<<<<< HEAD
   const [date, setDate] = useState(new Date())
   const formikRef = useRef();
+=======
+  const formikRef = useRef()
+>>>>>>> 3fc5966ea4956de52d92bc5dd2e9d6fde55f3846
 
   const modifiers = {
     today: new Date(),
@@ -67,14 +71,18 @@ export const RecordGameForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, data, memberData])
 
-
   useEffect(() => {
-    setCheckedStatus(members.map(() => checked));
+    setCheckedStatus(members.map(() => checked))
 
     if (formikRef.current) {
-        formikRef.current.setFieldValue("players", checked ? members.map((member, index) =>  `${member.id},${member.name}`) : []);
+      formikRef.current.setFieldValue(
+        'players',
+        checked
+          ? members.map((member, index) => `${member.id},${member.name}`)
+          : []
+      )
     }
-  }, [checked, members]);
+  }, [checked, members])
 
   const fetchData = async () => {
     try {
@@ -275,7 +283,7 @@ export const RecordGameForm = () => {
   ))
 
   // Render All Players
-  const playerCheckboxes = members.map((player, index) =>
+  const playerCheckboxes = members.map((player, index) => (
     <PlayerCheckbox
       key={index}
       player={player}
@@ -283,7 +291,7 @@ export const RecordGameForm = () => {
       checkedStatus={checkedStatus}
       checkboxStatus={checkboxStatus}
     />
-  );
+  ))
 
   // Render All Possible winners
   const winnerCheckboxes = members.map((player, index) => (
@@ -338,35 +346,38 @@ export const RecordGameForm = () => {
           </div>
 
           {/* Game Players */}
-            <div className="flex flex-row gap-3 justify-between">
-                <label className=" text-lg text-left">Who Played?</label>
-                <div>
-                    <SelectAll {...{checked, setChecked}} />
-                </div>
+          <div className="flex flex-row gap-3 justify-between">
+            <label className=" text-lg text-left">Who Played?</label>
+            <div>
+              <SelectAll {...{ checked, setChecked }} />
             </div>
-            <div className="flex flex-col gap-3">
-            <div role="group" aria-labelledby="checkbox-group" className="flex flex-wrap gap-4">
-                {membersLoading ? (
-                    <LoadingRipple />
-                ) : playerCheckboxes.length === 0 ? (
-                    <span className="text-base text-center w-full text-secondary">
-                    ⚠️ No added players: Add some in your settings
-                    </span>
-                ) : (
-                    playerCheckboxes
-                )}
+          </div>
+          <div className="flex flex-col gap-3">
+            <div
+              role="group"
+              aria-labelledby="checkbox-group"
+              className="flex flex-wrap gap-4"
+            >
+              {membersLoading ? (
+                <LoadingRipple />
+              ) : playerCheckboxes.length === 0 ? (
+                <span className="text-base text-center w-full text-secondary">
+                  ⚠️&nbsp; No added players: Add some in your settings
+                </span>
+              ) : (
+                playerCheckboxes
+              )}
             </div>
             {renderErrors(errors, touched, 'players')}
           </div>
 
           {/* Winners */}
           <div className="flex flex-col gap-3">
-            {membersLoading && (
-                <>
-                    <label className=" text-lg text-left" htmlFor="winners">
-                        Who Won?
-                    </label>
-
+            {members.length !== 0 && (
+              <>
+                <label className=" text-lg text-left" htmlFor="winners">
+                  Who Won?
+                </label>
               </>
             )}
 
