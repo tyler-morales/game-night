@@ -13,8 +13,6 @@ export const ChartHeatmap = ({ period, data }) => {
   const [selected, setSelected] = useState(`${year}/${month + 1}/${day}`)
   const { games } = useLoadSpecficRecords(selected)
 
-  console.log(selected)
-
   useEffect(() => {
     // Year to date of Current year
     if (period === 'YEAR_TO_DATE') {
@@ -38,7 +36,6 @@ export const ChartHeatmap = ({ period, data }) => {
 
   const SelectedDate = ({ selected }) => {
     const { date, count } = selected
-    console.log(date, count)
     const today = `${year}/${month + 1}/${day}`
 
     return (
