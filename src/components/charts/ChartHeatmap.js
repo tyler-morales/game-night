@@ -13,7 +13,7 @@ export const ChartHeatmap = ({ period, data }) => {
   const [selected, setSelected] = useState(`${year}/${month + 1}/${day}`)
   const { games } = useLoadSpecficRecords(selected)
 
-  // console.log(selected)
+  console.log(selected)
 
   useEffect(() => {
     // Year to date of Current year
@@ -38,10 +38,11 @@ export const ChartHeatmap = ({ period, data }) => {
 
   const SelectedDate = ({ selected }) => {
     const { date, count } = selected
+    console.log(date, count)
     const today = `${year}/${month + 1}/${day}`
 
     return (
-      <div className="text-left text-base">
+      <div className="text-left text-base overflow-scroll md:h-52">
         <span>
           On <span className="font-bold">{date ? date : today}</span>
         </span>
@@ -50,7 +51,7 @@ export const ChartHeatmap = ({ period, data }) => {
           <span className="font-bold">{count ? count : '0'} </span>
           {count === 1 ? 'game' : 'games'}
         </span>
-        <ul className="mt-2">
+        <ul className="mt-2 md:pb-16">
           {games.map((item, index) => {
             return (
               <li className="mb-2" key={index}>
@@ -70,7 +71,7 @@ export const ChartHeatmap = ({ period, data }) => {
                     )
                   })}
                 </ul>
-                <ul>
+                <ul className="border-b-2 pb-2 border-dotted border-quad">
                   <span>
                     <span className="mr-2">🏆</span> Winner(s):{' '}
                   </span>
@@ -93,15 +94,6 @@ export const ChartHeatmap = ({ period, data }) => {
     )
   }
 
-  const Tooltip = () => {
-    return (
-      <div className="bg-white">
-        <span>0 games on </span>
-        <span>date</span>
-      </div>
-    )
-  }
-
   return (
     <div className="flex overflow-hidden items-end flex-col w-full">
       <HeatMap
@@ -109,10 +101,11 @@ export const ChartHeatmap = ({ period, data }) => {
         style={{ color: 'white' }}
         startDate={new Date(startDate)}
         endDate={new Date(endDate)}
-        legendCellSize={20}
+        legendCellSize={0}
         rectSize={10}
         width={675}
-        legendRender={(props) => <rect {...props} y={props.y + 5} rx="2" />}
+        height={120}
+        legendRender={0}
         rectProps={{
           rx: 2,
         }}
@@ -139,14 +132,7 @@ export const ChartHeatmap = ({ period, data }) => {
 
       <hr className="border-1 border-white w-full" />
 
-      {/* TODO: Add members and filter below data by member */}
-      {/* <div className="self-start mt-4 mb-6 flex gap-3">
-        <span className="text-sm border-2 border-quad rounded-lg py-2 px-3">
-          MoralesFam
-        </span>
-      </div> */}
-
-      <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 self-start w-full min-h-170">
+      <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 self-start w-full md:h-52">
         <div className="border-b sm:border-b-0 sm:border-r border-white pb-4 sm:pb-0 sm:pr-4">
           <h3 className="text-sm uppercase font-bold text-left mb-4 ">
             Game Activity Stats
@@ -156,7 +142,7 @@ export const ChartHeatmap = ({ period, data }) => {
 
         <div className="pt-4 sm:pt-0 sm:pl-4">
           <h3 className="text-sm uppercase font-bold text-left mb-4">
-            Most active days of the week
+            Active days of the week
           </h3>
           <ChartRadar />
         </div>

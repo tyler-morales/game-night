@@ -40,64 +40,16 @@ export const ChartRadar = () => {
         }, {})
       )
 
-      console.log(arrayOfOccurrenceObjects)
       setDays(arrayOfOccurrenceObjects)
-
-      // console.log(sanitizedData)
-
-      // setDays(days)
-      // console.log(days)
-
-      // set the initial select option to the first game in the users's games
-      // if (!loading) setSelectGameOption(await games[0].id)
-      // if (!loading) setOptionName(await games[0].name)
     } catch (err) {
       console.error(err)
     }
   }
 
-  // const data = [
-  //   {
-  //     day: 'Monday',
-  //     plays: 2,
-  //   },
-  //   {
-  //     day: 'Tuesday',
-  //     plays: 3,
-  //   },
-  //   {
-  //     day: 'Wednsday',
-  //     plays: 4,
-  //   },
-  //   {
-  //     day: 'Thursday',
-  //     plays: 10,
-  //   },
-  //   {
-  //     day: 'Friday',
-  //     plays: 24,
-  //   },
-  //   {
-  //     day: 'Saturday',
-  //     plays: 10,
-  //   },
-  //   {
-  //     day: 'Sunday',
-  //     plays: 15,
-  //   },
-  // ]
-
-  function customTick({ payload, x, y, textAnchor, stroke, radius }) {
+  function customTick({ payload, x, y, textAnchor, radius }) {
     return (
       <g className="recharts-layer recharts-polar-angle-axis-tick">
-        <text
-          radius={radius}
-          fill="white"
-          x={x}
-          y={y}
-          className="recharts-text recharts-polar-angle-axis-tick-value"
-          text-anchor={textAnchor}
-        >
+        <text radius={radius} fill="white" x={x} y={y} text-anchor={textAnchor}>
           <tspan x={x} dy="0em" className="text-sm text-secondary">
             {payload.value}
           </tspan>
