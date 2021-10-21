@@ -38,15 +38,11 @@ export const RecordGameForm = () => {
   const [games, setGames] = useState([])
   const [members, setMembers] = useState([])
   const [checked, setChecked] = useState(false)
+  const [date, setDate] = useState(new Date())
   const { data, loading } = useLoadGames()
   const { memberData, membersLoading } = useLoadMembers([])
   const { user } = useUser()
-<<<<<<< HEAD
-  const [date, setDate] = useState(new Date())
   const formikRef = useRef();
-=======
-  const formikRef = useRef()
->>>>>>> 3fc5966ea4956de52d92bc5dd2e9d6fde55f3846
 
   const modifiers = {
     today: new Date(),
