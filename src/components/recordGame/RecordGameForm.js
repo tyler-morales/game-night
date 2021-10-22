@@ -29,8 +29,8 @@ import {
 } from '../../formik/RecordGameValidation'
 import { RecordGameErrors } from '../errors/RecordGameErrors'
 
-import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+import DayPickerInput from "react-day-picker/DayPickerInput";
+import "react-day-picker/lib/style.css";
 import '../../styles/dayPicker.css'
 
 export const RecordGameForm = () => {
@@ -43,24 +43,6 @@ export const RecordGameForm = () => {
   const { memberData, membersLoading } = useLoadMembers([])
   const { user } = useUser()
   const formikRef = useRef();
-
-  const modifiers = {
-    today: new Date(),
-    selectedDay: date,
-  };
-
-  const modifiersStyles = {
-    today: {
-      color: "#5cd5dd",
-      backgroundColor: "",
-    },
-    selectedDay: {
-      color: "#000022",
-      backgroundColor: "#5cd5dd",
-    },
-  };
-
-  
 
   useEffect(() => {
     fetchData()
@@ -389,10 +371,17 @@ export const RecordGameForm = () => {
 
           {/* Date Picker */}
           <div className="flex flex-col gap-3">
-            <DayPicker
-              modifiers={modifiers}
-              modifiersStyles={modifiersStyles}
-              onDayClick={(day) => {setDate(day)}}
+            <label className=" text-lg text-left" htmlFor="winners">
+                  Please select a day
+            </label>
+            <DayPickerInput 
+              format='YYYY/MM/DD'
+              value={date}
+              placeholder={date}
+              onDayChange={day => {setDate(day)}}
+              dayPickerProps={{
+                disabledDays:{after: new Date()}
+              }}
             />
           </div>
 
