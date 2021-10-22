@@ -59,7 +59,7 @@ export const ChartRadar = () => {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={200}>
+    <ResponsiveContainer width="100%" height={160}>
       <RadarChart cx="50%" cy="50%" outerRadius="80%" data={days}>
         <PolarGrid />
         <PolarAngleAxis dataKey="day" tick={customTick} />
