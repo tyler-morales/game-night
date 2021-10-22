@@ -5,14 +5,14 @@
     height: auto;
     border-width: 2px;
     border-style: solid;
-    border-color: #5cd5dd;
+    border-color: var(--color-quad);
     border-radius: 0.375rem;
     padding: 0 0.5rem;
 }
 
 .DayPickerInput input {
-    background-color: #000022;
-    color: white
+    background-color: var(--color-primary);
+    color: var(--color-white)
 }
 
 .DayPickerInput input:focus {
@@ -21,7 +21,7 @@
 
 .DayPicker-wrapper {
     display: inline-block;
-    background-color: #000022;
+    background-color: var(--color-primary);
 }
 
 .DayPicker-Months {
@@ -29,36 +29,36 @@
     flex-direction: column;
     margin: 0;
     padding: 0;
-    color: white
+    color: var(--color-white)
 }
 
 .DayPicker-Month {
     margin: 0;
     padding: 0;
-    color: white
+    color: var(--color-white)
 }
 
 .DayPicker-Day {
     padding: 0.3em;
     width: 4rem;
-    color: white
+    color: var(--color-white)
 }
 
 .DayPicker-Day:hover {
-    color: #000022;
-    background-color: white;
+    color: var(--color-primary);
+    background-color: var(--color-white);
 }
 
 .DayPicker-Day--selected {
-    color: #000022!important;
-    background-color: #5cd5dd!important
+    color: var(--color-primary)!important;
+    background-color: var(--color-quad)!important
 }
 
 .DayPicker-Day--today {
-    color: #5cd5dd; 
+    color: var(--color-quad); 
 }
 
 .DayPicker-Day--disabled {
-    color: white!important;
+    color: var(--color-white)!important;
     background-color: #a2a2a224!important; 
 }
