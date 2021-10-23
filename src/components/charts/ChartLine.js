@@ -39,7 +39,33 @@ export const ChartLine = () => {
       Sonia: 0.25,
       Pedro: 0.75,
     },
+    {
+      name: '10/23',
+      Tyler: 0.5,
+      Sonia: 0.25,
+      Pedro: 0.75,
+    },
   ]
+
+  const CustomizedAxisTick = (props) => {
+    const { x, y, stroke, payload } = props
+
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text
+          className="text-base"
+          x={7}
+          y={5}
+          dy={16}
+          textAnchor="end"
+          fill="#fff"
+          transform="rotate(-35)"
+        >
+          {payload.value}
+        </text>
+      </g>
+    )
+  }
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -50,6 +76,8 @@ export const ChartLine = () => {
           data={data}
           margin={{
             right: 5,
+            left: -10,
+            top: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -70,10 +98,11 @@ export const ChartLine = () => {
             )}
           />
           <XAxis
+            height={50}
             dataKey="name"
+            tick={<CustomizedAxisTick />}
             style={{
-              fill: '#fff',
-              fontSize: 20,
+              fontSize: 18,
             }}
           />
           <YAxis style={{ fill: '#fff', fontSize: 20 }} />
