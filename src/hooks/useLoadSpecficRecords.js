@@ -13,10 +13,22 @@ const useLoadSpecficRecords = ({ date }) => {
   }, [date])
 
   const fetchGames = async (date) => {
-    // let newDate = (await date) | null
-    date = date ? date.replaceAll('/', '-') : null
-
     try {
+      //format incomming dates without preceding zeros with zeros and dashes instead of slashes
+      const addZeros = (newDate) => {
+        return newDate
+          .split('/')
+          .map((digit) => {
+            const num = parseInt(digit)
+            return num < 10 ? `0${digit}` : digit
+          })
+          .join('/')
+          .replaceAll('/', '-')
+      }
+
+      const formatedDate = await addZeros(date)
+
+      // fetch games from database
       const { username } = await Auth.currentAuthenticatedUser()
 
       let records = await API.graphql({
@@ -24,7 +36,7 @@ const useLoadSpecficRecords = ({ date }) => {
         variables: {
           filter: {
             owner: { eq: username },
-            createdAt: { contains: date },
+            createdAt: { contains: formatedDate },
           },
         },
       })

@@ -10,7 +10,8 @@ export const ChartHeatmap = ({ period, data }) => {
 
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
-  const [selected, setSelected] = useState(`${year}/${month + 1}/${day}`)
+  const [selected, setSelected] = useState('')
+  // const [selected, setSelected] = useState(`${year}-${month + 1}-${day}`)
   const { games } = useLoadSpecficRecords(selected)
 
   useEffect(() => {
