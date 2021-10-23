@@ -16,28 +16,28 @@ export const ChartLine = () => {
   // const { data } = useLoadPlays(gameId)
   const data = [
     {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
+      name: '10/20',
+      Tyler: 1,
+      Sonia: 0,
+      Pedro: 0,
     },
     {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
+      name: '10/21',
+      Tyler: 0.5,
+      Sonia: 0,
+      Pedro: 0.5,
     },
     {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
+      name: '10/22',
+      Tyler: 0.333,
+      Sonia: 0.333,
+      Pedro: 0.666,
     },
     {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
+      name: '10/23',
+      Tyler: 0.5,
+      Sonia: 0.25,
+      Pedro: 0.75,
     },
   ]
 
@@ -50,7 +50,6 @@ export const ChartLine = () => {
           data={data}
           margin={{
             right: 5,
-            left: -25,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -63,16 +62,24 @@ export const ChartLine = () => {
                 </span>
                 <span className="text-left block text-tertiary">
                   Avg:{' '}
-                  {payload && payload[0] != null && payload[0].payload.uv | 0}
+                  {payload &&
+                    payload[0] != null &&
+                    payload[0].payload.Tyler | 0}
                 </span>
               </div>
             )}
           />
-          <XAxis dataKey="name" style={{ fill: '#fff', fontSize: 20 }} />
+          <XAxis
+            dataKey="name"
+            style={{
+              fill: '#fff',
+              fontSize: 20,
+            }}
+          />
           <YAxis style={{ fill: '#fff', fontSize: 20 }} />
           <Legend wrapperStyle={{ fontSize: '20px' }} />
-          <Line dataKey="uv" fill="#5cd5dd" />
-          <Line dataKey="pv" fill="#ff3456" />
+          <Line dataKey="Tyler" fill="#5cd5dd" />
+          <Line dataKey="Sonia" fill="#ff3456" />
         </LineChart>
       )}
     </ResponsiveContainer>
