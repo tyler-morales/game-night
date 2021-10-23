@@ -7,14 +7,20 @@ export const ChartHeatmap = ({ period, data }) => {
   // Get date info
   const date = new Date()
   let [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()]
+  const today = `${year}/${month + 1}/${day}`
+  const gamePlays = useLoadSpecficRecords(today).games.length
 
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
-  const [selected, setSelected] = useState('')
-  // const [selected, setSelected] = useState(`${year}-${month + 1}-${day}`)
-  const { games } = useLoadSpecficRecords(selected)
+  let [selected, setSelected] = useState({
+    date: today,
+    count: gamePlays, //BUG: count does not update on page load. Count should display the number of game items on today's date
+  })
+
+  const { games } = useLoadSpecficRecords(selected.date)
 
   useEffect(() => {
+    // fetchGameItems()
     // Year to date of Current year
     if (period === 'YEAR_TO_DATE') {
       const newYear = `${year}/01/01`
@@ -37,7 +43,6 @@ export const ChartHeatmap = ({ period, data }) => {
 
   const SelectedDate = ({ selected }) => {
     const { date, count } = selected
-    const today = `${year}/${month + 1}/${day}`
 
     return (
       <div className="text-left text-base overflow-scroll md:h-52">
@@ -45,8 +50,7 @@ export const ChartHeatmap = ({ period, data }) => {
           On <span className="font-bold">{date ? date : today}</span>
         </span>
         <span>
-          &nbsp; you played{' '}
-          <span className="font-bold">{count ? count : '0'} </span>
+          &nbsp; you played <span className="font-bold">{count} </span>
           {count === 1 ? 'game' : 'games'}
         </span>
         <ul className="mt-2 md:pb-16">
