@@ -18,33 +18,33 @@ export const ChartLine = () => {
   // const { data } = useLoadPlays(gameId)
   const data = [
     {
-      name: '10/20',
+      date: '10/20',
       Tyler: 1,
       Sonia: 0,
       Pedro: 0,
     },
     {
-      name: '10/21',
+      date: '10/21',
       Tyler: 0.5,
       Sonia: 0,
       Pedro: 0.5,
     },
     {
-      name: '10/22',
+      date: '10/22',
       Tyler: 0.333,
       Sonia: 0.333,
       Pedro: 0.666,
       George: 0,
     },
     {
-      name: '10/23',
+      date: '10/23',
       Tyler: 0.5,
       Sonia: 0.25,
       Pedro: 0.75,
       George: 0.5,
     },
     {
-      name: '10/23',
+      date: '10/23',
       Tyler: 0.5,
       Sonia: 0.25,
       Pedro: 0.75,
@@ -100,7 +100,7 @@ export const ChartLine = () => {
 
   const calculateLinesToDraw = (data) => {
     try {
-      return allNames(data, 'name').map((player, index) => {
+      return allNames(data, 'date').map((player, index) => {
         return (
           <Line
             key={index}
@@ -135,14 +135,14 @@ export const ChartLine = () => {
               <div className="bg-primary text-white border-2 border-white text-base py-3 px-4 rounded-md shadow-lg">
                 {/* Date */}
                 <span className="font-bold">
-                  {payload && payload[0] != null && payload[0].payload.name}
+                  {payload && payload[0] != null && payload[0].payload.date}
                 </span>
 
                 {/* Player Winning Averages */}
                 {payload.map((player, index) => {
                   return (
                     <span key={index} className="text-left block">
-                      <span style={{ color: colors[index] }}>
+                      <span style={{ color: colors[index], fontWeight: '700' }}>
                         {player.name}:{` `}
                       </span>
                       {player.value}
