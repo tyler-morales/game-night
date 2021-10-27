@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import useLoadPlays from '../../hooks/useLoadPlays'
 import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
 
@@ -32,19 +34,31 @@ export const ChartLine = () => {
       Tyler: 0.333,
       Sonia: 0.333,
       Pedro: 0.666,
+      George: 0,
     },
     {
       name: '10/23',
       Tyler: 0.5,
       Sonia: 0.25,
       Pedro: 0.75,
+      George: 0.5,
     },
     {
       name: '10/23',
       Tyler: 0.5,
       Sonia: 0.25,
       Pedro: 0.75,
+      George: 0.333,
     },
+  ]
+
+  const colors = [
+    '#ff0000',
+    '#ffd300',
+    '#0aff99',
+    '#0aefff',
+    '#580aff',
+    '#fafafa',
   ]
 
   const CustomizedAxisTick = (props) => {
@@ -67,6 +81,41 @@ export const ChartLine = () => {
     )
   }
 
+  useEffect(() => {
+    calculateLinesToDraw()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const allNames = (data, filterKey) => {
+    let allNames = []
+
+    // This makes sure you get each array and then strips just the keys as desired
+    data.forEach((item) => {
+      allNames = allNames.concat(Object.keys(item))
+    })
+
+    // This creates the set, strips our dups, and then spreads itself into an array
+    return [...new Set(allNames)].filter((res) => res !== filterKey)
+  }
+
+  const calculateLinesToDraw = (data) => {
+    try {
+      return allNames(data, 'name').map((player, index) => {
+        return (
+          <Line
+            key={index}
+            dataKey={player}
+            stroke={colors[index]}
+            strokeWidth="2"
+          />
+        )
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       {data.length === 0 ? (
@@ -85,15 +134,20 @@ export const ChartLine = () => {
             cursor={{ fill: '#fafafa' }}
             content={({ payload }) => (
               <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
+                {/* Date */}
                 <span className="font-bold">
                   {payload && payload[0] != null && payload[0].payload.name}
                 </span>
-                <span className="text-left block text-tertiary">
-                  Avg:{' '}
-                  {payload &&
-                    payload[0] != null &&
-                    payload[0].payload.Tyler | 0}
-                </span>
+
+                {/* Player Winning Averages */}
+                {payload.map((player, index) => {
+                  return (
+                    <span key={index} className="text-left block">
+                      {player.name}:{` `}
+                      {player.value}
+                    </span>
+                  )
+                })}
               </div>
             )}
           />
@@ -107,8 +161,8 @@ export const ChartLine = () => {
           />
           <YAxis style={{ fill: '#fff', fontSize: 20 }} />
           <Legend wrapperStyle={{ fontSize: '20px' }} />
-          <Line dataKey="Tyler" fill="#5cd5dd" />
-          <Line dataKey="Sonia" fill="#ff3456" />
+
+          {calculateLinesToDraw(data)}
         </LineChart>
       )}
     </ResponsiveContainer>
