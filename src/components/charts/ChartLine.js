@@ -106,7 +106,7 @@ export const ChartLine = () => {
             key={index}
             dataKey={player}
             stroke={colors[index]}
-            strokeWidth="2"
+            strokeWidth="4"
           />
         )
       })
