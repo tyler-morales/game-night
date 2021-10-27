@@ -115,7 +115,6 @@ export const ChartLine = () => {
     }
   }
 
-
   return (
     <ResponsiveContainer width="100%" height="100%">
       {data.length === 0 ? (
@@ -133,7 +132,7 @@ export const ChartLine = () => {
           <Tooltip
             cursor={{ fill: '#fafafa' }}
             content={({ payload }) => (
-              <div className="bg-white text-primary border-2 border-primary text-base py-3 px-4 rounded-md shadow-lg">
+              <div className="bg-primary text-white border-2 border-white text-base py-3 px-4 rounded-md shadow-lg">
                 {/* Date */}
                 <span className="font-bold">
                   {payload && payload[0] != null && payload[0].payload.name}
@@ -143,7 +142,9 @@ export const ChartLine = () => {
                 {payload.map((player, index) => {
                   return (
                     <span key={index} className="text-left block">
-                      {player.name}:{` `}
+                      <span style={{ color: colors[index] }}>
+                        {player.name}:{` `}
+                      </span>
                       {player.value}
                     </span>
                   )
