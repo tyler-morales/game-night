@@ -1,6 +1,6 @@
 {
   "auth": {
-    "gamenight945a970b": {
+    "gamenight21249871": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -20,6 +20,31 @@
         "mfaTypes": [
           "SMS"
         ]
+      }
+    }
+  },
+  "api": {
+    "GameNightAPI": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 365,
+              "description": "GameNightAPIKey"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authgamenight21249871"
+              }
+            }
+          ]
+        }
       }
     }
   }

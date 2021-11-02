@@ -1,19 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-gamenight-dev-133121-authRole",
-      "UnauthRoleArn": "arn:aws:iam::391385230535:role/amplify-gamenight-dev-133121-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::391385230535:role/amplify-gamenight-dev-133121-authRole",
+      "AuthRoleName": "amplify-gamenight-dev-140619-authRole",
+      "UnauthRoleArn": "arn:aws:iam::391385230535:role/amplify-gamenight-dev-140619-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::391385230535:role/amplify-gamenight-dev-140619-authRole",
       "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-gamenight-dev-133121-deployment",
-      "UnauthRoleName": "amplify-gamenight-dev-133121-unauthRole",
-      "StackName": "amplify-gamenight-dev-133121",
-      "StackId": "arn:aws:cloudformation:us-east-2:391385230535:stack/amplify-gamenight-dev-133121/786ff0d0-3c13-11ec-88e4-0611ab10668c",
-      "AmplifyAppId": "d1pfjy5m3a9kmy"
+      "DeploymentBucketName": "amplify-gamenight-dev-140619-deployment",
+      "UnauthRoleName": "amplify-gamenight-dev-140619-unauthRole",
+      "StackName": "amplify-gamenight-dev-140619",
+      "StackId": "arn:aws:cloudformation:us-east-2:391385230535:stack/amplify-gamenight-dev-140619/5be293a0-3c18-11ec-aae6-0a5a5fbe05a4",
+      "AmplifyAppId": "d2hg7o25chplbo"
     },
     "categories": {
       "auth": {
-        "gamenight945a970b": {}
+        "gamenight21249871": {}
       }
     }
   }
