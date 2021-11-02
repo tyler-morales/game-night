@@ -10,6 +10,11 @@
       "StackName": "amplify-gamenight-dev-133121",
       "StackId": "arn:aws:cloudformation:us-east-2:391385230535:stack/amplify-gamenight-dev-133121/786ff0d0-3c13-11ec-88e4-0611ab10668c",
       "AmplifyAppId": "d1pfjy5m3a9kmy"
+    },
+    "categories": {
+      "auth": {
+        "gamenight945a970b": {}
+      }
     }
   }
 }
