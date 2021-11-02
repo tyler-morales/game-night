@@ -29,8 +29,8 @@ import {
 } from '../../formik/RecordGameValidation'
 import { RecordGameErrors } from '../errors/RecordGameErrors'
 
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css";
+import DayPickerInput from 'react-day-picker/DayPickerInput'
+import 'react-day-picker/lib/style.css'
 import '../../styles/dayPicker.css'
 
 export const RecordGameForm = () => {
@@ -42,7 +42,7 @@ export const RecordGameForm = () => {
   const { data, loading } = useLoadGames()
   const { memberData, membersLoading } = useLoadMembers([])
   const { user } = useUser()
-  const formikRef = useRef();
+  const formikRef = useRef()
 
   useEffect(() => {
     fetchData()
@@ -132,7 +132,7 @@ export const RecordGameForm = () => {
       const gameId = gamePlayed.split(',')[0]
       const gamePlayedName = gamePlayed.split(',')[1]
 
-      // 3. Loop over the players array to get every players ID and name
+      // 3. Loop over the players array to get every player's ID and name
       players = players.map((player) => {
         const playerObjects = {
           id: player.split(',')[0],
@@ -158,48 +158,60 @@ export const RecordGameForm = () => {
       })
 
       // 6. Loop over every winner and loser and update their plays
-      loopOverLosersAndWinners(gameId, gamePlayedName, winners, 'wins')
-      loopOverLosersAndWinners(gameId, gamePlayedName, losers, 'loses')
+      loopOverLosersPlayers(gameId, gamePlayedName, winners, 'wins')
+      loopOverLosersPlayers(gameId, gamePlayedName, losers, 'loses')
     } catch (err) {
       console.error(err)
     }
   }
 
   // Loop over winners and loosers
-  const loopOverLosersAndWinners = (
-    gameId,
-    gamePlayedName,
-    playerType,
-    outcome
+  const loopOverLosersPlayers = (
+    gameId, //string: ('123')
+    gamePlayedName, // string: ('Chess')
+    playerType, // object: with player id & name {id:'abc', name:'Tyler'}
+    outcome // string: "wins" or "loses"
   ) => {
     playerType.forEach(async ({ id }) => {
-      // get all gameId's from the winner
+      // get all record plays for the player
       const memberPlays = await API.graphql({
         query: getMember,
         variables: { id },
       })
 
-      // Get the ID of every game the user has played & push it into an array of ID's
+      // Get every gameId the user has played & push it into an array of ID's
       const gameIds = memberPlays.data.getMember.Plays.items.map(
         ({ gameId }) => gameId
       )
 
-      // Check if the player has played the game
+      // Check if the player has played the game before
       if (gameIds.includes(gameId)) {
-        // player already won the same game; no need to create a new record; update the record instead
         // Find the Play ID
         const playId = memberPlays.data.getMember.Plays.items.filter((game) =>
           game.gameId.includes(gameId)
         )[0].id
 
-        // Get current loses for the specified game
-        const totalCount = memberPlays.data.getMember.Plays.items.filter(
-          (game) => game.gameId.includes(gameId)
-        )[0][outcome]
+        // get current amount of  wins or loses for the specified game
+        // const outcomeCount = memberPlays.data.getMember.Plays.items.filter(
+        //   (game) => game.gameId.includes(gameId)
+        // )[0][outcome]
 
-        updatePlayer(playId, totalCount, outcome)
+        // get current amount of wins
+        const totalWins = memberPlays.data.getMember.Plays.items.filter(
+          (game) => game.gameId.includes(gameId)
+        )[0]['wins']
+
+        // get current amount of loses
+        const totalLoses = memberPlays.data.getMember.Plays.items.filter(
+          (game) => game.gameId.includes(gameId)
+        )[0]['loses']
+
+        const totalPlays = totalWins + totalLoses
+
+        // player already played this game; no need to create a new record; update the record instead
+        updatePlayer(playId, totalWins, totalLoses, outcome, totalPlays)
       } else {
-        // winner has not won this game before; create a new Win
+        // player has not played this game before; create a new Play record
         createPlayRecord(
           id,
           gameId,
@@ -238,18 +250,33 @@ export const RecordGameForm = () => {
   }
 
   // Update the Play record for the player (win or loss)
-  const updatePlayer = async (id, numOfWinsOrLoses, type) => {
+  const updatePlayer = async (id, wins, loses, type, totalPlays) => {
     try {
-      await API.graphql({
-        query: updatePlay,
-        variables: {
-          input: {
-            id, // Play ID
-            [type]: (numOfWinsOrLoses += 1), // Increment wins or loses by 1
+      if (type === 'wins') {
+        await API.graphql({
+          query: updatePlay,
+          variables: {
+            input: {
+              id, // Play ID
+              wins: (wins += 1), // Increment wins by 1
+              winRatio: [(wins / totalPlays)], // update the player's win ratio
+            },
           },
-        },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
-      })
+          authMode: 'AMAZON_COGNITO_USER_POOLS',
+        })
+      } else {
+        await API.graphql({
+          query: updatePlay,
+          variables: {
+            input: {
+              id, // Play ID
+              loses: (loses += 1), // Increment loses by 1
+              winRatio: wins / totalPlays, // update the player's win ratio
+            },
+          },
+          authMode: 'AMAZON_COGNITO_USER_POOLS',
+        })
+      }
     } catch (err) {
       console.error(err)
     }
@@ -372,15 +399,17 @@ export const RecordGameForm = () => {
           {/* Date Picker */}
           <div className="flex flex-col gap-3">
             <label className=" text-lg text-left" htmlFor="winners">
-                  Please select a day
+              Please select a day
             </label>
-            <DayPickerInput 
-              format='YYYY/MM/DD'
+            <DayPickerInput
+              format="YYYY/MM/DD"
               value={date}
               placeholder={date}
-              onDayChange={day => {setDate(day)}}
+              onDayChange={(day) => {
+                setDate(day)
+              }}
               dayPickerProps={{
-                disabledDays:{after: new Date()}
+                disabledDays: { after: new Date() },
               }}
             />
           </div>
