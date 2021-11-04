@@ -34,6 +34,7 @@ type Play
   member: Member @connection(name: "MemberPlays")
   wins: Int
   loses: Int
+  winRatio: [Float]
   owner: String!
   type: String!
   createdAt: String!
