@@ -1,6 +1,6 @@
 {
   "auth": {
-    "gamenight21249871": {
+    "gamenight5135445b": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -24,7 +24,7 @@
     }
   },
   "api": {
-    "GameNightAPI": {
+    "gamenightAPI": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -33,17 +33,10 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 365,
-              "description": "GameNightAPIKey"
+              "description": "API Key"
             }
           },
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-              "userPoolConfig": {
-                "userPoolId": "authgamenight21249871"
-              }
-            }
-          ]
+          "additionalAuthenticationProviders": []
         }
       }
     }

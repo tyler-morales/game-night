@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "gamenight21249871_identitypool_21249871",
+    "identityPoolName": "gamenight5135445b_identitypool_5135445b",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "gameni21249871",
-    "userPoolName": "gamenight21249871_userpool_21249871",
+    "resourceNameTruncated": "gameni5135445b",
+    "userPoolName": "gamenight5135445b_userpool_5135445b",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -31,10 +31,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "gameni21249871_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "gameni5135445b_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "21249871",
-    "resourceName": "gamenight21249871",
+    "sharedId": "5135445b",
+    "resourceName": "gamenight5135445b",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -49,14 +49,8 @@
         ]
     },
     "useDefault": "default",
-    "triggers": "{}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "parentStack": {
-        "Ref": "AWS::StackId"
-    },
-    "breakCircularDependency": true,
-    "permissions": [],
     "dependsOn": []
 }
