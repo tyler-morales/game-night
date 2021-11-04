@@ -17,6 +17,7 @@ export const onCreateMember = /* GraphQL */ `
           name
           wins
           loses
+          winRatio
           owner
           type
           createdAt
@@ -43,6 +44,7 @@ export const onUpdateMember = /* GraphQL */ `
           name
           wins
           loses
+          winRatio
           owner
           type
           createdAt
@@ -69,6 +71,7 @@ export const onDeleteMember = /* GraphQL */ `
           name
           wins
           loses
+          winRatio
           owner
           type
           createdAt
@@ -87,6 +90,7 @@ export const onCreatePlay = /* GraphQL */ `
       name
       wins
       loses
+      winRatio
       owner
       type
       createdAt
@@ -113,6 +117,7 @@ export const onUpdatePlay = /* GraphQL */ `
       name
       wins
       loses
+      winRatio
       owner
       type
       createdAt
@@ -139,6 +144,7 @@ export const onDeletePlay = /* GraphQL */ `
       name
       wins
       loses
+      winRatio
       owner
       type
       createdAt
