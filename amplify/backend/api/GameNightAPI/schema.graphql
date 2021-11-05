@@ -35,6 +35,7 @@ type Play
   wins: Int
   loses: Int
   winRatio: [Float]
+  totalPlays: Int
   owner: String!
   type: String!
   createdAt: String!
