@@ -191,11 +191,6 @@ export const RecordGameForm = () => {
           game.gameId.includes(gameId)
         )[0].id
 
-        // get current amount of  wins or loses for the specified game
-        // const outcomeCount = memberPlays.data.getMember.Plays.items.filter(
-        //   (game) => game.gameId.includes(gameId)
-        // )[0][outcome]
-
         // get current amount of wins
         const totalWins = memberPlays.data.getMember.Plays.items.filter(
           (game) => game.gameId.includes(gameId)
@@ -206,20 +201,18 @@ export const RecordGameForm = () => {
           (game) => game.gameId.includes(gameId)
         )[0]['loses']
 
-        const totalPlays = totalWins + totalLoses
+        // get total play count
+        const totalPlays = memberPlays.data.getMember.Plays.items.filter(
+          (game) => game.gameId.includes(gameId)
+        )[0]['totalPlays']
+
+        // console.log({ plays: totalPlays, wins: totalWins, loses: totalLoses })
 
         // player already played this game; no need to create a new record; update the record instead
         updatePlayer(playId, totalWins, totalLoses, outcome, totalPlays)
       } else {
         // player has not played this game before; create a new Play record
-        createPlayRecord(
-          id,
-          gameId,
-          gamePlayedName,
-          user.username,
-          'Play',
-          outcome
-        )
+        createPlayRecord(id, gameId, gamePlayedName, user.username, outcome)
       }
     })
   }
@@ -230,23 +223,49 @@ export const RecordGameForm = () => {
     gameId,
     gameName,
     username,
-    type,
     playType
   ) => {
-    await API.graphql({
-      query: createPlay,
-      variables: {
-        input: {
-          playMemberId: playerId, // Member ID
-          gameId,
-          name: gameName,
-          owner: username,
-          [playType]: 1, // Set initial count to 1
-          type,
-        },
-      },
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
-    })
+    try {
+      if (playType === 'wins') {
+        await API.graphql({
+          query: createPlay,
+          variables: {
+            input: {
+              playMemberId: playerId, // Member ID
+              gameId,
+              name: gameName,
+              owner: username,
+              totalPlays: 1,
+              wins: 1, // Set initial wins to 1
+              loses: 0, // Set initial loses to 1
+              winRatio: 1, // initialize the player's win ratio
+              type: 'Play',
+            },
+          },
+          authMode: 'AMAZON_COGNITO_USER_POOLS',
+        })
+      } else {
+        await API.graphql({
+          query: createPlay,
+          variables: {
+            input: {
+              playMemberId: playerId, // Member ID
+              gameId,
+              name: gameName,
+              owner: username,
+              totalPlays: 1,
+              wins: 0, // Set initial wins to 1
+              loses: 1, // Set initial loses to 1
+              winRatio: 0, // initialize the player's win ratio
+              type: 'Play',
+            },
+          },
+          authMode: 'AMAZON_COGNITO_USER_POOLS',
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   // Update the Play record for the player (win or loss)
@@ -258,8 +277,9 @@ export const RecordGameForm = () => {
           variables: {
             input: {
               id, // Play ID
-              wins: (wins += 1), // Increment wins by 1
-              winRatio: [(wins / totalPlays)], // update the player's win ratio
+              wins: await (wins += 1), // Increment wins by 1
+              totalPlays: await (totalPlays += 1), // Increment totalPlays by 1
+              winRatio: (await wins) / (await totalPlays), // update the player's win ratio
             },
           },
           authMode: 'AMAZON_COGNITO_USER_POOLS',
@@ -271,7 +291,8 @@ export const RecordGameForm = () => {
             input: {
               id, // Play ID
               loses: (loses += 1), // Increment loses by 1
-              winRatio: wins / totalPlays, // update the player's win ratio
+              totalPlays: await (totalPlays += 1), // Increment totalPlays by 1
+              winRatio: (await wins) / (await totalPlays), // update the player's win ratio
             },
           },
           authMode: 'AMAZON_COGNITO_USER_POOLS',
