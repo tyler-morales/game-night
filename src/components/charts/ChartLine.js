@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import useLoadPlays from '../../hooks/useLoadPlays'
+import useLoadWinRatio from '../../hooks/useLoadWinRatio'
 import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
 
 import {
@@ -14,43 +14,22 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-export const ChartLine = () => {
-  // const { data } = useLoadPlays(gameId)
-  const data = [
-    {
-      date: '10/20',
-      Tyler: 1,
-      Sonia: 0,
-      Pedro: 0,
-    },
-    {
-      date: '10/21',
-      Tyler: 0.5,
-      Sonia: 0,
-      Pedro: 0.5,
-    },
-    {
-      date: '10/22',
-      Tyler: 0.333,
-      Sonia: 0.333,
-      Pedro: 0.666,
-      George: 0,
-    },
-    {
-      date: '10/23',
-      Tyler: 0.5,
-      Sonia: 0.25,
-      Pedro: 0.75,
-      George: 0.5,
-    },
-    {
-      date: '10/23',
-      Tyler: 0.5,
-      Sonia: 0.25,
-      Pedro: 0.75,
-      George: 0.333,
-    },
-  ]
+export const ChartLine = (gameId) => {
+  const { data } = useLoadWinRatio(gameId)
+  console.log(data)
+  // const data = [
+  //   {
+  //     date: '10/20',
+  //     Tyler: 1,
+  //     Sonia: 0,
+  //     Pedro: 0,
+  //   },
+  //   {
+  //     date: '10/21',
+  //     Tyler: 0.5,
+  //     Sonia: 0,
+  //     Pedro: 0.5,
+  // ]
 
   const colors = [
     '#ff0000',
