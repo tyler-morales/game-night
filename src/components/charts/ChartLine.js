@@ -16,7 +16,24 @@ import {
 
 export const ChartLine = (gameId) => {
   const { data } = useLoadWinRatio(gameId)
-  console.log(data)
+  const formatData = (data) => {
+    return data.reduce((previousValue, currentValue, index) => {
+      let current = {}
+
+      currentValue.winRatio.forEach((x, index) => {
+        current = previousValue[index] ?? { index }
+        current[currentValue.name] = x
+        previousValue[index] = current
+      })
+
+      return previousValue
+    }, [])
+  }
+
+  let sanitizedData = formatData(data)
+
+  console.log(sanitizedData)
+
   // const data = [
   //   {
   //     date: '10/20',
@@ -65,11 +82,11 @@ export const ChartLine = (gameId) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const allNames = (data, filterKey) => {
+  const allNames = (sanitizedData, filterKey) => {
     let allNames = []
 
     // This makes sure you get each array and then strips just the keys as desired
-    data.forEach((item) => {
+    sanitizedData.forEach((item) => {
       allNames = allNames.concat(Object.keys(item))
     })
 
@@ -77,9 +94,9 @@ export const ChartLine = (gameId) => {
     return [...new Set(allNames)].filter((res) => res !== filterKey)
   }
 
-  const calculateLinesToDraw = (data) => {
+  const calculateLinesToDraw = (sanitizedData) => {
     try {
-      return allNames(data, 'date').map((player, index) => {
+      return allNames(sanitizedData, 'index').map((player, index) => {
         return (
           <Line
             key={index}
@@ -96,11 +113,11 @@ export const ChartLine = (gameId) => {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      {data.length === 0 ? (
+      {sanitizedData.length === 0 ? (
         <EmptyTileInfo icon="📊" name="Winning Average" />
       ) : (
         <LineChart
-          data={data}
+          data={sanitizedData}
           margin={{
             right: 5,
             left: -10,
@@ -113,9 +130,9 @@ export const ChartLine = (gameId) => {
             content={({ payload }) => (
               <div className="bg-primary text-white border-2 border-white text-base py-3 px-4 rounded-md shadow-lg">
                 {/* Date */}
-                <span className="font-bold">
-                  {payload && payload[0] != null && payload[0].payload.date}
-                </span>
+                {/* <span className="font-bold">
+                  {payload && payload[0] != null && payload[0].payload.index}
+                </span> */}
 
                 {/* Player Winning Averages */}
                 {payload.map((player, index) => {
@@ -142,7 +159,7 @@ export const ChartLine = (gameId) => {
           <YAxis style={{ fill: '#fff', fontSize: 20 }} />
           <Legend wrapperStyle={{ fontSize: '20px' }} />
 
-          {calculateLinesToDraw(data)}
+          {calculateLinesToDraw(sanitizedData)}
         </LineChart>
       )}
     </ResponsiveContainer>
