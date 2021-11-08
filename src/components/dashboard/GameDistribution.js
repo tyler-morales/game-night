@@ -50,7 +50,7 @@ export const GameDistribution = () => {
   return (
     <DashboardItemContainer
       title="Game Distribution"
-      info={<ToolTipContent info={info} />}
+      info={<ToolTipContent info={info} position="bottom" />}
     >
       {games ? (
         <>

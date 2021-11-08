@@ -5,7 +5,11 @@ import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
 import { ChartLine } from '../charts/ChartLine'
 
+import { ToolTipContent } from '../global/ToolTip'
+
 import useLoadGames from '../../hooks/useLoadGames'
+
+import { AiOutlineInfoCircle } from 'react-icons/ai'
 
 export const WinningAverage = () => {
   const [games, setGames] = useState([])
@@ -57,8 +61,19 @@ export const WinningAverage = () => {
     )
   }
 
+  const info = {
+    icon: <AiOutlineInfoCircle />,
+    title: 'What is Winning Average?',
+    description: `
+    Winning Average is the ratio between the total wins and total plays. For example, if a player won 4 games and played a total of 16 games, their winning average would be .250. Think of baseball's batting average 🤔.`,
+  }
+
   return (
-    <DashboardItemContainer title="Winning Average" options={<Options />}>
+    <DashboardItemContainer
+      title="Winning Average"
+      info={<ToolTipContent info={info} />}
+      options={<Options />}
+    >
       {!loading ? (
         <div data-aos="fade-in" className="h-80 flex flex-col gap-6">
           {data.length !== 0 ? (
