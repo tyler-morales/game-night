@@ -44,8 +44,6 @@ export const RecordGameForm = () => {
   const { user } = useUser()
   const formikRef = useRef()
 
-  console.log(date)
-
   useEffect(() => {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -212,8 +210,6 @@ export const RecordGameForm = () => {
         const winRatio = memberPlays.data.getMember.Plays.items.filter((game) =>
           game.gameId.includes(gameId)
         )[0]['winRatio']
-
-        // console.log({ plays: totalPlays, wins: totalWins, loses: totalLoses })
 
         // player already played this game; no need to create a new record; update the record instead
         updatePlayer(
@@ -437,6 +433,7 @@ export const RecordGameForm = () => {
               Please select a day
             </label>
             <DayPickerInput
+              utcOffset={0}
               format="YYYY/MM/DD"
               value={date}
               placeholder={date}

@@ -1,30 +1,32 @@
-import { useState, useEffect } from "react";
+import * as dayjs from 'dayjs'
 
-import useGetRecords from "../../hooks/useGetRecords";
+import { useState, useEffect } from 'react'
 
-import { DashboardItemContainer } from "../../layout/DashboardItemContainer";
-import { LoadingRipple } from "../loadingIndicator/LoadingRipple";
-import { EmptyTileInfo } from "../../layout/EmptyTileInfo";
+import useGetRecords from '../../hooks/useGetRecords'
 
-import "./tablestyles.css";
+import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
+import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
+import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
+
+import './tablestyles.css'
 
 export const History = () => {
-  const [dateRecords, setDateRecords] = useState([]);
-  const { data, loading } = useGetRecords();
+  const [dateRecords, setDateRecords] = useState([])
+  const { data, loading } = useGetRecords()
 
   useEffect(() => {
-    fetchData();
+    fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, data, dateRecords.length]);
+  }, [loading, data, dateRecords.length])
 
   const fetchData = async () => {
     try {
-      let records = (await data) ?? [];
-      setDateRecords(records);
+      let records = (await data) ?? []
+      setDateRecords(records)
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
-  };
+  }
 
   const GameItem = ({ game }) => {
     const formatArray = (arr) => String(arr).split(',').join(', ')
@@ -33,7 +35,10 @@ export const History = () => {
       <tr className="w-full">
         <td data-th="Date" className="text-left text-base font-thin lg:py-3">
           {window.innerWidth < 400}
-          <span>&nbsp;&nbsp;{game.createdAt.slice(0, 10)}</span>
+          <span>
+            &nbsp;&nbsp;
+            {new Date(game.createdAt).toLocaleString().split(',')[0]}
+          </span>
         </td>
         <td data-th="Name" className="text-left text-base font-thin">
           {window.innerWidth < 400}
@@ -48,12 +53,12 @@ export const History = () => {
           <span>&nbsp;&nbsp;{formatArray(game.players)}</span>
         </td>
       </tr>
-    );
-  };
+    )
+  }
 
   const recordedGameItems = dateRecords.map((game, index) => (
     <GameItem key={index} game={game} />
-  ));
+  ))
 
   const GameTable = () => {
     return (
@@ -68,8 +73,8 @@ export const History = () => {
           {recordedGameItems}
         </tbody>
       </table>
-    );
-  };
+    )
+  }
 
   return (
     <DashboardItemContainer title="Game History">
@@ -85,5 +90,5 @@ export const History = () => {
         <LoadingRipple />
       )}
     </DashboardItemContainer>
-  );
-};
+  )
+}
