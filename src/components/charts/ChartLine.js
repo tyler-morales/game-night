@@ -32,22 +32,6 @@ export const ChartLine = (gameId) => {
 
   let sanitizedData = formatData(data)
 
-  console.log(sanitizedData)
-
-  // const data = [
-  //   {
-  //     date: '10/20',
-  //     Tyler: 1,
-  //     Sonia: 0,
-  //     Pedro: 0,
-  //   },
-  //   {
-  //     date: '10/21',
-  //     Tyler: 0.5,
-  //     Sonia: 0,
-  //     Pedro: 0.5,
-  // ]
-
   const colors = [
     '#ff0000',
     '#ffd300',
@@ -141,7 +125,7 @@ export const ChartLine = (gameId) => {
                       <span style={{ color: colors[index], fontWeight: '700' }}>
                         {player.name}:{` `}
                       </span>
-                      {player.value}
+                      {player.value.toFixed(3)}
                     </span>
                   )
                 })}
