@@ -1,5 +1,3 @@
-import * as dayjs from 'dayjs'
-
 import { useState, useEffect } from 'react'
 
 import useGetRecords from '../../hooks/useGetRecords'
