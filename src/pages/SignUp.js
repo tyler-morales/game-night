@@ -15,6 +15,9 @@ import {
   SignUpStepTwoSchema,
 } from '../formik/SignUpValidation'
 
+import { AiOutlineEyeInvisible } from 'react-icons/ai'
+import { AiOutlineEye } from 'react-icons/ai'
+
 function SignUp() {
   let history = useHistory()
 
@@ -51,18 +54,21 @@ function SignUp() {
   )
 }
 
-const toggle = () => {
-  const isPasswordVisible = document.getElementById('password')
-  if (isPasswordVisible.type === 'password') {
-    isPasswordVisible.type = 'text'
-  } else {
-    isPasswordVisible.type = 'password'
-  }
-}
-
 const StepOne = (props) => {
   const [signingIn, setSigningIn] = useState(false)
   const [serverError, setServerError] = useState(null)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+
+  const toggle = () => {
+    const passwordInput = document.getElementById('password')
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text'
+      setIsPasswordVisible(true)
+    } else {
+      passwordInput.type = 'password'
+      setIsPasswordVisible(false)
+    }
+  }
 
   const handleSubmit = async ({ username, password, email }) => {
     setSigningIn(true)
@@ -131,17 +137,32 @@ const StepOne = (props) => {
                 <label className="text-white text-xs" htmlFor="password">
                   Password
                 </label>
-                <Field
-                  name="password"
-                  type="password"
-                  className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring"
-                  placeholder="qwerty123"
-                  id="password"
-                />
-                <label>
-                  <Field type="checkbox" name="toggle" onClick={toggle} />
-                  <span className="font-body text-white"> Show Password</span>
-                </label>
+                <div className="relative w-full flex items-center">
+                  <Field
+                    name="password"
+                    type="password"
+                    placeholder="password"
+                    id="password"
+                    className="transition-all rounded-md py-3 pl-3 border-2 focus-tertiary-ring w-full"
+                  />
+                  {isPasswordVisible ? (
+                    <button
+                      type="button"
+                      onClick={toggle}
+                      className="absolute right-3 cursor-pointer p-1 transition-all"
+                    >
+                      <AiOutlineEye size="1.5em" color="grey" />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={toggle}
+                      className="absolute right-3 cursor-pointer p-1 transition-all"
+                    >
+                      <AiOutlineEyeInvisible size="1.5em" color="grey" />
+                    </button>
+                  )}
+                </div>
                 {errors.password && touched.password ? (
                   <span className="text-sm text-error">{errors.password}</span>
                 ) : null}
