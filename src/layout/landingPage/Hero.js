@@ -30,7 +30,7 @@ export const Hero = () => {
           Ready to upgrade your game ledger?
         </h3>
         <NavLink
-          to="/dashboard"
+          to="/sign-up"
           className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary"
         >
           <span>Create an Account</span>
