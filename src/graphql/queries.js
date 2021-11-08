@@ -18,6 +18,7 @@ export const getMember = /* GraphQL */ `
           wins
           loses
           winRatio
+          totalPlays
           owner
           type
           createdAt
@@ -91,6 +92,7 @@ export const getPlay = /* GraphQL */ `
       wins
       loses
       winRatio
+      totalPlays
       owner
       type
       createdAt
@@ -123,6 +125,7 @@ export const listPlays = /* GraphQL */ `
         wins
         loses
         winRatio
+        totalPlays
         owner
         type
         createdAt

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import useLoadPlays from '../../hooks/useLoadPlays'
+import useLoadWinRatio from '../../hooks/useLoadWinRatio'
 import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
 
 import {
@@ -14,43 +14,23 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-export const ChartLine = () => {
-  // const { data } = useLoadPlays(gameId)
-  const data = [
-    {
-      date: '10/20',
-      Tyler: 1,
-      Sonia: 0,
-      Pedro: 0,
-    },
-    {
-      date: '10/21',
-      Tyler: 0.5,
-      Sonia: 0,
-      Pedro: 0.5,
-    },
-    {
-      date: '10/22',
-      Tyler: 0.333,
-      Sonia: 0.333,
-      Pedro: 0.666,
-      George: 0,
-    },
-    {
-      date: '10/23',
-      Tyler: 0.5,
-      Sonia: 0.25,
-      Pedro: 0.75,
-      George: 0.5,
-    },
-    {
-      date: '10/23',
-      Tyler: 0.5,
-      Sonia: 0.25,
-      Pedro: 0.75,
-      George: 0.333,
-    },
-  ]
+export const ChartLine = (gameId) => {
+  const { data } = useLoadWinRatio(gameId)
+  const formatData = (data) => {
+    return data.reduce((previousValue, currentValue, index) => {
+      let current = {}
+
+      currentValue.winRatio.forEach((x, index) => {
+        current = previousValue[index] ?? { index }
+        current[currentValue.name] = x
+        previousValue[index] = current
+      })
+
+      return previousValue
+    }, [])
+  }
+
+  let sanitizedData = formatData(data)
 
   const colors = [
     '#ff0000',
@@ -86,11 +66,11 @@ export const ChartLine = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const allNames = (data, filterKey) => {
+  const allNames = (sanitizedData, filterKey) => {
     let allNames = []
 
     // This makes sure you get each array and then strips just the keys as desired
-    data.forEach((item) => {
+    sanitizedData.forEach((item) => {
       allNames = allNames.concat(Object.keys(item))
     })
 
@@ -98,9 +78,9 @@ export const ChartLine = () => {
     return [...new Set(allNames)].filter((res) => res !== filterKey)
   }
 
-  const calculateLinesToDraw = (data) => {
+  const calculateLinesToDraw = (sanitizedData) => {
     try {
-      return allNames(data, 'date').map((player, index) => {
+      return allNames(sanitizedData, 'index').map((player, index) => {
         return (
           <Line
             key={index}
@@ -117,11 +97,11 @@ export const ChartLine = () => {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      {data.length === 0 ? (
+      {sanitizedData.length === 0 ? (
         <EmptyTileInfo icon="📊" name="Winning Average" />
       ) : (
         <LineChart
-          data={data}
+          data={sanitizedData}
           margin={{
             right: 5,
             left: -10,
@@ -134,9 +114,9 @@ export const ChartLine = () => {
             content={({ payload }) => (
               <div className="bg-primary text-white border-2 border-white text-base py-3 px-4 rounded-md shadow-lg">
                 {/* Date */}
-                <span className="font-bold">
-                  {payload && payload[0] != null && payload[0].payload.date}
-                </span>
+                {/* <span className="font-bold">
+                  {payload && payload[0] != null && payload[0].payload.index}
+                </span> */}
 
                 {/* Player Winning Averages */}
                 {payload.map((player, index) => {
@@ -145,7 +125,7 @@ export const ChartLine = () => {
                       <span style={{ color: colors[index], fontWeight: '700' }}>
                         {player.name}:{` `}
                       </span>
-                      {player.value}
+                      {player.value.toFixed(3)}
                     </span>
                   )
                 })}
@@ -163,7 +143,7 @@ export const ChartLine = () => {
           <YAxis style={{ fill: '#fff', fontSize: 20 }} />
           <Legend wrapperStyle={{ fontSize: '20px' }} />
 
-          {calculateLinesToDraw(data)}
+          {calculateLinesToDraw(sanitizedData)}
         </LineChart>
       )}
     </ResponsiveContainer>
