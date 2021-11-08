@@ -44,6 +44,8 @@ export const RecordGameForm = () => {
   const { user } = useUser()
   const formikRef = useRef()
 
+  console.log(date)
+
   useEffect(() => {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
