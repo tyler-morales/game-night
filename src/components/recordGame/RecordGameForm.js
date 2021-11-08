@@ -211,8 +211,6 @@ export const RecordGameForm = () => {
           game.gameId.includes(gameId)
         )[0]['winRatio']
 
-        // console.log({ plays: totalPlays, wins: totalWins, loses: totalLoses })
-
         // player already played this game; no need to create a new record; update the record instead
         updatePlayer(
           playId,
@@ -435,6 +433,7 @@ export const RecordGameForm = () => {
               Please select a day
             </label>
             <DayPickerInput
+              utcOffset={0}
               format="YYYY/MM/DD"
               value={date}
               placeholder={date}

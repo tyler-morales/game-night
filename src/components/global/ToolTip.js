@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 export const ToolTipContent = ({ info, position }) => {
-  console.log(position)
   const [iconToggle, setIconToggle] = useState(false)
   const { icon, title, description } = info
 

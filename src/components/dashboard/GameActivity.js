@@ -26,8 +26,8 @@ export const GameActivity = () => {
     try {
       let records = await data
 
-      records = records.map((item) =>
-        [item.createdAt.split('T')[0]].map((item) => item.replaceAll('-', '/'))
+      records = records.map(
+        (item) => new Date(item.createdAt).toLocaleString().split(',')[0]
       )
 
       records = records.flat()
