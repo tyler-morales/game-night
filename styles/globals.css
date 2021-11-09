@@ -1,0 +1,111 @@
+:root {
+  --color-primary: #000022;
+  --color-secondary: #fce17d;
+  --color-tertiary: #49d3ad;
+  --color-quad: #5cd5dd;
+  --color-dark-green: #264053;
+  --color-white: #ffffff;
+  --color-error: #ff3456;
+  --color-grey: #8b949e;
+  --color-forest-green: #161b22;
+
+  --shadow-xs: 0 8px 25px 5px rgba(255, 255, 255, 0.2);
+  --shadow-light: 0 14px 55px 15px rgba(255, 255, 255, 0.2);
+  --shadow-base: 0 14px 55px 30px rgba(255, 255, 255, 0.2);
+}
+
+body {
+  background-color: var(--color-primary);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .focus-darkgreen {
+    @apply focus:bg-darkGreen ring-offset-primary ring-offset-2 focus:ring-darkGreen focus:outline-none focus:ring-2;
+  }
+  ,
+  .focus-secondary {
+    --color-secondary: #fce17d;
+    --color-primary: #000022;
+    @apply focus:bg-secondary ring-offset-primary ring-offset-2 focus:ring-secondary focus:outline-none focus:ring-2;
+  }
+  .focus-tertiary-ring {
+    @apply transition-all ring-offset-primary ring-offset-2 focus:ring-tertiary focus:outline-none focus:ring-2;
+  }
+  .focus-quad-ring {
+    @apply transition-all ring-offset-primary ring-offset-2 focus:ring-quad focus:outline-none focus:ring-2;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Resets */
+select {
+  /* A reset of styles, including removing the default dropdown arrow */
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  outline: none;
+
+  /* Style select arrow */
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  cursor: pointer;
+}
+
+#dashboard {
+  height: calc(100vh - 50px);
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+}
+
+/* Tables */
+tr:nth-child(even) {
+  background-color: var(--color-dark-green);
+}
+
+.gradient {
+  /* Fallback: Set a background color. */
+  background-color: white;
+
+  /* Create the gradient. */
+  background-image: linear-gradient(
+    90deg,
+    rgba(242, 203, 63, 1) 0%,
+    rgb(124, 148, 235) 100%
+  );
+
+  /* Set the background size and repeat properties. */
+  background-size: 100%;
+  background-repeat: repeat;
+
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+
+button:focus-visible {
+  outline: 2px solid #49d3ad;
+  outline-style: auto;
+}
