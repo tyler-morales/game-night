@@ -14,40 +14,32 @@ const useLoadSpecficRecords = (date) => {
 
   const fetchGames = async (date) => {
     try {
-      //format incomming dates without preceding zeros with zeros and dashes instead of slashes
-      const formatDate = (date) => {
-        return date
-          .split('/')
-          .map((digit) => {
-            const num = parseInt(digit)
-            return num < 10 ? `0${digit}` : digit
-          })
-          .join('/')
-          .replaceAll('/', '-')
-      }
-
-      const formatedDate = await formatDate(date)
-
       // fetch games from database
       const { username } = await Auth.currentAuthenticatedUser()
-
       let records = await API.graphql({
         query: listRecordGames,
         variables: {
           filter: {
             owner: { eq: username },
-            createdAt: { contains: formatedDate },
           },
         },
       })
 
       const allGames = records.data.listRecordGames.items
-      const filteredGames = allGames.map(({ name, players, winners }) => {
-        return {
-          gameName: name,
-          players: players,
-          winners: winners,
+
+      const formatedDates = allGames.map(
+        ({ createdAt, name, players, winners }) => {
+          return {
+            createdAt: new Date(createdAt).toLocaleString().split(',')[0],
+            gameName: name,
+            players,
+            winners,
+          }
         }
+      )
+
+      const filteredGames = formatedDates.filter(({ createdAt }) => {
+        return createdAt === new Date(date).toLocaleDateString('en-US')
       })
 
       setLoading(false)

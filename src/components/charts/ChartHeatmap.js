@@ -18,6 +18,7 @@ export const ChartHeatmap = ({ period, data }) => {
   })
 
   const { games } = useLoadSpecficRecords(selected.date)
+  // console.log(games)
 
   useEffect(() => {
     // fetchGameItems()
@@ -50,7 +51,8 @@ export const ChartHeatmap = ({ period, data }) => {
           On <span className="font-bold">{date ? date : today}</span>
         </span>
         <span>
-          &nbsp; you played <span className="font-bold">{count} </span>
+          &nbsp; you played{' '}
+          <span className="font-bold">{count === undefined ? 0 : count} </span>
           {count === 1 ? 'game' : 'games'}
         </span>
         <ul className="mt-2 md:pb-16">
