@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import HeroImage from '../../Hero-image.png'
+import HeroImageMobile from '../../Hero-image-mobile.png'
 
 export const Hero = () => {
   return (
@@ -21,7 +22,8 @@ export const Hero = () => {
       <img
         data-aos="fade-up"
         data-aos-delay="350"
-        className="md:m-auto w-full h-auto border-2 border-white rounded-md mt-6 md:mt-14 shadow-light md:shadow-base"
+        className="md:m-auto w-full h-auto border-2 border-white rounded-2xl mt-6 md:mt-14 shadow-light md:shadow-base"
+        srcset={`${HeroImage}, ${HeroImageMobile} 414w`}
         src={HeroImage}
         alt="Dashboard Preview"
       />
