@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import HeroImage from '../../Hero-image.png'
+import HeroImageMobile from '../../Hero-image-mobile.png'
 
 export const Hero = () => {
   return (
@@ -18,13 +19,16 @@ export const Hero = () => {
       >
         Taking the hassle out of game night
       </h2>
-      <img
-        data-aos="fade-up"
-        data-aos-delay="350"
-        className="md:m-auto w-full h-auto border-2 border-white rounded-md mt-6 md:mt-14 shadow-light md:shadow-base"
-        src={HeroImage}
-        alt="Dashboard Preview"
-      />
+      <picture>
+        <source media="(min-width:414px)" srcset={HeroImage} />
+        <img
+          data-aos="fade-up"
+          data-aos-delay="350"
+          className="md:m-auto w-full h-auto border-2 border-white rounded-2xl mt-6 md:mt-14 shadow-light md:shadow-base"
+          src={HeroImageMobile}
+          alt="Dashboard Preview"
+        />
+      </picture>
       <div data-aos="fade-in">
         <h3 className="text-white font-light font-body text-center text-base md:text-lg mt-14 lg:mt-20">
           Ready to upgrade your game ledger?
