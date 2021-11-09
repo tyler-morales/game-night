@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import Link from 'next/link'
 import Image from 'next/image'
 import HeroImage from '../../../public/images/Hero-image.png'
 import HeroImageMobile from '../../../public/images/Hero-image-mobile.png'
@@ -24,7 +24,7 @@ export const Hero = () => {
         data-aos="fade-up"
         data-aos-delay="350"
         className="md:m-auto w-full h-auto border-2 border-white rounded-2xl mt-6 md:mt-14 shadow-light md:shadow-base"
-        srcset={`${HeroImage}, ${HeroImageMobile} 414w`}
+        srcSet={`${HeroImage}, ${HeroImageMobile} 414w`}
         src={HeroImage}
         alt="Dashboard Preview"
       />
@@ -32,12 +32,12 @@ export const Hero = () => {
         <h3 className="text-white font-light font-body text-center text-base md:text-lg mt-14 lg:mt-20">
           Ready to upgrade your game ledger?
         </h3>
-        <NavLink
-          to="/sign-up"
+        <Link
+          href="/sign-up"
           className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary"
         >
           <span>Create an Account</span>
-        </NavLink>
+        </Link>
       </div>
     </header>
   )
