@@ -60,7 +60,7 @@ export const Leaderboard = () => {
   return (
     <DashboardItemContainer title="Leaderboard" options={<Options />}>
       {!loading ? (
-        <div data-aos="fade-in" className="h-80 flex flex-col gap-6">
+        <div className="h-80 flex flex-col gap-6">
           {data.length !== 0 ? (
             <Chart value={selectGameOption} />
           ) : (
