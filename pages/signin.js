@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { Formik, Form, Field } from 'formik'
 
@@ -14,7 +14,7 @@ import { useUser } from '../contexts/UserContext'
 import { SignInValues, SignInSchema } from '../src/formik/SignInValidation'
 
 function SignIn() {
-  let history = useHistory()
+  const router = useRouter()
   // const { login } = useUser()
 
   const [signingIn, setSigningIn] = useState(false)
@@ -36,7 +36,7 @@ function SignIn() {
     try {
       setSigningIn(true)
       // await login(username, password)
-      history.push('/dashboard')
+      router.push('/dashboard')
     } catch (err) {
       setServerError(err.message)
       console.error('error signing in..', err)
@@ -127,7 +127,7 @@ function SignIn() {
         <div className="mt-6">
           <p className="font-body text-white">
             Don't have an Account?
-            <Link href="/sign-up">
+            <Link href="/signup">
               <a className="text-quad cursor-pointer ml-2">Sign Up</a>
             </Link>
           </p>

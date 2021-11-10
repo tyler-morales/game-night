@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import logo from '../../../public/images/logo.svg'
 import { useRouter } from 'next/router'
+
 export const AuthNav = () => {
   const router = useRouter()
 

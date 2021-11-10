@@ -1,28 +1,29 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react'
 import { Auth } from 'aws-amplify'
-import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 
-import { NavLink } from 'react-router-dom'
+import Link from 'next/link'
 import { Formik, Form, Field } from 'formik'
 
-import { AuthNav } from '../components/nav/AuthNav'
+import { AuthNav } from '../src/components/nav/AuthNav'
 
-import { serverErrorOptions } from '../components/errors/serverErrorOptions'
+import { serverErrorOptions } from '../src/components/errors/serverErrorOptions'
 
 import {
   ForgotPasswordValues,
   ForgotPasswordStepOneSchema,
   ForgotPasswordStepTwoSchema,
-} from '../formik/ForgotPasswordValidation'
+} from '../src/formik/ForgotPasswordValidation'
 
 function ForgotPassword() {
-  let history = useHistory()
+  const router = useRouter()
 
   const [data, setData] = useState(ForgotPasswordValues)
   const [currentStep, setCurrentStep] = useState(0)
 
   const makeRequest = (formData) => {
-    history.push('/sign-in')
+    router.push('/signin')
   }
 
   const handleNextStep = (newData, final = false) => {
@@ -117,9 +118,9 @@ const StepOne = (props) => {
         <div className="mt-6">
           <p className="font-body text-white">
             <span className="mr-2">Remembered your password?</span>
-            <NavLink to="/sign-in">
-              <span className="text-quad cursor-pointer">Sign In</span>
-            </NavLink>
+            <Link href="/signin">
+              <a className="text-quad cursor-pointer">Sign In</a>
+            </Link>
           </p>
         </div>
       </section>
@@ -128,7 +129,7 @@ const StepOne = (props) => {
 }
 
 const StepTwo = (props) => {
-  let history = useHistory()
+  const router = useRouter()
 
   const [signingIn, setSigningIn] = useState(false)
   const [serverError, setServerError] = useState(null)
@@ -138,7 +139,7 @@ const StepTwo = (props) => {
     console.log(username, confirmationCode, newPassword)
     try {
       await Auth.forgotPasswordSubmit(username, confirmationCode, newPassword)
-      history.push('/sign-in')
+      router.push('/signin')
     } catch (err) {
       setSigningIn(false)
       setServerError(err.message)
