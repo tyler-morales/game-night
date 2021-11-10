@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { NavLink } from 'react-router-dom'
+import Link from 'next/link'
 import { Formik, Form, Field } from 'formik'
 
 import { AiOutlineEyeInvisible } from 'react-icons/ai'
@@ -8,13 +9,13 @@ import { AiOutlineEye } from 'react-icons/ai'
 
 import { AuthNav } from '../src/components/nav/AuthNav'
 
-import { useUser } from '../src/contexts/UserContext'
+import { useUser } from '../contexts/UserContext'
 
 import { SignInValues, SignInSchema } from '../src/formik/SignInValidation'
 
 function SignIn() {
   let history = useHistory()
-  const { login } = useUser()
+  // const { login } = useUser()
 
   const [signingIn, setSigningIn] = useState(false)
   const [serverError, setServerError] = useState(null)
@@ -34,7 +35,7 @@ function SignIn() {
   const signIn = async ({ username, password }) => {
     try {
       setSigningIn(true)
-      await login(username, password)
+      // await login(username, password)
       history.push('/dashboard')
     } catch (err) {
       setServerError(err.message)
@@ -126,17 +127,15 @@ function SignIn() {
         <div className="mt-6">
           <p className="font-body text-white">
             Don't have an Account?
-            <NavLink to="/sign-up">
-              <span className="text-quad cursor-pointer ml-2">Sign Up</span>
-            </NavLink>
+            <Link href="/sign-up">
+              <a className="text-quad cursor-pointer ml-2">Sign Up</a>
+            </Link>
           </p>
           <p className="font-body text-white">
             Forget your password?
-            <NavLink to="/forgot-password">
-              <span className="text-quad cursor-pointer ml-2">
-                Reset Password
-              </span>
-            </NavLink>
+            <Link href="/forgot-password">
+              <a className="text-quad cursor-pointer ml-2">Reset Password</a>
+            </Link>
           </p>
         </div>
       </div>
