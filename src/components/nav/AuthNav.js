@@ -10,13 +10,15 @@ export const AuthNav = () => {
   }
   return (
     <header className="m-auto md:my-10">
-      <Image
-        style={{ width: '150px' }}
-        className="m-auto cursor-pointer"
-        src={logo}
-        alt="Game Night Logo"
-        onClick={redirectHome}
-      />
+      <div className="m-auto cursor-pointer text-center">
+        <Image
+          src={logo}
+          alt="Game Night Logo"
+          onClick={redirectHome}
+          width={200}
+          height={200}
+        />
+      </div>
     </header>
   )
 }
