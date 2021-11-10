@@ -8,13 +8,13 @@ import { Formik, Form, Field } from 'formik'
 
 import { AuthNav } from '../src/components/nav/AuthNav'
 
-import { serverErrorOptions } from '../src/components/errors/serverErrorOptions'
+import { serverErrorOptions } from '../components/errors/serverErrorOptions'
 
 import {
   ForgotPasswordValues,
   ForgotPasswordStepOneSchema,
   ForgotPasswordStepTwoSchema,
-} from '../src/formik/ForgotPasswordValidation'
+} from '../components/formik/ForgotPasswordValidation'
 
 function ForgotPassword() {
   const router = useRouter()

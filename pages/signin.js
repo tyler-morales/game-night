@@ -11,7 +11,7 @@ import { AuthNav } from '../src/components/nav/AuthNav'
 
 import { useUser } from '../contexts/UserContext'
 
-import { SignInValues, SignInSchema } from '../src/formik/SignInValidation'
+import { SignInValues, SignInSchema } from '../components/formik/SignInValidation'
 
 function SignIn() {
   const router = useRouter()
