@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -11,14 +12,14 @@ export const Nav = () => {
       </div>
       <div className="flex gap-6 ">
         <Link href="/sign-in">
-          <span className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary">
+          <a className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary">
             Sign in
-          </span>
+          </a>
         </Link>
         <Link href="/sign-up">
-          <span className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary">
+          <a className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary">
             Sign up
-          </span>
+          </a>
         </Link>
       </div>
     </nav>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link'
 import Image from 'next/image'
 import HeroImage from '../../../public/images/Hero-image.png'
@@ -35,9 +36,9 @@ export const Hero = () => {
           Ready to upgrade your game ledger?
         </h3>
         <Link href="/sign-up">
-          <span className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary">
+          <a className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary">
             Create an Account
-          </span>
+          </a>
         </Link>
       </div>
     </header>
