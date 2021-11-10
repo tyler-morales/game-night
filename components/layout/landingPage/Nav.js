@@ -11,12 +11,12 @@ export const Nav = () => {
         <Image src={logo} alt="Game Night Logo" />
       </div>
       <div className="flex gap-6 ">
-        <Link href="/sign-in">
+        <Link href="/signin">
           <a className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary">
             Sign in
           </a>
         </Link>
-        <Link href="/sign-up">
+        <Link href="/signup">
           <a className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary">
             Sign up
           </a>
