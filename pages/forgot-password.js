@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { Formik, Form, Field } from 'formik'
 
-import { AuthNav } from '../src/components/nav/AuthNav'
+import { AuthNav } from '../components/layout/AuthNav'
 
 import { serverErrorOptions } from '../components/errors/serverErrorOptions'
 
@@ -45,7 +45,7 @@ function ForgotPassword() {
   return (
     <>
       <AuthNav />
-      <div className="flex flex-col w-11/12 m-auto justify-center mt-9 md:mt-14 py-6 md:max-w-4xl">
+      <div className="flex flex-col w-11/12 m-auto justify-center mt-9 pb-6 md:max-w-4xl">
         {steps[currentStep]}
       </div>
     </>

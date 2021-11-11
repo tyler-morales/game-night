@@ -7,15 +7,18 @@ import { Formik, Form, Field } from 'formik'
 import { AiOutlineEyeInvisible } from 'react-icons/ai'
 import { AiOutlineEye } from 'react-icons/ai'
 
-import { AuthNav } from '../src/components/nav/AuthNav'
+import { AuthNav } from '../components/layout/AuthNav'
 
 import { useUser } from '../contexts/UserContext'
 
-import { SignInValues, SignInSchema } from '../components/formik/SignInValidation'
+import {
+  SignInValues,
+  SignInSchema,
+} from '../components/formik/SignInValidation'
 
 function SignIn() {
   const router = useRouter()
-  // const { login } = useUser()
+  const { login } = useUser()
 
   const [signingIn, setSigningIn] = useState(false)
   const [serverError, setServerError] = useState(null)
@@ -35,7 +38,7 @@ function SignIn() {
   const signIn = async ({ username, password }) => {
     try {
       setSigningIn(true)
-      // await login(username, password)
+      await login(username, password)
       router.push('/dashboard')
     } catch (err) {
       setServerError(err.message)
@@ -47,7 +50,7 @@ function SignIn() {
   return (
     <>
       <AuthNav />
-      <div className="flex flex-col w-11/12 m-auto justify-center mt-9 md:mt-14 py-6 md:max-w-md">
+      <div className="flex flex-col w-11/12 m-auto justify-center mt-9 md:mt-10 py-6 md:max-w-md">
         <h1 className="font-bold text-white text-3xl md:text-left mb-4">
           Sign in
         </h1>

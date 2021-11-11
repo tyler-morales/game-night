@@ -1,8 +1,16 @@
 import { useEffect } from 'react'
+
+import Amplify from 'aws-amplify'
+import awsconfig from '../aws-exports'
+
 import '../styles/globals.css'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+
+import { UserProvider } from '../contexts/UserContext'
+
+Amplify.configure(awsconfig)
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -11,7 +19,11 @@ function MyApp({ Component, pageProps }) {
       easing: 'ease-in-out',
     })
   }, [])
-  return <Component {...pageProps} />
+  return (
+    <UserProvider>
+      <Component {...pageProps} />
+    </UserProvider>
+  )
 }
 
 export default MyApp
