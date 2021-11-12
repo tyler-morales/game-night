@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 
-import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
-import { LoadingRipple } from '../../src/components/loadingIndicator/LoadingRipple'
-import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
+import { DashboardItemContainer } from '../layout/DashboardItemContainer'
+import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
+import { EmptyTileInfo } from '../layout/EmptyTileInfo'
 import { ChartHeatmap } from '../charts/ChartHeatmap'
 import { ToolTipContent } from '../global/ToolTip'
 

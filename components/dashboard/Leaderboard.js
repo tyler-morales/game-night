@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 
-import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
+import { DashboardItemContainer } from '../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
-import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
+import { EmptyTileInfo } from '../layout/EmptyTileInfo'
 import { Chart } from './Chart'
 
 import useLoadGames from '../../hooks/useLoadGames'

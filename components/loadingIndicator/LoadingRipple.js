@@ -1,4 +1,4 @@
-import css from './ripple.module.css'
+// import css from './ripple.module.css'
 
 export const LoadingRipple = () => {
   return (

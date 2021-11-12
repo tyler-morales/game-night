@@ -1,5 +1,5 @@
 import useLoadPlays from '../../hooks/useLoadPlays'
-import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
+import { EmptyTileInfo } from '../layout/EmptyTileInfo'
 
 import {
   BarChart,

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 import useLoadWinRatio from '../../hooks/useLoadWinRatio'
-import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
+import { EmptyTileInfo } from '../layout/EmptyTileInfo'
 
 import {
   LineChart,

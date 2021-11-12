@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 
 import useGetRecords from '../../hooks/useGetRecords'
 
-import { DashboardItemContainer } from '../../layout/DashboardItemContainer'
+import { DashboardItemContainer } from '../layout/DashboardItemContainer'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
-import { EmptyTileInfo } from '../../layout/EmptyTileInfo'
+import { EmptyTileInfo } from '../layout/EmptyTileInfo'
 
-import './tablestyles.css'
+// import './tablestyles.css'
 
 export const History = () => {
   const [dateRecords, setDateRecords] = useState([])
