@@ -4,6 +4,8 @@ import Amplify from 'aws-amplify'
 import awsconfig from '../aws-exports'
 
 import '../styles/globals.css'
+import 'react-day-picker/lib/style.css'
+import '../styles/dayPicker.css'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'

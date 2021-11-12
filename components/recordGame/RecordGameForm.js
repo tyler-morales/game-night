@@ -30,8 +30,7 @@ import {
 import { RecordGameErrors } from '../errors/RecordGameErrors'
 
 import DayPickerInput from 'react-day-picker/DayPickerInput'
-// import 'react-day-picker/lib/style.css'
-// import '../../styles/dayPicker.css'
+// import './dayPicker.module.css'
 
 export const RecordGameForm = () => {
   let history = useHistory()
