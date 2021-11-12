@@ -1,4 +1,5 @@
 import { Field } from 'formik'
+import css from './checkboxStyles.module.css'
 
 export const WinnerCheckbox = ({
   player,
@@ -10,7 +11,7 @@ export const WinnerCheckbox = ({
   const { name, id } = player
 
   return (
-    <div key={index} className="wrapper">
+    <div key={index} className={css.wrapper}>
       <Field
         type="checkbox"
         onClick={() => checkboxStatus(index, 'WINNERS')}

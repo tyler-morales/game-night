@@ -1,5 +1,5 @@
-import { Dashboard } from '../layout/Dashboard'
-import protectedRoute from './protectedRoute'
+import { Dashboard } from '../components/layout/Dashboard'
+import protectedRoute from '../components/protectedRoute'
 
 import { RecordGameForm } from '../components/recordGame/RecordGameForm'
 import useUser from '../hooks/useUser'

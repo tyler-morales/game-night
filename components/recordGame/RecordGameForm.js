@@ -26,12 +26,12 @@ import useUser from '../../hooks/useUser'
 import {
   RecordGameValues,
   RecordGameSchema,
-} from '../../formik/RecordGameValidation'
+} from '../formik/RecordGameValidation'
 import { RecordGameErrors } from '../errors/RecordGameErrors'
 
 import DayPickerInput from 'react-day-picker/DayPickerInput'
-import 'react-day-picker/lib/style.css'
-import '../../styles/dayPicker.css'
+// import 'react-day-picker/lib/style.css'
+// import '../../styles/dayPicker.css'
 
 export const RecordGameForm = () => {
   let history = useHistory()
