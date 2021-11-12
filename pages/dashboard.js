@@ -1,6 +1,6 @@
-import { Dashboard } from '../layout/Dashboard'
+import { Dashboard } from '../components/layout/Dashboard'
 
-import protectedRoute from './protectedRoute'
+import protectedRoute from '../components/protectedRoute'
 
 import { Members } from '../components/profile/Members'
 import { Games } from '../components/profile/Games'
@@ -42,4 +42,4 @@ function Profile() {
   )
 }
 
-export default protectedRoute(Profile, '/sign-in')
+export default protectedRoute(Profile, '/signin')

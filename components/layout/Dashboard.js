@@ -1,10 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from 'react'
-import logo from '../logo.svg'
+import Image from 'next/image'
+import logo from '../../public/images/logo.svg'
 import { Hub } from 'aws-amplify'
-import { NavLink } from 'react-router-dom'
-import SignIn from '../pages/SignIn'
+import Link from 'next/link'
+import SignIn from '../../pages/signin'
 
-import { useUser } from '../contexts/UserContext'
+import { useUser } from '../../contexts/UserContext'
 
 import { HiMenuAlt4 } from 'react-icons/hi'
 import { FiLoader } from 'react-icons/fi'
@@ -17,9 +19,7 @@ import {
 
 export const Dashboard = ({ children }) => {
   const { user, logout } = useUser()
-
   const [spinner, setSpinner] = useState(false)
-
   const [hamburger, setHamburger] = useState(false)
 
   // Set spinner to false when user logs out
@@ -34,15 +34,16 @@ export const Dashboard = ({ children }) => {
 
   // change nav based on responsive seize
   const [toggleMenu, setToggleMenu] = useState(false)
-  const [size, setSize] = useState(window.innerWidth)
+  // const [size, setSize] = useState(window.innerWidth)
 
   const handleToggle = () => {
     toggleMenu ? setToggleMenu(false) : setToggleMenu(true)
     hamburger ? setHamburger(false) : setHamburger(true)
   }
 
-  const updateSize = () => setSize(window.innerWidth)
-  useEffect(() => (window.onresize = updateSize))
+  // const updateSize = () => setSize(window.innerWidth)
+
+  // useEffect(() => (window.onresize = updateSize))
 
   const handleLogOut = () => {
     try {
@@ -62,12 +63,9 @@ export const Dashboard = ({ children }) => {
         <nav className="flex flex-col md:items-center gap-3">
           <div className="relative flex justify-between items-center">
             {/* Logo */}
-            <img
-              className="md:m-auto"
-              style={{ width: '100px' }} //TODO: Change size to 80px on phones
-              src={logo}
-              alt="Game Night Logo"
-            />
+            <div className="md:m-auto" style={{ width: '100px' }}>
+              <Image src={logo} alt="Game Night Logo" />
+            </div>
             {/* Hamburger menu */}
             <div onClick={handleToggle} className="cursor-pointer md:hidden">
               {hamburger ? <RiCloseFill /> : <HiMenuAlt4 />}
@@ -75,36 +73,39 @@ export const Dashboard = ({ children }) => {
           </div>
 
           {/* Record a Game  */}
-          <NavLink
-            to="/record-game"
+          <Link
+            href="/record-game"
             className="transition-all text-lg py-3 md:py-2 px-5 bg-secondary text-primary rounded-md mt-2 md:mt-10 focus-secondary"
           >
-            <span>Record a Game</span>
-          </NavLink>
+            <a>Record a Game</a>
+          </Link>
 
           {/* Dashboard & settings buttons */}
           <div
-            className={`flex-col md:gap-3 md:mt-10 md:h-full md:justify-between ${
-              toggleMenu || size >= 768 ? 'flex' : 'hidden'
-            }`}
+            className="flex-col md:gap-3 md:mt-10 md:h-full md:justify-between flex"
+            // className={`flex-col md:gap-3 md:mt-10 md:h-full md:justify-between ${
+            //   toggleMenu || size >= 768 ? 'flex' : 'hidden'
+            // }`}
           >
             <div className="w-full">
-              <NavLink
-                to="/dashboard"
-                activeClassName="bg-darkGreen"
-                className="transition-all md:rounded-md ease-in-out  mb-0 md:mb-6 py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
-              >
-                <RiBarChart2Fill />
-                <span>Dashboard</span>
-              </NavLink>
-              <NavLink
-                to="/profile"
-                activeClassName="bg-darkGreen"
-                className="tranition-all duration-150 md:rounded-md ease-in-out  py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
-              >
-                <RiSettings5Fill />
-                <span>Settings</span>
-              </NavLink>
+              <Link href="/dashboard">
+                <div
+                  className="transition-all md:rounded-md ease-in-out  mb-0 md:mb-6 py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
+                  activeClassName="bg-darkGreen"
+                >
+                  <RiBarChart2Fill />
+                  <a>Dashboard</a>
+                </div>
+              </Link>
+              <Link href="/profile">
+                <div
+                  className="tranition-all duration-150 md:rounded-md ease-in-out  py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
+                  activeClassName="bg-darkGreen"
+                >
+                  <RiSettings5Fill />
+                  <a>Settings</a>
+                </div>
+              </Link>
             </div>
 
             {/* Logout button */}

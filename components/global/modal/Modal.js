@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { BsFillPersonPlusFill } from 'react-icons/bs'
 import { FaChessQueen } from 'react-icons/fa'
 
-import Backdrop from '../modal/Backdrop'
+import backdrop from './backdrop.module.css'
 
 const dropIn = {
   hidden: {
@@ -31,7 +31,7 @@ const Modal = ({
   type,
 }) => {
   return (
-    <Backdrop onClick={handleClose}>
+    <backdrop onClick={handleClose}>
       <motion.div
         onClick={(e) => e.stopPropagation()} // Prevent click from closing modal
         className="border-2 border-quad w-96 flex flex-col gap-3 bg-primary rounded-lg p-8 text-left"
@@ -104,7 +104,7 @@ const Modal = ({
           )}
         </div>
       </motion.div>
-    </Backdrop>
+    </backdrop>
   )
 }
 

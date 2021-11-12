@@ -1,8 +1,8 @@
-import './ripple.css'
+import css from './ripple.module.css'
 
 export const LoadingRipple = () => {
   return (
-    <div className="lds-ripple">
+    <div className="css.ripple">
       <div></div>
       <div></div>
     </div>

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import './styles.css'
+import '../../../styles/backdrop.css'
 
 const Backdrop = ({ children, onClick }) => {
   return (

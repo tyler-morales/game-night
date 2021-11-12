@@ -21,4 +21,4 @@ function RecordGame() {
   )
 }
 
-export default protectedRoute(RecordGame, '/sign-in')
+export default protectedRoute(RecordGame, '/signin')
