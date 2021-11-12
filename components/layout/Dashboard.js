@@ -58,7 +58,7 @@ export const Dashboard = ({ children }) => {
     return (
       <main
         id="dashboard"
-        className="flex flex-col md:grid gap-5 grid-cols-1 md:grid-cols-dashboard text-white text-3xl text-center px-5 m-auto"
+        className="flex flex-col md:grid gap-5 grid-cols-1 md:grid-cols-dashboard text-white text-3xl text-center px-5 m-auto pt-8"
       >
         <nav className="flex flex-col md:items-center gap-3">
           <div className="relative flex justify-between items-center">
@@ -73,11 +73,10 @@ export const Dashboard = ({ children }) => {
           </div>
 
           {/* Record a Game  */}
-          <Link
-            href="/record-game"
-            className="transition-all text-lg py-3 md:py-2 px-5 bg-secondary text-primary rounded-md mt-2 md:mt-10 focus-secondary"
-          >
-            <a>Record a Game</a>
+          <Link href="/record-game">
+            <a className="transition-all text-lg py-3 md:py-2 px-5 bg-secondary text-primary rounded-md mt-2 md:mt-10 focus-secondary">
+              Record a Game
+            </a>
           </Link>
 
           {/* Dashboard & settings buttons */}
@@ -89,29 +88,29 @@ export const Dashboard = ({ children }) => {
           >
             <div className="w-full">
               <Link href="/dashboard">
-                <div
-                  className="transition-all md:rounded-md ease-in-out  mb-0 md:mb-6 py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
+                <a
+                  className="cursor-pointer transition-all md:rounded-md ease-in-out  mb-0 md:mb-6 py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
                   activeClassName="bg-darkGreen"
                 >
                   <RiBarChart2Fill />
-                  <a>Dashboard</a>
-                </div>
+                  <span>Dashboard</span>
+                </a>
               </Link>
               <Link href="/profile">
-                <div
-                  className="tranition-all duration-150 md:rounded-md ease-in-out  py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
+                <a
+                  className="cursor-pointer tranition-all duration-150 md:rounded-md ease-in-out  py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
                   activeClassName="bg-darkGreen"
                 >
                   <RiSettings5Fill />
-                  <a>Settings</a>
-                </div>
+                  <span>Settings</span>
+                </a>
               </Link>
             </div>
 
             {/* Logout button */}
             <button
               onClick={handleLogOut}
-              className=" tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
+              className="cursor-pointer tranition-all duration-150 md:rounded-md ease-in-out md:border-none border-b-2 border-darkGreen py-4 px-3 md:px-8 items-center text-lg justify-self-start  flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
             >
               {spinner ? (
                 <span className="flex items-center gap-2 w-full">
