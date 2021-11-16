@@ -21,7 +21,6 @@ export const ChartHeatmap = ({ period, data }) => {
   // console.log(games)
 
   useEffect(() => {
-    // fetchGameItems()
     // Year to date of Current year
     if (period === 'YEAR_TO_DATE') {
       const newYear = `${year}/01/01`
