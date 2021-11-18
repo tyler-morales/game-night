@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 
 import { Formik, Field, Form } from 'formik'
 import { v4 as uuid } from 'uuid'
-import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { API } from 'aws-amplify'
 
 import {
@@ -33,7 +33,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput'
 // import './dayPicker.module.css'
 
 export const RecordGameForm = () => {
-  let history = useHistory()
+  let router = useRouter()
   const [games, setGames] = useState([])
   const [members, setMembers] = useState([])
   const [checked, setChecked] = useState(false)
@@ -116,7 +116,7 @@ export const RecordGameForm = () => {
         variables: { input: recordGameInfo },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
-      history.push('/dashboard')
+      router.push('/dashboard')
     } catch (err) {
       console.error(err)
     }
