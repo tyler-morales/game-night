@@ -85,7 +85,6 @@ export const Dashboard = ({ children }) => {
 
           {/* Dashboard & settings buttons */}
           <div
-            // className="flex-col md:gap-3 md:mt-10 md:h-full md:justify-between flex"
             className={`flex-col md:gap-3 md:mt-10 md:h-full md:justify-between ${
               toggleMenu || size >= 768 ? 'flex' : 'hidden'
             }`}
