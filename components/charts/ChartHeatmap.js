@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-// import HeatMap from '@uiw/react-heat-map'
+import HeatMap from '@uiw/react-heat-map'
 import useLoadSpecficRecords from '../../hooks/useLoadSpecficRecords'
 import { ChartRadar } from './ChartRadar'
 
@@ -99,7 +99,7 @@ export const ChartHeatmap = ({ period, data }) => {
 
   return (
     <div className="flex overflow-hidden items-end flex-col w-full">
-      {/* <HeatMap
+      <HeatMap
         value={data}
         style={{ color: 'white' }}
         startDate={new Date(startDate)}
@@ -131,7 +131,7 @@ export const ChartHeatmap = ({ period, data }) => {
             </>
           )
         }}
-      /> */}
+      />
 
       <hr className="border-1 border-white w-full" />
 

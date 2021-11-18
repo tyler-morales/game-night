@@ -12,6 +12,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "next": "latest",
+    "next-remove-imports": "^1.0.6",
     "react": "latest",
     "react-day-picker": "^7.4.10",
     "react-dom": "^17.0.2",
