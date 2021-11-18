@@ -35,7 +35,7 @@ export const Hero = () => {
         <h3 className="text-white font-light font-body text-center text-base md:text-lg mt-14 lg:mt-20">
           Ready to upgrade your game ledger?
         </h3>
-        <Link href="/sign-up">
+        <Link href="/signup">
           <a className="text-lg py-2 px-4 bg-secondary text-primary rounded-md mt-4 md:mt-8 block w-max m-auto text-center focus-secondary">
             Create an Account
           </a>
