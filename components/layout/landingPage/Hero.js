@@ -21,10 +21,12 @@ export const Hero = () => {
       >
         Taking the hassle out of game night
       </h2>
-      <div className="md:m-auto w-full h-auto border-2 border-white rounded-2xl mt-6 md:mt-14 shadow-light md:shadow-base overflow-hidden">
+      <div
+        data-aos="fade-up"
+        data-aos-delay="350"
+        className="md:m-auto w-full h-auto border-2 border-white rounded-2xl mt-6 md:mt-14 shadow-light md:shadow-base overflow-hidden"
+      >
         <Image
-          data-aos="fade-up"
-          data-aos-delay="350"
           placeholder="blur"
           srcSet={`${HeroImage}, ${HeroImageMobile} 414w`}
           src={HeroImage}
