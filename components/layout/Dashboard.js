@@ -4,6 +4,7 @@ import Image from 'next/image'
 import logo from '../../public/images/logo.svg'
 import { Hub } from 'aws-amplify'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import SignIn from '../../pages/signin'
 
 import { useUser } from '../../contexts/UserContext'
@@ -21,6 +22,7 @@ export const Dashboard = ({ children }) => {
   const { user, logout } = useUser()
   const [spinner, setSpinner] = useState(false)
   const [hamburger, setHamburger] = useState(false)
+  const router = useRouter()
 
   // Set spinner to false when user logs out
   useEffect(() => {
@@ -34,16 +36,18 @@ export const Dashboard = ({ children }) => {
 
   // change nav based on responsive seize
   const [toggleMenu, setToggleMenu] = useState(false)
-  // const [size, setSize] = useState(window.innerWidth)
+
+  const [size, setSize] = useState()
+  if (typeof window !== 'undefined') {
+    const updateSize = () => setSize(window.innerWidth)
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => (window.onresize = updateSize))
+  }
 
   const handleToggle = () => {
     toggleMenu ? setToggleMenu(false) : setToggleMenu(true)
     hamburger ? setHamburger(false) : setHamburger(true)
   }
-
-  // const updateSize = () => setSize(window.innerWidth)
-
-  // useEffect(() => (window.onresize = updateSize))
 
   const handleLogOut = () => {
     try {
@@ -81,16 +85,17 @@ export const Dashboard = ({ children }) => {
 
           {/* Dashboard & settings buttons */}
           <div
-            className="flex-col md:gap-3 md:mt-10 md:h-full md:justify-between flex"
-            // className={`flex-col md:gap-3 md:mt-10 md:h-full md:justify-between ${
-            //   toggleMenu || size >= 768 ? 'flex' : 'hidden'
-            // }`}
+            // className="flex-col md:gap-3 md:mt-10 md:h-full md:justify-between flex"
+            className={`flex-col md:gap-3 md:mt-10 md:h-full md:justify-between ${
+              toggleMenu || size >= 768 ? 'flex' : 'hidden'
+            }`}
           >
             <div className="w-full">
               <Link href="/dashboard">
                 <a
-                  className="cursor-pointer transition-all md:rounded-md ease-in-out  mb-0 md:mb-6 py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
-                  activeClassName="bg-darkGreen"
+                  className={`cursor-pointer transition-all md:rounded-md ease-in-out  mb-0 md:mb-6 py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen ${
+                    router.pathname === '/dashboard' ? 'bg-darkGreen' : ''
+                  }`}
                 >
                   <RiBarChart2Fill />
                   <span>Dashboard</span>
@@ -98,8 +103,9 @@ export const Dashboard = ({ children }) => {
               </Link>
               <Link href="/profile">
                 <a
-                  className="cursor-pointer tranition-all duration-150 md:rounded-md ease-in-out  py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen"
-                  activeClassName="bg-darkGreen"
+                  className={`cursor-pointer transition-all md:rounded-md ease-in-out  mb-0 md:mb-6 py-4 px-3 md:px-8 items-center text-lg justify-self-start flex gap-2 w-full hover:bg-darkGreen focus-darkgreen ${
+                    router.pathname === '/profile' ? 'bg-darkGreen' : ''
+                  }`}
                 >
                   <RiSettings5Fill />
                   <span>Settings</span>
