@@ -123,6 +123,7 @@ export const ChartHeatmap = ({ period, data }) => {
           return (
             <>
               <rect
+                className="cursor-pointer"
                 {...props}
                 onClick={() => {
                   setSelected(data.date === selected ? '' : { date, count })
