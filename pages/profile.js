@@ -6,8 +6,41 @@ import { Members } from '../components/profile/Members'
 import { Games } from '../components/profile/Games'
 
 import useUser from '../hooks/useUser'
+import { membersByDate } from '../graphql/queries'
 
-function Profile() {
+import { API, Auth, withSSRContext } from 'aws-amplify'
+
+export async function getServerSideProps(context) {
+  // console.log(context)
+  // const { username } = await Auth.currentAuthenticatedUser(context)
+  const { API } = withSSRContext(context)
+
+  let membersData
+
+  try {
+    membersData = await API.graphql({
+      query: membersByDate,
+      variables: {
+        type: 'Member',
+        filter: { owner: { eq: 'moralesfam' } },
+        sortDirection: 'ASC',
+      },
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+    })
+    console.log('✅ membersData: ', membersData)
+  } catch (err) {
+    console.error('❌ error fetching members: ', err)
+  }
+  return {
+    props: {
+      members: membersData ? membersData.data.membersByDate.items : null,
+    },
+  }
+}
+
+function Profile({ members }) {
+  // console.log(members.map((member) => member.name))
+
   const { user } = useUser()
 
   return (
@@ -32,7 +65,7 @@ function Profile() {
           </div>
 
           {/* Members */}
-          <Members />
+          <Members members={members} />
 
           {/* Games */}
           <Games />

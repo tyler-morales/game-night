@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 // 💻 AWS
-import Amplify from 'aws-amplify'
+import Amplify, { withSSRContext } from 'aws-amplify'
 import awsconfig from '../aws-exports'
 
 // 🎨 CSS
@@ -15,8 +15,16 @@ import 'aos/dist/aos.css'
 
 // 👥 Authentication
 import { UserProvider } from '../contexts/UserContext'
+const { Auth } = withSSRContext()
 
 Amplify.configure({ ...awsconfig, ssr: true })
+
+Auth.configure({
+  region: process.env.AUTH_REGION,
+  userPoolId: process.env.AUTH_POOL,
+  userPoolWebClientId: process.env.AUTH_POOL_CLIENT,
+  mandatorySignIn: false,
+})
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {

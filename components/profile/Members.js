@@ -12,7 +12,9 @@ import { updateMember, deleteMember } from '../../graphql/mutations'
 import { MemberItem } from './MemberItem'
 import { LoadingRipple } from '../loadingIndicator/LoadingRipple'
 
-export const Members = () => {
+export const Members = (data) => {
+  // const { members: memberData } = data
+  // console.log(memberData)
   const [memberName, setMemberName] = useState('')
   const [loading, updateLoading] = useState(true)
   const [members, updateMembers] = useState([])
@@ -114,12 +116,6 @@ export const Members = () => {
 
   // UPDATE name in database
   const updateMemberName = async (index, id) => {
-    console.log({
-      new: memberName,
-      old: members[index].name,
-      length: memberName.length,
-    })
-
     if (memberName !== members[index].name && memberName !== '') {
       handleIndividualOperation(index, false, 'EDIT_NAME')
       handleIndividualOperation(index, true, 'UPDATE_NAME')
