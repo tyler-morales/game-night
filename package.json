@@ -19,6 +19,7 @@
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "react-toastify": "^8.1.0",
     "recharts": "^2.1.4",
     "uuidv4": "^6.2.12",
     "yup": "^0.32.9"
@@ -49,8 +50,5 @@
     "autoprefixer": "^10.4.0",
     "postcss": "^8.3.11",
     "tailwindcss": "^2.2.19"
-  },
-  "engines": {
-    "node": "12.22.0"
   }
 }

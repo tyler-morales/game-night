@@ -56,6 +56,7 @@ export const CreateMember = ({ updateMembers, members }) => {
       updateMembers([...members, { ...memberInfo, owner: username }])
       updateFormState((currentState) => ({ ...currentState, saving: false }))
       updateFormState(initialState)
+      
       close()
     } catch (err) {
       console.error(err)

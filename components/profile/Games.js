@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 import { CreateGame } from './CreateGame'
 
@@ -88,6 +89,7 @@ export const Games = () => {
         query: deleteGame,
         variables: { input: { id } },
       })
+      toast.success('Game Deleted 🔥')
 
       fetchGames(index)
     } catch (err) {
@@ -112,12 +114,6 @@ export const Games = () => {
 
   // UPDATE name in database
   const updateGameName = async (index, id) => {
-    console.log({
-      new: gameName,
-      old: games[index].name,
-      length: gameName.length,
-    })
-
     if (gameName !== games[index].name && gameName !== '') {
       handleIndividualOperation(index, false, 'EDIT_NAME')
       handleIndividualOperation(index, true, 'UPDATE_NAME')
@@ -133,13 +129,16 @@ export const Games = () => {
           },
         })
 
+        toast.success(`${gameName} updated ⬆️`)
+
         fetchGames()
       } catch (err) {
         console.error(err)
       }
     } else {
-      // TODO: Create an alert (modal, dialogue etc...)
-      alert(`Input field can't be empty: Either enter a new name or cancel`)
+      toast.error(
+        `Input field can't be empty: Either enter a new name or cancel`
+      )
     }
   }
 
