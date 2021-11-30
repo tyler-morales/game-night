@@ -12,6 +12,8 @@ import '../styles/dayPicker.css'
 // 📚 Library
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 // 👥 Authentication
 import { UserProvider } from '../contexts/UserContext'
@@ -28,6 +30,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <UserProvider>
       <Component {...pageProps} />
+      <ToastContainer position="top-center" theme="dark" />
     </UserProvider>
   )
 }
