@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-
+import { toast } from 'react-toastify'
 import { CreateMember } from './CreateMember'
 
 // import API from Amplify library
@@ -90,6 +90,7 @@ export const Members = () => {
         query: deleteMember,
         variables: { input: { id } },
       })
+      toast.success('User Deleted 🔥')
 
       fetchMembers(index)
     } catch (err) {
@@ -135,13 +136,16 @@ export const Members = () => {
           },
         })
 
+        toast.success(`${memberName} updated ⬆️`)
+
         fetchMembers()
       } catch (err) {
         console.error(err)
       }
     } else {
-      // TODO: Create an alert (modal, dialogue etc...)
-      alert(`Input field can't be empty: Either enter a new name or cancel`)
+      toast.error(
+        `Input field can't be empty: Either enter a new name or cancel`
+      )
     }
   }
 

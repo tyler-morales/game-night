@@ -5,6 +5,8 @@ import { v4 as uuid } from 'uuid'
 import { useRouter } from 'next/router'
 import { API } from 'aws-amplify'
 
+import { toast } from 'react-toastify'
+
 import {
   createPlay,
   updatePlay,
@@ -352,6 +354,7 @@ export const RecordGameForm = () => {
         setSubmitting(false)
         createMemberPlay(values)
         addGameToDB(values)
+        toast.success('Game Recorded Successfully 🎉')
       }}
       innerRef={formikRef}
     >
